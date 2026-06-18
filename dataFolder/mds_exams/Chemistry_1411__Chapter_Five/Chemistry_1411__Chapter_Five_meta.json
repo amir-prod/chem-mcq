@@ -1,0 +1,420 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Chemistry 1411",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          253.705078125,
+          166.67578125
+        ],
+        [
+          360.84600830078125,
+          166.67578125
+        ],
+        [
+          360.84600830078125,
+          183.24530029296875
+        ],
+        [
+          253.705078125,
+          183.24530029296875
+        ]
+      ]
+    },
+    {
+      "title": "Chapter 5 Practice Test",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          230.09765625,
+          207.28125
+        ],
+        [
+          381.90234375,
+          207.28125
+        ],
+        [
+          381.90234375,
+          223.7752685546875
+        ],
+        [
+          230.09765625,
+          223.7752685546875
+        ]
+      ]
+    },
+    {
+      "title": "17.Calculate the \n\u2134\nfor the reaction below",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          90.05000305175781,
+          136.8651123046875
+        ],
+        [
+          308.4460144042969,
+          136.8651123046875
+        ],
+        [
+          308.4460144042969,
+          152.07147216796875
+        ],
+        [
+          90.05000305175781,
+          152.07147216796875
+        ]
+      ]
+    },
+    {
+      "title": "18.For which species below would \n\u2134be zero?",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          89.6484375,
+          407.43511962890625
+        ],
+        [
+          333.29400634765625,
+          407.43511962890625
+        ],
+        [
+          333.29400634765625,
+          422.6414794921875
+        ],
+        [
+          89.6484375,
+          422.6414794921875
+        ]
+      ]
+    },
+    {
+      "title": "Answers",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          70.822265625,
+          261.01531982421875
+        ],
+        [
+          128.6169891357422,
+          261.01531982421875
+        ],
+        [
+          128.6169891357422,
+          277.01531982421875
+        ],
+        [
+          70.822265625,
+          277.01531982421875
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          85
+        ],
+        [
+          "Line",
+          20
+        ],
+        [
+          "ListItem",
+          15
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Picture",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          126
+        ],
+        [
+          "Line",
+          29
+        ],
+        [
+          "ListItem",
+          22
+        ],
+        [
+          "Equation",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          200
+        ],
+        [
+          "Line",
+          38
+        ],
+        [
+          "ListItem",
+          19
+        ],
+        [
+          "Equation",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          262
+        ],
+        [
+          "Line",
+          46
+        ],
+        [
+          "ListItem",
+          23
+        ],
+        [
+          "Equation",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          224
+        ],
+        [
+          "Line",
+          51
+        ],
+        [
+          "ListItem",
+          10
+        ],
+        [
+          "TableCell",
+          10
+        ],
+        [
+          "Equation",
+          5
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Table",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          118
+        ],
+        [
+          "Line",
+          28
+        ],
+        [
+          "ListItem",
+          18
+        ],
+        [
+          "ListGroup",
+          5
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Equation",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 6,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          83
+        ],
+        [
+          "Line",
+          29
+        ],
+        [
+          "ListItem",
+          26
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/Chemistry_1411__Chapter_Five"
+}

@@ -1,0 +1,595 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Chemistry Challenge Practice Exam #1",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          33.0,
+          69.0
+        ],
+        [
+          256.5,
+          69.0
+        ],
+        [
+          256.5,
+          88.5
+        ],
+        [
+          33.0,
+          88.5
+        ]
+      ]
+    },
+    {
+      "title": "",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          34.962890625,
+          108.66796875
+        ],
+        [
+          110.865234375,
+          108.66796875
+        ],
+        [
+          110.865234375,
+          120.26953125
+        ],
+        [
+          34.962890625,
+          120.26953125
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Challenge Practice Exam #1",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          34.06640625,
+          36.73828125
+        ],
+        [
+          220.18951416015625,
+          36.73828125
+        ],
+        [
+          220.18951416015625,
+          48.6424560546875
+        ],
+        [
+          34.06640625,
+          48.6424560546875
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Challenge Practice Exam #1",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          35.26171875,
+          36.3515625
+        ],
+        [
+          220.18951416015625,
+          36.3515625
+        ],
+        [
+          220.18951416015625,
+          48.6424560546875
+        ],
+        [
+          35.26171875,
+          48.6424560546875
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Challenge Practice Exam #1",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          35.26171875,
+          36.3515625
+        ],
+        [
+          220.18951416015625,
+          36.3515625
+        ],
+        [
+          220.18951416015625,
+          48.6424560546875
+        ],
+        [
+          35.26171875,
+          48.6424560546875
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Challenge Practice Exam #1",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          35.26171875,
+          36.73828125
+        ],
+        [
+          220.18951416015625,
+          36.73828125
+        ],
+        [
+          220.18951416015625,
+          48.6424560546875
+        ],
+        [
+          35.26171875,
+          48.6424560546875
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Challenge Practice Exam #1",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          34.6640625,
+          37.125
+        ],
+        [
+          220.18951416015625,
+          37.125
+        ],
+        [
+          220.18951416015625,
+          48.6424560546875
+        ],
+        [
+          34.6640625,
+          48.6424560546875
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Challenge Practice Exam #1",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          35.26171875,
+          36.73828125
+        ],
+        [
+          220.18951416015625,
+          36.73828125
+        ],
+        [
+          220.18951416015625,
+          48.6424560546875
+        ],
+        [
+          35.26171875,
+          48.6424560546875
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Challenge Pracitce Exam #1\nAnswer Section",
+      "heading_level": null,
+      "page_id": 7,
+      "polygon": [
+        [
+          34.06640625,
+          73.4765625
+        ],
+        [
+          254.4105224609375,
+          73.4765625
+        ],
+        [
+          254.4105224609375,
+          102.14044189453125
+        ],
+        [
+          34.06640625,
+          102.14044189453125
+        ]
+      ]
+    },
+    {
+      "title": "MULTIPLE CHOICE",
+      "heading_level": null,
+      "page_id": 7,
+      "polygon": [
+        [
+          35.560546875,
+          124.13671875
+        ],
+        [
+          141.84718322753906,
+          124.13671875
+        ],
+        [
+          141.84718322753906,
+          135.8824462890625
+        ],
+        [
+          35.560546875,
+          135.8824462890625
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "TableCell",
+          173
+        ],
+        [
+          "Line",
+          4
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Span",
+          2
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          173
+        ],
+        [
+          "TableCell",
+          110
+        ],
+        [
+          "Line",
+          67
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          197
+        ],
+        [
+          "TableCell",
+          122
+        ],
+        [
+          "Line",
+          38
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "TableCell",
+          160
+        ],
+        [
+          "Span",
+          124
+        ],
+        [
+          "Line",
+          35
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          171
+        ],
+        [
+          "TableCell",
+          134
+        ],
+        [
+          "Line",
+          40
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          103
+        ],
+        [
+          "ListItem",
+          29
+        ],
+        [
+          "Line",
+          28
+        ],
+        [
+          "ListGroup",
+          4
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 6,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          45
+        ],
+        [
+          "TableCell",
+          25
+        ],
+        [
+          "Line",
+          14
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 7,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          89
+        ],
+        [
+          "Line",
+          45
+        ],
+        [
+          "ListItem",
+          39
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 8,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          29
+        ],
+        [
+          "Line",
+          15
+        ],
+        [
+          "ListItem",
+          12
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/chem_challenge_practice_exam#1"
+}

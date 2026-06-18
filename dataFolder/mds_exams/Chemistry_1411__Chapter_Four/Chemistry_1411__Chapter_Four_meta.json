@@ -1,0 +1,236 @@
+{
+  "table_of_contents": [
+    {
+      "title": "CHEM 1411",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          266.255859375,
+          173.63671875
+        ],
+        [
+          345.4100036621094,
+          173.63671875
+        ],
+        [
+          345.4100036621094,
+          189.99530029296875
+        ],
+        [
+          266.255859375,
+          189.99530029296875
+        ]
+      ]
+    },
+    {
+      "title": "Chapter 4 Practice Test",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          230.35000610351562,
+          214.52532958984375
+        ],
+        [
+          381.8060302734375,
+          214.52532958984375
+        ],
+        [
+          381.8060302734375,
+          230.52532958984375
+        ],
+        [
+          230.35000610351562,
+          230.52532958984375
+        ]
+      ]
+    },
+    {
+      "title": "Answers",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          71.12109375,
+          224.68359375
+        ],
+        [
+          128.6169891357422,
+          224.68359375
+        ],
+        [
+          128.6169891357422,
+          241.02532958984375
+        ],
+        [
+          71.12109375,
+          241.02532958984375
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          121
+        ],
+        [
+          "Line",
+          26
+        ],
+        [
+          "ListItem",
+          16
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Picture",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          271
+        ],
+        [
+          "Line",
+          50
+        ],
+        [
+          "ListItem",
+          17
+        ],
+        [
+          "Equation",
+          5
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          137
+        ],
+        [
+          "Line",
+          30
+        ],
+        [
+          "ListItem",
+          16
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Equation",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          45
+        ],
+        [
+          "Line",
+          23
+        ],
+        [
+          "ListItem",
+          10
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/Chemistry_1411__Chapter_Four"
+}

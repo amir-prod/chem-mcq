@@ -1,0 +1,64 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Chem110 Answer to Practice Exam 2",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          89.05078125,
+          73.3814697265625
+        ],
+        [
+          283.88671875,
+          73.3814697265625
+        ],
+        [
+          283.88671875,
+          85.3814697265625
+        ],
+        [
+          89.05078125,
+          85.3814697265625
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          65
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "ListItem",
+          7
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/CHEM110-Practice-Exam-2-Key"
+}

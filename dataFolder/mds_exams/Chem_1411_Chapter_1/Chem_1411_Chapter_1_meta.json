@@ -1,0 +1,355 @@
+{
+  "table_of_contents": [
+    {
+      "title": "CHEM 1411",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          255.19921875,
+          167.91912841796875
+        ],
+        [
+          354.9899597167969,
+          167.91912841796875
+        ],
+        [
+          354.9899597167969,
+          187.91912841796875
+        ],
+        [
+          255.19921875,
+          187.91912841796875
+        ]
+      ]
+    },
+    {
+      "title": "Chapter 1 Practice Test",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          211.35000610351562,
+          210.1990966796875
+        ],
+        [
+          400.4296875,
+          210.1990966796875
+        ],
+        [
+          400.4296875,
+          230.1990966796875
+        ],
+        [
+          211.35000610351562,
+          230.1990966796875
+        ]
+      ]
+    },
+    {
+      "title": "11. Round the number 0.07535 to two significant figures.",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          69.92578125,
+          329.87109375
+        ],
+        [
+          362.6650085449219,
+          329.87109375
+        ],
+        [
+          362.6650085449219,
+          342.3714904785156
+        ],
+        [
+          69.92578125,
+          342.3714904785156
+        ]
+      ]
+    },
+    {
+      "title": "12. How many significant figures should be retained in the result of the following \ncalculation?",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          69.328125,
+          462.515625
+        ],
+        [
+          485.5210266113281,
+          462.515625
+        ],
+        [
+          485.5210266113281,
+          493.6714782714844
+        ],
+        [
+          69.328125,
+          493.6714782714844
+        ]
+      ]
+    },
+    {
+      "title": "13. A flow reactor has an output of 8709 L/min. What is the output of this reactor in gallons \nper hour?",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          69.328125,
+          656.6484375
+        ],
+        [
+          537.68505859375,
+          656.6484375
+        ],
+        [
+          537.68505859375,
+          687.2515029907227
+        ],
+        [
+          69.328125,
+          687.2515029907227
+        ]
+      ]
+    },
+    {
+      "title": "Answers",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          70.224609375,
+          304.3714904785156
+        ],
+        [
+          116.34099578857422,
+          304.3714904785156
+        ],
+        [
+          116.34099578857422,
+          316.3714904785156
+        ],
+        [
+          70.224609375,
+          316.3714904785156
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          73
+        ],
+        [
+          "Line",
+          22
+        ],
+        [
+          "ListItem",
+          16
+        ],
+        [
+          "TableCell",
+          3
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Picture",
+          1
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          107
+        ],
+        [
+          "Line",
+          28
+        ],
+        [
+          "ListItem",
+          21
+        ],
+        [
+          "Text",
+          5
+        ],
+        [
+          "ListGroup",
+          5
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          98
+        ],
+        [
+          "Line",
+          27
+        ],
+        [
+          "ListItem",
+          16
+        ],
+        [
+          "ListGroup",
+          4
+        ],
+        [
+          "Equation",
+          3
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "TableCell",
+          2
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          115
+        ],
+        [
+          "Line",
+          26
+        ],
+        [
+          "ListItem",
+          19
+        ],
+        [
+          "ListGroup",
+          5
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageFooter",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          79
+        ],
+        [
+          "Line",
+          26
+        ],
+        [
+          "ListItem",
+          22
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/Chem_1411_Chapter_1"
+}

@@ -1,0 +1,290 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Chemistry 110 Section 3",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          242.6484375,
+          65.7421875
+        ],
+        [
+          370.5,
+          65.7421875
+        ],
+        [
+          370.5,
+          76.5703125
+        ],
+        [
+          242.6484375,
+          76.5703125
+        ]
+      ]
+    },
+    {
+      "title": "Practice Exam 4 (Ch 7[Rate&Equilibrium], 8, and 9)",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          168.75,
+          93.0
+        ],
+        [
+          443.25,
+          93.0
+        ],
+        [
+          443.25,
+          104.80078125
+        ],
+        [
+          168.75,
+          104.80078125
+        ]
+      ]
+    },
+    {
+      "title": "Note:",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          42.0,
+          120.75
+        ],
+        [
+          71.25,
+          120.75
+        ],
+        [
+          71.25,
+          132.2578125
+        ],
+        [
+          42.0,
+          132.2578125
+        ]
+      ]
+    },
+    {
+      "title": "Periodic Table of the Elements:",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          222.328125,
+          351.75
+        ],
+        [
+          387.75,
+          351.75
+        ],
+        [
+          387.75,
+          362.25
+        ],
+        [
+          222.328125,
+          362.25
+        ]
+      ]
+    },
+    {
+      "title": "Choose the most appropriate answer.",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          41.23828125,
+          65.35546875
+        ],
+        [
+          204.0,
+          65.35546875
+        ],
+        [
+          204.0,
+          75.75
+        ],
+        [
+          41.23828125,
+          75.75
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          312
+        ],
+        [
+          "Span",
+          27
+        ],
+        [
+          "Text",
+          5
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Span",
+          80
+        ],
+        [
+          "Line",
+          57
+        ],
+        [
+          "Text",
+          50
+        ],
+        [
+          "ListItem",
+          11
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Figure",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "TableCell",
+          28
+        ],
+        [
+          "Line",
+          3
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "Span",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Span",
+          68
+        ],
+        [
+          "Line",
+          54
+        ],
+        [
+          "ListItem",
+          36
+        ],
+        [
+          "Text",
+          18
+        ],
+        [
+          "ListGroup",
+          9
+        ],
+        [
+          "Equation",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "PageHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/CHEM110-Practice-Exam-4-Key"
+}

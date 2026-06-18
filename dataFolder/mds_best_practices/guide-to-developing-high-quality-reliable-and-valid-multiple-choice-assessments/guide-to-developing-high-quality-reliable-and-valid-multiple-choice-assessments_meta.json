@@ -1,0 +1,854 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Guide To Developing High-Quality, Reliable, and Valid Multiple-\nChoice Assessments",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          59.29736211031175,
+          118.77099609375
+        ],
+        [
+          536.74609375,
+          118.77099609375
+        ],
+        [
+          536.74609375,
+          151.5
+        ],
+        [
+          59.29736211031175,
+          151.5
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 INTRODUCTION",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          60.04796163069544,
+          398.70263671875
+        ],
+        [
+          148.61870503597123,
+          398.70263671875
+        ],
+        [
+          148.61870503597123,
+          408.0
+        ],
+        [
+          60.04796163069544,
+          408.0
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 MULTIPLE-CHOICE QUESTIONS",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          323.392578125,
+          637.5
+        ],
+        [
+          480.3836930455635,
+          637.5
+        ],
+        [
+          480.3836930455635,
+          647.44189453125
+        ],
+        [
+          323.392578125,
+          647.44189453125
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 CONTENT GUIDELINES",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          59.29736211031175,
+          144.75
+        ],
+        [
+          179.39328537170263,
+          144.75
+        ],
+        [
+          179.39328537170263,
+          153.75
+        ],
+        [
+          59.29736211031175,
+          153.75
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 GENERAL ITEM-WRITING GUIDELINES",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          60.04796163069544,
+          433.89404296875
+        ],
+        [
+          244.69544364508394,
+          433.89404296875
+        ],
+        [
+          244.69544364508394,
+          445.5
+        ],
+        [
+          60.04796163069544,
+          445.5
+        ]
+      ]
+    },
+    {
+      "title": "STEM CONSTRUCTION",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          60.04796163069544,
+          715.42529296875
+        ],
+        [
+          177.14148681055156,
+          715.42529296875
+        ],
+        [
+          177.14148681055156,
+          726.0
+        ],
+        [
+          60.04796163069544,
+          726.0
+        ]
+      ]
+    },
+    {
+      "title": "Box 1. Complex Multiple-Choice Item (Type K Item) That Should Be Avoided",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          325.0095923261391,
+          70.5
+        ],
+        [
+          565.2014388489208,
+          70.5
+        ],
+        [
+          565.2014388489208,
+          90.77783203125
+        ],
+        [
+          325.0095923261391,
+          90.77783203125
+        ]
+      ]
+    },
+    {
+      "title": "Box 2. Response Set for Example 2: Revision of Original Repetitive Wording To Shorten the Response Set and Make the Item Clearer",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          324.2589928057554,
+          372.30908203125
+        ],
+        [
+          565.2014388489208,
+          372.30908203125
+        ],
+        [
+          565.2014388489208,
+          404.25
+        ],
+        [
+          324.2589928057554,
+          404.25
+        ]
+      ]
+    },
+    {
+      "title": "Electron-Pair Geometry Molecular Geometry",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          351.513671875,
+          591.75
+        ],
+        [
+          545.6858513189449,
+          591.75
+        ],
+        [
+          545.6858513189449,
+          602.65283203125
+        ],
+        [
+          351.513671875,
+          602.65283203125
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 RESPONSE SET CONSTRUCTION",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          324.2589928057554,
+          693.03076171875
+        ],
+        [
+          483.3860911270983,
+          693.03076171875
+        ],
+        [
+          483.3860911270983,
+          704.25
+        ],
+        [
+          324.2589928057554,
+          704.25
+        ]
+      ]
+    },
+    {
+      "title": "Box 3. Examples 3 and 4 Illustrating Aspects of Response Set Construction",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          60.04796163069544,
+          69.98291015625
+        ],
+        [
+          297.10546875,
+          69.98291015625
+        ],
+        [
+          297.10546875,
+          90.75
+        ],
+        [
+          60.04796163069544,
+          90.75
+        ]
+      ]
+    },
+    {
+      "title": "Box 5. True\u2014False Question Written as a Multiple-Choice Item",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          324.2589928057554,
+          505.4765625
+        ],
+        [
+          562.9496402877697,
+          505.4765625
+        ],
+        [
+          562.9496402877697,
+          524.671875
+        ],
+        [
+          324.2589928057554,
+          524.671875
+        ]
+      ]
+    },
+    {
+      "title": "Optimum Number of Responses in a Set",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          59.29736211031175,
+          213.75
+        ],
+        [
+          225.9304556354916,
+          213.75
+        ],
+        [
+          225.9304556354916,
+          223.54541015625
+        ],
+        [
+          59.29736211031175,
+          223.54541015625
+        ]
+      ]
+    },
+    {
+      "title": "Issues Related to Test-wiseness",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          59.29736211031175,
+          628.5
+        ],
+        [
+          189.51171875,
+          628.5
+        ],
+        [
+          189.51171875,
+          637.84423828125
+        ],
+        [
+          59.29736211031175,
+          637.84423828125
+        ]
+      ]
+    },
+    {
+      "title": "Correct Response Issues and Key Balancing",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          321.55859375,
+          104.25
+        ],
+        [
+          502.15107913669067,
+          104.25
+        ],
+        [
+          502.15107913669067,
+          113.25
+        ],
+        [
+          321.55859375,
+          113.25
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 ITEM ORDER AND RESPONSE ORDER EFFECTS",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          324.2589928057554,
+          227.25
+        ],
+        [
+          548.6882494004797,
+          227.25
+        ],
+        [
+          548.6882494004797,
+          237.5419921875
+        ],
+        [
+          324.2589928057554,
+          237.5419921875
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 USING ITEM ANALYSIS TO IMPROVE ITEM WRITING",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          324.2589928057554,
+          683.25
+        ],
+        [
+          565.9520383693045,
+          681.75
+        ],
+        [
+          565.9520383693045,
+          692.25
+        ],
+        [
+          325.0095923261391,
+          693.75
+        ]
+      ]
+    },
+    {
+      "title": "Item Difficulty",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          59.29736211031175,
+          213.75
+        ],
+        [
+          119.34532374100719,
+          213.75
+        ],
+        [
+          119.34532374100719,
+          223.54541015625
+        ],
+        [
+          59.29736211031175,
+          223.54541015625
+        ]
+      ]
+    },
+    {
+      "title": "Item Discrimination",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          59.29736211031175,
+          453.0
+        ],
+        [
+          141.86330935251797,
+          453.0
+        ],
+        [
+          141.86330935251797,
+          461.88720703125
+        ],
+        [
+          59.29736211031175,
+          461.88720703125
+        ]
+      ]
+    },
+    {
+      "title": "Distribution of Responses",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          323.5083932853717,
+          417.89794921875
+        ],
+        [
+          430.84412470023983,
+          417.89794921875
+        ],
+        [
+          430.84412470023983,
+          427.5
+        ],
+        [
+          323.5083932853717,
+          427.5
+        ]
+      ]
+    },
+    {
+      "title": "CONCLUSION",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          323.6982421875,
+          561.86279296875
+        ],
+        [
+          402.32134292565945,
+          561.86279296875
+        ],
+        [
+          402.32134292565945,
+          570.75
+        ],
+        [
+          323.6982421875,
+          570.75
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 AUTHOR INFORMATION",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          60.491302490234375,
+          51.05352783203125
+        ],
+        [
+          184.87754821777344,
+          51.05352783203125
+        ],
+        [
+          184.87754821777344,
+          83.05352783203125
+        ],
+        [
+          60.491302490234375,
+          83.05352783203125
+        ]
+      ]
+    },
+    {
+      "title": "Corresponding Author",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          58.6875,
+          84.37939453125
+        ],
+        [
+          152.94149780273438,
+          84.37939453125
+        ],
+        [
+          152.94149780273438,
+          95.2078857421875
+        ],
+        [
+          58.6875,
+          95.2078857421875
+        ]
+      ]
+    },
+    {
+      "title": "Notes",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          58.9931640625,
+          115.57177734375
+        ],
+        [
+          84.21280670166016,
+          115.57177734375
+        ],
+        [
+          84.21280670166016,
+          125.36846923828125
+        ],
+        [
+          58.9931640625,
+          125.36846923828125
+        ]
+      ]
+    },
+    {
+      "title": "\u25a0 REFERENCES",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          60.491302490234375,
+          138.0203857421875
+        ],
+        [
+          133.76095581054688,
+          138.0203857421875
+        ],
+        [
+          133.76095581054688,
+          170.0203857421875
+        ],
+        [
+          60.491302490234375,
+          170.0203857421875
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          106
+        ],
+        [
+          "Span",
+          35
+        ],
+        [
+          "Text",
+          14
+        ],
+        [
+          "Picture",
+          4
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "PageFooter",
+          3
+        ],
+        [
+          "PageHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          168
+        ],
+        [
+          "Span",
+          57
+        ],
+        [
+          "Text",
+          27
+        ],
+        [
+          "SectionHeader",
+          7
+        ],
+        [
+          "ListItem",
+          7
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          137
+        ],
+        [
+          "Span",
+          38
+        ],
+        [
+          "Text",
+          25
+        ],
+        [
+          "Equation",
+          5
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ],
+        [
+          "Reference",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          143
+        ],
+        [
+          "Span",
+          39
+        ],
+        [
+          "Text",
+          15
+        ],
+        [
+          "SectionHeader",
+          5
+        ],
+        [
+          "PageFooter",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          134
+        ],
+        [
+          "Span",
+          32
+        ],
+        [
+          "Text",
+          15
+        ],
+        [
+          "TableCell",
+          10
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Equation",
+          1
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "Table",
+          1
+        ],
+        [
+          "TableGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          393
+        ],
+        [
+          "Line",
+          84
+        ],
+        [
+          "ListItem",
+          25
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Reference",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/guide-to-developing-high-quality-reliable-and-valid-multiple-choice-assessments"
+}

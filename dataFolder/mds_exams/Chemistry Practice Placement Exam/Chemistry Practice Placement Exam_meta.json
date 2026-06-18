@@ -1,0 +1,931 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Chemistry Practice \nPlacement Exam",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          231.591796875,
+          37.8984375
+        ],
+        [
+          384.66802978515625,
+          37.8984375
+        ],
+        [
+          384.66802978515625,
+          77.765869140625
+        ],
+        [
+          231.591796875,
+          77.765869140625
+        ]
+      ]
+    },
+    {
+      "title": "The following five questions concern the synthesis of ammonia:",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          71.71875,
+          36.73828125
+        ],
+        [
+          380.109375,
+          36.73828125
+        ],
+        [
+          380.109375,
+          49.54150390625
+        ],
+        [
+          71.71875,
+          49.54150390625
+        ]
+      ]
+    },
+    {
+      "title": "Questions 46 and 47 are related to each other.",
+      "heading_level": null,
+      "page_id": 6,
+      "polygon": [
+        [
+          51.3984375,
+          506.741455078125
+        ],
+        [
+          273.70001220703125,
+          506.741455078125
+        ],
+        [
+          273.70001220703125,
+          518.741455078125
+        ],
+        [
+          51.3984375,
+          518.741455078125
+        ]
+      ]
+    },
+    {
+      "title": "Periodic Table of the Elements",
+      "heading_level": null,
+      "page_id": 9,
+      "polygon": [
+        [
+          293.25,
+          56.25
+        ],
+        [
+          498.0,
+          56.25
+        ],
+        [
+          498.0,
+          72.75
+        ],
+        [
+          293.25,
+          72.75
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Practice \nPlacement Exam Answers",
+      "heading_level": null,
+      "page_id": 10,
+      "polygon": [
+        [
+          201.29501342773438,
+          40.21875
+        ],
+        [
+          401.239013671875,
+          40.21875
+        ],
+        [
+          401.239013671875,
+          79.69085693359375
+        ],
+        [
+          201.29501342773438,
+          79.69085693359375
+        ]
+      ]
+    },
+    {
+      "title": "The following five questions concern the synthesis of ammonia:",
+      "heading_level": null,
+      "page_id": 16,
+      "polygon": [
+        [
+          72.0999984741211,
+          37.125
+        ],
+        [
+          381.3046875,
+          37.125
+        ],
+        [
+          381.3046875,
+          49.54150390625
+        ],
+        [
+          72.0999984741211,
+          49.54150390625
+        ]
+      ]
+    },
+    {
+      "title": "Questions 46 and 47 are related to each other.",
+      "heading_level": null,
+      "page_id": 16,
+      "polygon": [
+        [
+          51.99609375,
+          506.741455078125
+        ],
+        [
+          273.70001220703125,
+          506.741455078125
+        ],
+        [
+          273.70001220703125,
+          518.741455078125
+        ],
+        [
+          51.99609375,
+          518.741455078125
+        ]
+      ]
+    },
+    {
+      "title": "Periodic Table of the Elements",
+      "heading_level": null,
+      "page_id": 19,
+      "polygon": [
+        [
+          293.25,
+          55.5
+        ],
+        [
+          498.0,
+          55.5
+        ],
+        [
+          498.0,
+          73.5
+        ],
+        [
+          293.25,
+          73.5
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          259
+        ],
+        [
+          "TableCell",
+          66
+        ],
+        [
+          "Line",
+          45
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          590
+        ],
+        [
+          "Line",
+          49
+        ],
+        [
+          "ListItem",
+          36
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Equation",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          258
+        ],
+        [
+          "TableCell",
+          150
+        ],
+        [
+          "Line",
+          51
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          425
+        ],
+        [
+          "TableCell",
+          96
+        ],
+        [
+          "Line",
+          49
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          81
+        ],
+        [
+          "Span",
+          54
+        ],
+        [
+          "ListItem",
+          36
+        ],
+        [
+          "ListGroup",
+          3
+        ],
+        [
+          "Equation",
+          2
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          465
+        ],
+        [
+          "Line",
+          53
+        ],
+        [
+          "ListItem",
+          41
+        ],
+        [
+          "TableCell",
+          10
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 6,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          389
+        ],
+        [
+          "Line",
+          50
+        ],
+        [
+          "ListItem",
+          41
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Equation",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 7,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          132
+        ],
+        [
+          "Line",
+          30
+        ],
+        [
+          "ListItem",
+          15
+        ],
+        [
+          "Text",
+          7
+        ],
+        [
+          "Equation",
+          3
+        ],
+        [
+          "ListGroup",
+          3
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 8,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          197
+        ],
+        [
+          "TableCell",
+          90
+        ],
+        [
+          "Line",
+          43
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 9,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "TableCell",
+          209
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "Span",
+          4
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "Table",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 10,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          256
+        ],
+        [
+          "TableCell",
+          66
+        ],
+        [
+          "Line",
+          45
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 11,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          568
+        ],
+        [
+          "Line",
+          49
+        ],
+        [
+          "ListItem",
+          36
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Equation",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 12,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          258
+        ],
+        [
+          "TableCell",
+          98
+        ],
+        [
+          "Line",
+          51
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 13,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          425
+        ],
+        [
+          "TableCell",
+          138
+        ],
+        [
+          "Line",
+          49
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 14,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          81
+        ],
+        [
+          "Span",
+          54
+        ],
+        [
+          "ListItem",
+          36
+        ],
+        [
+          "ListGroup",
+          3
+        ],
+        [
+          "Equation",
+          2
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 15,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          465
+        ],
+        [
+          "Line",
+          53
+        ],
+        [
+          "ListItem",
+          41
+        ],
+        [
+          "TableCell",
+          10
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 16,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          389
+        ],
+        [
+          "Line",
+          50
+        ],
+        [
+          "ListItem",
+          41
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ],
+        [
+          "Equation",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 17,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          126
+        ],
+        [
+          "Line",
+          30
+        ],
+        [
+          "ListItem",
+          15
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "Equation",
+          3
+        ],
+        [
+          "ListGroup",
+          3
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 18,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          197
+        ],
+        [
+          "TableCell",
+          135
+        ],
+        [
+          "Line",
+          43
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 19,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "TableCell",
+          206
+        ],
+        [
+          "Line",
+          7
+        ],
+        [
+          "Span",
+          4
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "Table",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/Chemistry Practice Placement Exam"
+}

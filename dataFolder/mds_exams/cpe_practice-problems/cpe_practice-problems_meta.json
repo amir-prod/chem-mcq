@@ -1,0 +1,201 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Sample Questions for the Chemistry Placement Test",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          180.3000030517578,
+          73.08984375
+        ],
+        [
+          434.6724548339844,
+          73.08984375
+        ],
+        [
+          434.6724548339844,
+          85.3814697265625
+        ],
+        [
+          180.3000030517578,
+          85.3814697265625
+        ]
+      ]
+    },
+    {
+      "title": "Chemistry Diagnostic Test Sample Questions",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          162.5625,
+          72.703125
+        ],
+        [
+          392.4349060058594,
+          72.703125
+        ],
+        [
+          392.4349060058594,
+          85.263671875
+        ],
+        [
+          162.5625,
+          85.263671875
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "TableCell",
+          273
+        ],
+        [
+          "Span",
+          124
+        ],
+        [
+          "Line",
+          36
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          104
+        ],
+        [
+          "TableCell",
+          37
+        ],
+        [
+          "Line",
+          25
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          77
+        ],
+        [
+          "TableCell",
+          28
+        ],
+        [
+          "Line",
+          23
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          42
+        ],
+        [
+          "Span",
+          27
+        ],
+        [
+          "ListItem",
+          13
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "ListGroup",
+          3
+        ],
+        [
+          "Equation",
+          2
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/cpe_practice-problems"
+}

@@ -1,0 +1,315 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Chemistry 110",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          268.048828125,
+          58.78125
+        ],
+        [
+          346.47802734375,
+          58.78125
+        ],
+        [
+          346.47802734375,
+          70.98150634765625
+        ],
+        [
+          268.048828125,
+          70.98150634765625
+        ]
+      ]
+    },
+    {
+      "title": "Practice Exam 3 (Ch 5,6,7[Energy])",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          213.36328125,
+          85.078125
+        ],
+        [
+          397.2860412597656,
+          85.078125
+        ],
+        [
+          397.2860412597656,
+          98.60150146484375
+        ],
+        [
+          213.36328125,
+          98.60150146484375
+        ]
+      ]
+    },
+    {
+      "title": "Note:",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          48.708984375,
+          99.38671875
+        ],
+        [
+          77.01599884033203,
+          99.38671875
+        ],
+        [
+          77.01599884033203,
+          112.1614990234375
+        ],
+        [
+          48.708984375,
+          112.1614990234375
+        ]
+      ]
+    },
+    {
+      "title": "Concentration units:",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          49.60546875,
+          362.7421875
+        ],
+        [
+          148.00799560546875,
+          362.7421875
+        ],
+        [
+          148.00799560546875,
+          375.95147705078125
+        ],
+        [
+          49.60546875,
+          375.95147705078125
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          114
+        ],
+        [
+          "Line",
+          26
+        ],
+        [
+          "Text",
+          11
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "ListItem",
+          4
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          280
+        ],
+        [
+          "Line",
+          47
+        ],
+        [
+          "TableCell",
+          43
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ],
+        [
+          "Text",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          150
+        ],
+        [
+          "TableCell",
+          55
+        ],
+        [
+          "Line",
+          44
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "Form",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "surya",
+      "block_counts": [
+        [
+          "Line",
+          153
+        ],
+        [
+          "Span",
+          85
+        ],
+        [
+          "Text",
+          77
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "Figure",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          87
+        ],
+        [
+          "Line",
+          22
+        ],
+        [
+          "Text",
+          18
+        ],
+        [
+          "ListItem",
+          7
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          11
+        ],
+        [
+          "Line",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Text",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0,
+        "previous_text": "",
+        "previous_type": "",
+        "previous_order": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data/CHEM110-Practice-Exam-3-Key"
+}

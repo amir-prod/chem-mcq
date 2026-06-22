@@ -121,9 +121,21 @@ def main() -> int:
         return 1
 
     questions = final_state.get("completed_questions", [])
+    rejected = final_state.get("rejected_questions", [])
     if not questions:
-        logger.error("No questions were generated.")
+        logger.error(
+            "No approved questions were generated (%d rejected).",
+            len(rejected),
+        )
         return 1
+
+    if len(questions) < args.num_questions:
+        logger.warning(
+            "Only %d of %d requested questions were approved (%d rejected).",
+            len(questions),
+            args.num_questions,
+            len(rejected),
+        )
 
     batch = MCQBatchOutput(
         topic=args.topic,
@@ -131,9 +143,16 @@ def main() -> int:
         difficulty=args.difficulty,
         num_questions=len(questions),
         questions=questions,
+        rejected_questions=rejected,
     )
     json_path, md_path = write_outputs(batch, args.output_json, args.output_md)
-    logger.info("Wrote %d questions to %s and %s", len(questions), json_path, md_path)
+    logger.info(
+        "Wrote %d approved question(s) to %s and %s (%d rejected)",
+        len(questions),
+        json_path,
+        md_path,
+        len(rejected),
+    )
     return 0
 
 

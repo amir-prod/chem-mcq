@@ -9,7 +9,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from src.schemas import MCQBatchOutput, MCQQuestion
+from src.schemas import CompletedMCQRecord, MCQBatchOutput, MCQQuestion, RejectedQuestionRecord
 
 # Project root is the mcq_agent directory (parent of src/).
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -93,17 +93,29 @@ def write_outputs(
     batch: MCQBatchOutput,
     json_path: Path | None = None,
     md_path: Path | None = None,
+    rejected_json_path: Path | None = None,
 ) -> tuple[Path, Path]:
     """Write generated MCQs to JSON and Markdown files."""
     ensure_directories()
     json_path = json_path or OUTPUT_DIR / "generated_mcqs.json"
     md_path = md_path or OUTPUT_DIR / "generated_mcqs.md"
+    rejected_json_path = rejected_json_path or OUTPUT_DIR / "rejected_mcqs.json"
 
     json_path.write_text(
         batch.model_dump_json(indent=2),
         encoding="utf-8",
     )
     md_path.write_text(_format_markdown(batch), encoding="utf-8")
+
+    if batch.rejected_questions:
+        rejected_json_path.write_text(
+            json.dumps(
+                [r.model_dump() for r in batch.rejected_questions],
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
     return json_path, md_path
 
 
@@ -115,23 +127,23 @@ def _format_markdown(batch: MCQBatchOutput) -> str:
         f"**Topic:** {batch.topic}",
         f"**Learning objective:** {batch.learning_objective}",
         f"**Difficulty:** {batch.difficulty}",
-        f"**Count:** {len(batch.questions)}",
+        f"**Approved count:** {len(batch.questions)}",
+        f"**Rejected count:** {len(batch.rejected_questions)}",
         "",
     ]
-    for index, question in enumerate(batch.questions, start=1):
-        lines.extend(_format_question_markdown(index, question))
+    for index, record in enumerate(batch.questions, start=1):
+        lines.extend(_format_completed_markdown(index, record))
+
+    if batch.rejected_questions:
+        lines.extend(["# Rejected Questions", ""])
+        for index, record in enumerate(batch.rejected_questions, start=1):
+            lines.extend(_format_rejected_markdown(index, record))
+
     return "\n".join(lines)
 
 
-def _format_question_markdown(index: int, question: MCQQuestion) -> list[str]:
-    status = "Approved" if question.approved else "Not approved (max revisions reached)"
+def _format_mcq_body(question: MCQQuestion) -> list[str]:
     lines = [
-        f"## Question {index}",
-        "",
-        f"**Status:** {status}  ",
-        f"**Revision rounds:** {question.revision_rounds}  ",
-        f"**Cognitive level:** {question.cognitive_level.value}  ",
-        "",
         question.question,
         "",
     ]
@@ -143,12 +155,77 @@ def _format_question_markdown(index: int, question: MCQQuestion) -> list[str]:
             "",
             f"**Explanation:** {question.explanation}",
             "",
-            f"**Evaluator feedback:** {question.evaluator_feedback or 'None'}",
+        ]
+    )
+    return lines
+
+
+def _format_evaluation_summary(label: str, evaluation) -> list[str]:
+    issues = ", ".join(evaluation.issues) if evaluation.issues else "None"
+    return [
+        f"**{label} evaluation:** approved={evaluation.approved}, "
+        f"score={evaluation.score}",
+        f"- Issues: {issues}",
+        f"- Revision instructions: {evaluation.revision_instructions or 'None'}",
+        "",
+    ]
+
+
+def _format_completed_markdown(index: int, record: CompletedMCQRecord) -> list[str]:
+    question = record.mcq
+    blueprint = record.question_blueprint
+    lines = [
+        f"## Question {index}",
+        "",
+        f"**Status:** Approved  ",
+        f"**Revision rounds:** {record.revision_rounds}  ",
+        f"**Cognitive level:** {question.cognitive_level.value}  ",
+        "",
+        "### Blueprint",
+        "",
+        f"- **Target misconception:** {blueprint.target_misconception}",
+        f"- **Correct answer concept:** {blueprint.correct_answer_concept}",
+        f"- **Expected reasoning:** {blueprint.expected_reasoning}",
+        f"- **Style notes:** {blueprint.question_style_notes or 'None'}",
+        "",
+    ]
+    lines.extend(_format_mcq_body(question))
+    lines.extend(_format_evaluation_summary("Content", record.content_evaluation))
+    lines.extend(_format_evaluation_summary("Quality", record.quality_evaluation))
+    dup = record.duplicate_evaluation
+    lines.extend(
+        [
+            f"**Duplicate check:** is_duplicate={dup.is_duplicate}",
+            f"- Reason: {dup.similarity_reason or 'None'}",
             "",
             "---",
             "",
         ]
     )
+    return lines
+
+
+def _format_rejected_markdown(index: int, record: RejectedQuestionRecord) -> list[str]:
+    lines = [
+        f"## Rejected {index}",
+        "",
+        f"**Reason:** {record.rejection_reason}  ",
+        f"**Revision rounds:** {record.revision_rounds}  ",
+        "",
+    ]
+    if record.question_blueprint:
+        bp = record.question_blueprint
+        lines.extend(
+            [
+                "### Blueprint",
+                "",
+                f"- **Target misconception:** {bp.target_misconception}",
+                f"- **Correct answer concept:** {bp.correct_answer_concept}",
+                "",
+            ]
+        )
+    if record.last_candidate:
+        lines.extend(_format_mcq_body(record.last_candidate))
     return lines
 
 

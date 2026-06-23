@@ -1,6 +1,6 @@
 # MCQ Agent — LangGraph Workflow
 
-Agentic pipeline for generating chemistry multiple-choice questions using RAG over sample exams and MCQ best-practice documents. Questions are generated, evaluated, revised in a loop, and written to JSON/Markdown.
+Agentic pipeline for generating chemistry multiple-choice questions using RAG over sample exams and MCQ best-practice documents. Each question is planned with a blueprint, generated with exam style and best-practice constraints, reviewed for content accuracy and item quality, checked for duplicates, revised when needed, and written to JSON/Markdown. Failed questions are rejected—not saved as completed.
 
 ## Project layout
 
@@ -15,10 +15,12 @@ mcq_agent/
 │   ├── schemas.py              # Pydantic models
 │   ├── prompts.py              # Prompt templates
 │   ├── graph.py                # LangGraph workflow
-│   ├── agents.py               # LLM generation / evaluation / revision
+│   ├── agents.py               # LLM blueprint / generation / evaluation / revision
 │   ├── export.py               # Pandoc DOCX/PDF export
 │   └── utils.py                # Config, paths, output writers
-├── outputs/                    # generated_mcqs.json / .md
+├── tests/
+│   └── test_workflow.py        # Routing, schema, and loop-guard tests
+├── outputs/                    # generated_mcqs.json / .md, rejected_mcqs.json
 ├── generate_mcqs.py            # CLI entry point
 ├── export_mcqs.py              # Pandoc export to DOCX/PDF
 ├── requirements.txt
@@ -43,7 +45,7 @@ Place (or symlink) your corpora under `mcq_agent/data/`:
 | Folder | Purpose | Vector collection |
 |--------|---------|-------------------|
 | `data/mds_exams/` | Sample exams for style/content RAG | `exam_examples` |
-| `data/mds_best_practices/` | MCQ design guidelines for evaluation | `best_practices` |
+| `data/mds_best_practices/` | MCQ design guidelines for generation and evaluation | `best_practices` |
 
 Each exam or paper should live in its own subfolder and may contain `.md`, `.json`, and `.png` files.
 
@@ -83,8 +85,11 @@ python generate_mcqs.py \
 
 Outputs:
 
-- `outputs/generated_mcqs.json`
-- `outputs/generated_mcqs.md`
+- `outputs/generated_mcqs.json` — approved questions with full audit trail
+- `outputs/generated_mcqs.md` — human-readable report (includes rejected section when applicable)
+- `outputs/rejected_mcqs.json` — questions that failed after max revision rounds (written only when rejections occur)
+
+Only **approved** questions count toward `--num_questions`. If too many candidates are rejected, you may receive fewer approved items than requested (the CLI logs a warning).
 
 ## Export to DOCX and PDF
 
@@ -124,29 +129,72 @@ Optional flags (generation):
 | `--output-json PATH` | Custom JSON output path |
 | `--output-md PATH` | Custom Markdown output path |
 
+## Tests
+
+```bash
+cd mcq_agent
+python -m pytest tests/ -v
+```
+
+Tests cover quality-gate routing, structured evaluator schemas, finalize/reject behavior, and loop guards (no infinite reject/regenerate cycles).
+
 ## LangGraph workflow
 
 ```mermaid
 flowchart TD
-    START --> retrieve_exam_examples
-    retrieve_exam_examples --> generate_mcq
-    generate_mcq --> retrieve_best_practices
-    retrieve_best_practices --> evaluate_mcq
-    evaluate_mcq --> final_quality_check
-    final_quality_check -->|approved or max rounds| finalize_question
-    final_quality_check -->|needs revision| revise_mcq
-    revise_mcq --> evaluate_mcq
-    finalize_question -->|more questions| generate_mcq
-    finalize_question -->|done| END
+    START([START]) --> SPEC["create_question_blueprint"]
+    SPEC --> R1["retrieve_exam_examples"]
+    R1 --> R2["retrieve_best_practices"]
+    R2 --> G["generate_mcq"]
+    G --> C["content_accuracy_check"]
+    C --> Q["mcq_quality_check"]
+    Q --> D["duplicate_check"]
+    D --> QC["quality_gate"]
+
+    QC -->|"all checks pass"| F["finalize_question"]
+    QC -->|"needs revision, rounds < max"| REV["revise_mcq"]
+    REV --> C
+
+    QC -->|"failed after max rounds"| REJECT["reject_or_regenerate"]
+    REJECT --> SPEC
+    REJECT -->|"attempt cap reached"| END
+
+    F -->|"completed < num_questions"| SPEC
+    F -->|"batch complete"| END([END])
 ```
 
-1. **retrieve_exam_examples** — RAG from `exam_examples` using topic + learning objective.
-2. **generate_mcq** — LLM writes one MCQ in the style of retrieved samples.
-3. **retrieve_best_practices** — RAG from `best_practices` for the evaluator rubric.
-4. **evaluate_mcq** — Checks stem clarity, distractors, alignment, cognitive level, etc.
-5. **final_quality_check** — Routes to revision or finalization.
-6. **revise_mcq** — Improves the question from evaluator feedback (preserves learning objective).
-7. **finalize_question** — Saves the question and loops until `--num_questions` are done.
+`generate_mcqs.py` calls `write_outputs()` after the graph finishes (not a LangGraph node).
+
+### Pipeline nodes
+
+1. **create_question_blueprint** — LLM plans the next question (misconception, reasoning path, cognitive level) before writing. Avoids repeating completed or rejected designs.
+2. **retrieve_exam_examples** — RAG from `exam_examples` using topic, learning objective, difficulty, and blueprint hints.
+3. **retrieve_best_practices** — RAG from `best_practices` for item-writing constraints (used at generation and evaluation).
+4. **generate_mcq** — LLM writes one MCQ from the blueprint, exam style context, and best-practice guidance.
+5. **content_accuracy_check** — Verifies scientific correctness, correct answer key, and that no distractor is accidentally correct.
+6. **mcq_quality_check** — Evaluates MCQ-writing quality (stem clarity, distractors, alignment, ambiguity, clueing, rubric adherence).
+7. **duplicate_check** — Compares the candidate against `completed_questions` for near-duplicate stems, concepts, or misconceptions.
+8. **quality_gate** — Combines all three reviewer results and routes to finalize, revise, or reject.
+9. **revise_mcq** — Revises using structured feedback from content, quality, and duplicate checks; re-enters the review chain.
+10. **finalize_question** — Appends an approved `CompletedMCQRecord` and clears per-question working state.
+11. **reject_or_regenerate** — Records a `RejectedQuestionRecord` and starts a fresh blueprint (does **not** finalize failed questions).
+
+### Quality gate routing
+
+The gate in `route_after_quality_gate` (`src/graph.py`) uses this logic:
+
+```python
+if content.approved and quality.approved and not duplicate.is_duplicate:
+    route = "finalize_question"
+elif revision_rounds < max_revision_rounds:
+    route = "revise_mcq"
+else:
+    route = "reject_or_regenerate"
+```
+
+Questions are **never** finalized just because max revision rounds were reached. Failed candidates go to `reject_or_regenerate` → new blueprint.
+
+A generation attempt cap (`num_questions × (max_revision_rounds + 4)`) prevents infinite reject/regenerate loops.
 
 ## Customization
 
@@ -173,7 +221,7 @@ INGESTION_CHUNK_OVERLAP=200
 
 ### Prompts
 
-Edit `src/prompts.py` for generation, evaluation, and revision instructions.
+Edit `src/prompts.py` for blueprint, generation, content/quality/duplicate checks, and revision instructions.
 
 ### PNG / OCR
 
@@ -198,10 +246,67 @@ batch = MCQBatchOutput(
     difficulty="medium",
     num_questions=len(state["completed_questions"]),
     questions=state["completed_questions"],
+    rejected_questions=state.get("rejected_questions", []),
 )
 write_outputs(batch)
 ```
 
 ## MCQ output schema
 
-Each question includes: `question`, `options` (A–D), `correct_answer`, `explanation`, `learning_objective`, `difficulty`, `cognitive_level`, `source_context_used`, `evaluator_feedback`, `revision_rounds`, and `approved`.
+### Cognitive level
+
+Final MCQs use the `CognitiveLevel` enum: `recall`, `application`, `analysis`, `evaluation` (Bloom’s taxonomy, simplified).
+
+### Question blueprint (per question)
+
+Planned before generation:
+
+```json
+{
+  "topic": "...",
+  "learning_objective": "...",
+  "difficulty": "...",
+  "cognitive_level": "...",
+  "target_misconception": "...",
+  "correct_answer_concept": "...",
+  "expected_reasoning": "...",
+  "question_style_notes": "..."
+}
+```
+
+### Structured evaluator output
+
+Content and quality reviewers return:
+
+```json
+{
+  "approved": false,
+  "score": 0.0,
+  "issues": ["..."],
+  "revision_instructions": "...",
+  "blocking_errors": ["..."]
+}
+```
+
+Duplicate check returns:
+
+```json
+{
+  "is_duplicate": false,
+  "similarity_reason": "",
+  "most_similar_question_id": null,
+  "revision_instructions": ""
+}
+```
+
+### Completed question record
+
+Each approved entry in `generated_mcqs.json` includes:
+
+- **mcq** — `question`, `options` (A–D), `correct_answer`, `explanation`, `learning_objective`, `difficulty`, `cognitive_level`, `revision_rounds`, `approved`
+- **question_blueprint** — the plan used to generate the item
+- **content_evaluation** — content accuracy review summary
+- **quality_evaluation** — MCQ quality review summary
+- **duplicate_evaluation** — duplicate check result
+
+Rejected questions (in `rejected_mcqs.json`) include the last candidate, blueprint, rejection reason, and evaluator snapshots when available.

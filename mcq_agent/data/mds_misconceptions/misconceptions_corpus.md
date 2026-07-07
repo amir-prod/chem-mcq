@@ -1,0 +1,1 @@
+/home/amirreza/chemmcq/misconception_extraction/outputs/misconceptions_corpus.md

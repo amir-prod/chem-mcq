@@ -134,7 +134,7 @@ class DocumentMetadata(BaseModel):
     source_folder: str
     filename: str
     document_type: Literal["md", "json", "png", "image"]
-    collection: Literal["exam_examples", "best_practices"]
+    collection: Literal["exam_examples", "best_practices", "misconceptions"]
     relative_path: str
 
 
@@ -157,6 +157,7 @@ class WorkflowState(TypedDict, total=False):
     max_total_attempts: int
 
     # Retrieval context (per-question cycle)
+    misconceptions_context: list[str]
     exam_examples_context: list[str]
     best_practices_context: list[str]
 

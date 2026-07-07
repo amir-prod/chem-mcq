@@ -17,7 +17,11 @@ from src.agents import (
     generate_mcq,
     revise_mcq,
 )
-from src.prompts import RETRIEVAL_QUERY_BEST_PRACTICES, RETRIEVAL_QUERY_EXAM
+from src.prompts import (
+    RETRIEVAL_QUERY_BEST_PRACTICES,
+    RETRIEVAL_QUERY_EXAM,
+    RETRIEVAL_QUERY_MISCONCEPTIONS,
+)
 from src.schemas import (
     CompletedMCQRecord,
     DuplicateCheckResult,
@@ -28,7 +32,11 @@ from src.schemas import (
     WorkflowState,
     compute_max_total_attempts,
 )
-from src.utils import BEST_PRACTICES_COLLECTION, EXAM_COLLECTION
+from src.utils import (
+    BEST_PRACTICES_COLLECTION,
+    EXAM_COLLECTION,
+    MISCONCEPTIONS_COLLECTION,
+)
 from src.vectorstore import VectorStoreManager, ensure_indexes
 
 logger = logging.getLogger("mcq_agent.graph")
@@ -56,6 +64,14 @@ def _blueprint_hint(state: WorkflowState) -> str:
     return (
         f"{blueprint.cognitive_level} {blueprint.correct_answer_concept} "
         f"{blueprint.target_misconception}"
+    )
+
+
+def _retrieval_query_misconceptions(state: WorkflowState) -> str:
+    return RETRIEVAL_QUERY_MISCONCEPTIONS.format(
+        topic=state["topic"],
+        learning_objective=state["learning_objective"],
+        blueprint_hint=_blueprint_hint(state),
     )
 
 
@@ -172,6 +188,7 @@ def make_create_question_blueprint_node(deps: GraphDependencies):
             num_questions=state["num_questions"],
             completed_questions=state.get("completed_questions", []),
             rejected_questions=state.get("rejected_questions", []),
+            misconceptions_context=state.get("misconceptions_context", []),
             model=deps.model,
         )
         return {
@@ -187,6 +204,19 @@ def make_create_question_blueprint_node(deps: GraphDependencies):
         }
 
     return create_question_blueprint_node
+
+
+def make_retrieve_misconceptions_node(deps: GraphDependencies):
+    def retrieve_misconceptions(state: WorkflowState) -> dict:
+        query = _retrieval_query_misconceptions(state)
+        context = deps.vector_manager.retrieve(MISCONCEPTIONS_COLLECTION, query)
+        if not context:
+            logger.warning(
+                "No misconceptions retrieved; blueprint will rely on model knowledge."
+            )
+        return {"misconceptions_context": context}
+
+    return retrieve_misconceptions
 
 
 def make_retrieve_exam_examples_node(deps: GraphDependencies):
@@ -388,6 +418,7 @@ def finalize_question_node(state: WorkflowState) -> dict:
         "duplicate_evaluation": None,
         "exam_examples_context": [],
         "best_practices_context": [],
+        "misconceptions_context": [],
     }
 
 
@@ -436,6 +467,7 @@ def reject_or_regenerate_node(state: WorkflowState) -> dict:
         "duplicate_evaluation": None,
         "exam_examples_context": [],
         "best_practices_context": [],
+        "misconceptions_context": [],
     }
 
 
@@ -453,6 +485,10 @@ def build_mcq_graph(
 
     graph = StateGraph(MCQGraphState)
 
+    graph.add_node(
+        "retrieve_misconceptions",
+        make_retrieve_misconceptions_node(dependencies),
+    )
     graph.add_node(
         "create_question_blueprint",
         make_create_question_blueprint_node(dependencies),
@@ -477,8 +513,9 @@ def build_mcq_graph(
     graph.add_node("finalize_question", finalize_question_node)
     graph.add_node("reject_or_regenerate", reject_or_regenerate_node)
 
-    # Per-question pipeline: blueprint -> retrieve both -> generate -> review chain.
-    graph.add_edge(START, "create_question_blueprint")
+    # Per-question pipeline: retrieve misconceptions -> blueprint -> retrieve both -> generate.
+    graph.add_edge(START, "retrieve_misconceptions")
+    graph.add_edge("retrieve_misconceptions", "create_question_blueprint")
     graph.add_edge("create_question_blueprint", "retrieve_exam_examples")
     graph.add_edge("retrieve_exam_examples", "retrieve_best_practices")
     graph.add_edge("retrieve_best_practices", "generate_mcq")
@@ -540,6 +577,7 @@ def run_workflow(
         "generation_attempts": 0,
         "current_question_index": 0,
         "question_blueprint": None,
+        "misconceptions_context": [],
         "exam_examples_context": [],
         "best_practices_context": [],
         "completed_questions": [],

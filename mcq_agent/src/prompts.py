@@ -22,6 +22,9 @@ Already completed question summaries:
 Previously rejected blueprint summaries (avoid repeating these designs):
 {rejected_summaries}
 
+Literature-backed student misconceptions (prefer targeting one of these when relevant):
+{misconceptions_context}
+
 Create a question blueprint as structured JSON with:
 topic, learning_objective, difficulty, cognitive_level, target_misconception,
 correct_answer_concept, expected_reasoning, question_style_notes.
@@ -164,6 +167,11 @@ RETRIEVAL_QUERY_EXAM = (
 RETRIEVAL_QUERY_BEST_PRACTICES = (
     "multiple choice question design guidelines stem distractors "
     "item writing best practices {topic} {blueprint_hint}"
+)
+
+RETRIEVAL_QUERY_MISCONCEPTIONS = (
+    "{topic}. {learning_objective}. student misconceptions alternative conceptions "
+    "chemistry {blueprint_hint}"
 )
 
 # Legacy prompts kept for reference / tests

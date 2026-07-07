@@ -14,6 +14,8 @@ from src.utils import (
     BEST_PRACTICES_COLLECTION,
     EXAM_COLLECTION,
     EXAMS_DIR,
+    MISCONCEPTIONS_COLLECTION,
+    MISCONCEPTIONS_DIR,
     SUPPORTED_EXTENSIONS,
 )
 
@@ -49,9 +51,13 @@ def _collection_for_root(root: Path) -> str:
         return EXAM_COLLECTION
     if resolved == BEST_PRACTICES_DIR.resolve():
         return BEST_PRACTICES_COLLECTION
+    if resolved == MISCONCEPTIONS_DIR.resolve():
+        return MISCONCEPTIONS_COLLECTION
     name = root.name.lower()
     if "exam" in name:
         return EXAM_COLLECTION
+    if "misconception" in name:
+        return MISCONCEPTIONS_COLLECTION
     if "practice" in name or "best" in name:
         return BEST_PRACTICES_COLLECTION
     raise ValueError(f"Cannot infer collection for data root: {root}")
@@ -189,8 +195,8 @@ def ingest_directory(
 def ingest_all(
     image_extractor: ImageTextExtractor | None = None,
 ) -> dict[str, list[IngestedDocument]]:
-    """Ingest both exam examples and best-practice corpora."""
-    return {
+    """Ingest exam examples, best-practice, and misconception corpora."""
+    corpora = {
         EXAM_COLLECTION: ingest_directory(EXAMS_DIR, EXAM_COLLECTION, image_extractor),
         BEST_PRACTICES_COLLECTION: ingest_directory(
             BEST_PRACTICES_DIR,
@@ -198,3 +204,15 @@ def ingest_all(
             image_extractor,
         ),
     }
+    if MISCONCEPTIONS_DIR.exists():
+        corpora[MISCONCEPTIONS_COLLECTION] = ingest_directory(
+            MISCONCEPTIONS_DIR,
+            MISCONCEPTIONS_COLLECTION,
+            image_extractor,
+        )
+    else:
+        logger.warning(
+            "Misconceptions directory not found (optional): %s", MISCONCEPTIONS_DIR
+        )
+        corpora[MISCONCEPTIONS_COLLECTION] = []
+    return corpora

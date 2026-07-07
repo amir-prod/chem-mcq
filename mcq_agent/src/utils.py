@@ -16,11 +16,15 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = Path(os.getenv("MCQ_DATA_DIR", PROJECT_ROOT / "data"))
 EXAMS_DIR = Path(os.getenv("MCQ_EXAMS_DIR", DATA_DIR / "mds_exams"))
 BEST_PRACTICES_DIR = Path(os.getenv("MCQ_BEST_PRACTICES_DIR", DATA_DIR / "mds_best_practices"))
+MISCONCEPTIONS_DIR = Path(
+    os.getenv("MCQ_MISCONCEPTIONS_DIR", DATA_DIR / "mds_misconceptions")
+)
 VECTORSTORE_DIR = Path(os.getenv("MCQ_VECTORSTORE_DIR", PROJECT_ROOT / ".chroma"))
 OUTPUT_DIR = Path(os.getenv("MCQ_OUTPUT_DIR", PROJECT_ROOT / "outputs"))
 
 EXAM_COLLECTION = "exam_examples"
 BEST_PRACTICES_COLLECTION = "best_practices"
+MISCONCEPTIONS_COLLECTION = "misconceptions"
 
 SUPPORTED_EXTENSIONS = {".md", ".json", ".png"}
 
@@ -62,6 +66,7 @@ def get_retrieval_config() -> dict[str, int]:
     return {
         "exam_k": int(os.getenv("RETRIEVAL_EXAM_K", "6")),
         "best_practices_k": int(os.getenv("RETRIEVAL_BEST_PRACTICES_K", "5")),
+        "misconceptions_k": int(os.getenv("RETRIEVAL_MISCONCEPTIONS_K", "5")),
         "chunk_size": int(os.getenv("INGESTION_CHUNK_SIZE", "1200")),
         "chunk_overlap": int(os.getenv("INGESTION_CHUNK_OVERLAP", "200")),
     }

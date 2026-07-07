@@ -116,10 +116,16 @@ def create_question_blueprint(
     num_questions: int,
     completed_questions: list[CompletedMCQRecord],
     rejected_questions: list[RejectedQuestionRecord],
+    misconceptions_context: list[str] | None = None,
     model: ChatOpenAI | None = None,
 ) -> QuestionBlueprint:
     """Create a structured plan for the next MCQ."""
     llm = model or build_chat_model()
+    misc_text = (
+        "\n\n---\n\n".join(misconceptions_context)
+        if misconceptions_context
+        else "[No literature-backed misconceptions retrieved. Use topic knowledge.]"
+    )
     user_prompt = BLUEPRINT_USER_PROMPT.format(
         topic=topic,
         learning_objective=learning_objective,
@@ -128,6 +134,7 @@ def create_question_blueprint(
         num_questions=num_questions,
         completed_summaries=_summarize_completed(completed_questions),
         rejected_summaries=_summarize_rejected(rejected_questions),
+        misconceptions_context=misc_text,
     )
     return _invoke_structured(llm, BLUEPRINT_SYSTEM_PROMPT, user_prompt, QuestionBlueprint)
 

@@ -16,6 +16,8 @@ from src.schemas import IngestedDocument
 from src.utils import (
     BEST_PRACTICES_COLLECTION,
     EXAM_COLLECTION,
+    MISCONCEPTIONS_COLLECTION,
+    MISCONCEPTIONS_DIR,
     VECTORSTORE_DIR,
     get_embedding_config,
     get_retrieval_config,
@@ -138,6 +140,8 @@ class VectorStoreManager:
         default_k = (
             get_retrieval_config()["exam_k"]
             if collection_name == EXAM_COLLECTION
+            else get_retrieval_config()["misconceptions_k"]
+            if collection_name == MISCONCEPTIONS_COLLECTION
             else get_retrieval_config()["best_practices_k"]
         )
         k = k or default_k
@@ -168,16 +172,27 @@ def ensure_indexes(
     mgr = manager or VectorStoreManager()
     exam_count = mgr.collection_count(EXAM_COLLECTION)
     bp_count = mgr.collection_count(BEST_PRACTICES_COLLECTION)
+    misc_count = mgr.collection_count(MISCONCEPTIONS_COLLECTION)
 
-    if rebuild or exam_count == 0 or bp_count == 0:
+    needs_build = rebuild or exam_count == 0 or bp_count == 0
+    if (
+        MISCONCEPTIONS_DIR.exists()
+        and misc_count == 0
+        and any(MISCONCEPTIONS_DIR.rglob("*.md"))
+    ):
+        needs_build = True
+
+    if needs_build:
         logger.info("Building vector indexes (rebuild=%s)...", rebuild)
         mgr.build_indexes(reset=rebuild)
     else:
         logger.info(
-            "Using existing indexes (%s=%d, %s=%d chunks)",
+            "Using existing indexes (%s=%d, %s=%d, %s=%d chunks)",
             EXAM_COLLECTION,
             exam_count,
             BEST_PRACTICES_COLLECTION,
             bp_count,
+            MISCONCEPTIONS_COLLECTION,
+            misc_count,
         )
     return mgr

@@ -1,13 +1,20 @@
 # Misconceptions corpus for RAG
 
-After running misconception extraction, symlink or copy the corpus here:
+The agent indexes three topic-specific misconception corpora under this directory:
 
-```bash
-ln -sf ../../../misconception_extraction/outputs/misconceptions_corpus.md \
-  data/mds_misconceptions/misconceptions_corpus.md
+```text
+data/mds_misconceptions/
+├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs
+├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox
+└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction
 ```
 
-Then rebuild the vector index:
+Each topic folder contains:
+
+- `misconceptions_corpus.md` — human-readable misconception entries
+- `extracted_misconceptions.json` — structured extraction output
+
+Rebuild the vector index after adding or updating corpora:
 
 ```bash
 python generate_mcqs.py --index-only --rebuild-index

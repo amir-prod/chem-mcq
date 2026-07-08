@@ -9,6 +9,10 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
 from src.prompts import (
+    BATCH_BLUEPRINT_SYSTEM_PROMPT,
+    BATCH_BLUEPRINT_USER_PROMPT,
+    BATCH_GENERATION_SYSTEM_PROMPT,
+    BATCH_GENERATION_USER_PROMPT,
     BLUEPRINT_SYSTEM_PROMPT,
     BLUEPRINT_USER_PROMPT,
     CONTENT_CHECK_SYSTEM_PROMPT,
@@ -26,7 +30,9 @@ from src.schemas import (
     CompletedMCQRecord,
     DuplicateCheckResult,
     MCQQuestion,
+    MCQQuestionBatch,
     QuestionBlueprint,
+    QuestionBlueprintBatch,
     RejectedQuestionRecord,
     StructuredEvaluation,
 )
@@ -61,6 +67,18 @@ def _invoke_structured(model: ChatOpenAI, system: str, user: str, schema: type):
             HumanMessage(content=user),
         ]
     )
+
+
+def _format_misconceptions_context(misconceptions_context: list[str] | None) -> str:
+    if misconceptions_context:
+        return "\n\n---\n\n".join(misconceptions_context)
+    return "[No literature-backed misconceptions retrieved. Use topic knowledge.]"
+
+
+def _format_best_practices_context(best_practices_context: list[str] | None) -> str:
+    if best_practices_context:
+        return "\n\n---\n\n".join(best_practices_context)
+    return "[No best-practice documents retrieved. Apply standard MCQ design rules.]"
 
 
 def _summarize_completed(records: list[CompletedMCQRecord]) -> str:
@@ -121,11 +139,6 @@ def create_question_blueprint(
 ) -> QuestionBlueprint:
     """Create a structured plan for the next MCQ."""
     llm = model or build_chat_model()
-    misc_text = (
-        "\n\n---\n\n".join(misconceptions_context)
-        if misconceptions_context
-        else "[No literature-backed misconceptions retrieved. Use topic knowledge.]"
-    )
     user_prompt = BLUEPRINT_USER_PROMPT.format(
         topic=topic,
         learning_objective=learning_objective,
@@ -134,41 +147,102 @@ def create_question_blueprint(
         num_questions=num_questions,
         completed_summaries=_summarize_completed(completed_questions),
         rejected_summaries=_summarize_rejected(rejected_questions),
-        misconceptions_context=misc_text,
+        misconceptions_context=_format_misconceptions_context(misconceptions_context),
     )
     return _invoke_structured(llm, BLUEPRINT_SYSTEM_PROMPT, user_prompt, QuestionBlueprint)
+
+
+def create_batch_blueprints(
+    *,
+    topic: str,
+    learning_objective: str,
+    difficulty: str,
+    start_question_number: int,
+    num_questions: int,
+    batch_count: int,
+    completed_questions: list[CompletedMCQRecord],
+    rejected_questions: list[RejectedQuestionRecord],
+    misconceptions_context: list[str] | None = None,
+    model: ChatOpenAI | None = None,
+) -> QuestionBlueprintBatch:
+    """Create structured plans for a batch of MCQs."""
+    llm = model or build_chat_model()
+    user_prompt = BATCH_BLUEPRINT_USER_PROMPT.format(
+        topic=topic,
+        learning_objective=learning_objective,
+        difficulty=difficulty,
+        batch_count=batch_count,
+        start_question_number=start_question_number,
+        num_questions=num_questions,
+        completed_summaries=_summarize_completed(completed_questions),
+        rejected_summaries=_summarize_rejected(rejected_questions),
+        misconceptions_context=_format_misconceptions_context(misconceptions_context),
+    )
+    batch = _invoke_structured(
+        llm,
+        BATCH_BLUEPRINT_SYSTEM_PROMPT,
+        user_prompt,
+        QuestionBlueprintBatch,
+    )
+    if len(batch.blueprints) != batch_count:
+        raise ValueError(
+            f"Expected {batch_count} blueprints, got {len(batch.blueprints)}"
+        )
+    return batch
 
 
 def generate_mcq(
     *,
     blueprint: QuestionBlueprint,
-    question_number: int,
-    num_questions: int,
-    exam_context: list[str],
+    misconceptions_context: list[str],
     best_practices_context: list[str],
     model: ChatOpenAI | None = None,
 ) -> MCQQuestion:
-    """Generate a single MCQ from blueprint, exam style, and best-practice constraints."""
+    """Generate a single MCQ from blueprint, misconceptions, and best-practice constraints."""
     llm = model or build_chat_model()
-    exam_text = (
-        "\n\n---\n\n".join(exam_context)
-        if exam_context
-        else "[No exam examples retrieved. Use standard chemistry exam style.]"
-    )
-    practices_text = (
-        "\n\n---\n\n".join(best_practices_context)
-        if best_practices_context
-        else "[No best-practice documents retrieved. Apply standard MCQ design rules.]"
-    )
     user_prompt = GENERATION_USER_PROMPT.format(
         blueprint_json=dumps_json(blueprint),
-        exam_context=exam_text,
-        best_practices_context=practices_text,
+        misconceptions_context=_format_misconceptions_context(misconceptions_context),
+        best_practices_context=_format_best_practices_context(best_practices_context),
     )
     question = _invoke_structured(llm, GENERATION_SYSTEM_PROMPT, user_prompt, MCQQuestion)
-    question.source_context_used = exam_context[:]
+    question.source_context_used = misconceptions_context[:]
     question.learning_objective = blueprint.learning_objective
     return question
+
+
+def generate_batch_mcqs(
+    *,
+    blueprints: list[QuestionBlueprint],
+    misconceptions_context: list[str],
+    best_practices_context: list[str],
+    model: ChatOpenAI | None = None,
+) -> MCQQuestionBatch:
+    """Generate a batch of MCQs from blueprints and retrieved context."""
+    llm = model or build_chat_model()
+    user_prompt = BATCH_GENERATION_USER_PROMPT.format(
+        blueprints_json=dumps_json(blueprints),
+        batch_count=len(blueprints),
+        misconceptions_context=_format_misconceptions_context(misconceptions_context),
+        best_practices_context=_format_best_practices_context(best_practices_context),
+    )
+    batch = _invoke_structured(
+        llm,
+        BATCH_GENERATION_SYSTEM_PROMPT,
+        user_prompt,
+        MCQQuestionBatch,
+    )
+    if len(batch.questions) != len(blueprints):
+        raise ValueError(
+            f"Expected {len(blueprints)} questions, got {len(batch.questions)}"
+        )
+
+    finalized: list[MCQQuestion] = []
+    for blueprint, question in zip(blueprints, batch.questions, strict=True):
+        question.source_context_used = misconceptions_context[:]
+        question.learning_objective = blueprint.learning_objective
+        finalized.append(question)
+    return MCQQuestionBatch(questions=finalized)
 
 
 def check_content_accuracy(
@@ -203,17 +277,12 @@ def check_mcq_quality(
 ) -> StructuredEvaluation:
     """Evaluate MCQ-writing quality against best-practice rubric."""
     llm = model or build_chat_model()
-    context_text = (
-        "\n\n---\n\n".join(best_practices_context)
-        if best_practices_context
-        else "[No best-practice documents retrieved. Apply standard MCQ design rules.]"
-    )
     user_prompt = QUALITY_CHECK_USER_PROMPT.format(
         learning_objective=learning_objective,
         difficulty=difficulty,
         blueprint_json=dumps_json(blueprint),
         mcq_json=dumps_json(question),
-        best_practices_context=context_text,
+        best_practices_context=_format_best_practices_context(best_practices_context),
     )
     return _invoke_structured(
         llm, QUALITY_CHECK_SYSTEM_PROMPT, user_prompt, StructuredEvaluation

@@ -1,13 +1,13 @@
 # MCQ Agent — LangGraph Workflow
 
-Agentic pipeline for generating chemistry multiple-choice questions using RAG over sample exams and MCQ best-practice documents. Each question is planned with a blueprint, generated with exam style and best-practice constraints, reviewed for content accuracy and item quality, checked for duplicates, revised when needed, and written to JSON/Markdown. Failed questions are rejected—not saved as completed.
+Agentic pipeline for generating chemistry multiple-choice questions using RAG over literature-backed student misconceptions and MCQ best-practice documents. Questions are planned in batches, generated to target specific misconceptions, reviewed for content accuracy and item quality, checked for duplicates, revised when needed, and written to JSON/Markdown. Failed questions are rejected—not saved as completed.
 
 ## Project layout
 
 ```text
 mcq_agent/
 ├── data/
-│   ├── mds_exams/              # Sample exams (symlinked to ../dataFolder/mds_exams)
+│   ├── mds_misconceptions/     # Topic misconception corpora (3 subfolders)
 │   └── mds_best_practices/     # Best-practice papers
 ├── src/
 │   ├── ingestion.py            # Document loading (.md, .json, .png)
@@ -44,22 +44,25 @@ Place (or symlink) your corpora under `mcq_agent/data/`:
 
 | Folder | Purpose | Vector collection |
 |--------|---------|-------------------|
-| `data/mds_exams/` | Sample exams for style/content RAG | `exam_examples` |
+| `data/mds_misconceptions/` | Literature-backed student misconceptions (3 topic subfolders) | `misconceptions` |
 | `data/mds_best_practices/` | MCQ design guidelines for generation and evaluation | `best_practices` |
 
-Each exam or paper should live in its own subfolder and may contain `.md`, `.json`, and `.png` files.
+Each misconception topic folder contains `misconceptions_corpus.md` and `extracted_misconceptions.json`.
 
-This repo already has data at `../dataFolder/`; symlinks were created automatically:
+This repo already has data at `../dataFolder/`; symlinks under `data/mds_misconceptions/`:
 
 ```bash
-data/mds_exams -> ../../dataFolder/mds_exams
+data/mds_misconceptions/mds_IMFs -> ../../../dataFolder/mds_IMFs
+data/mds_misconceptions/mds_ox_redox -> ../../../dataFolder/mds_ox_redox
+data/mds_misconceptions/mds_sn1_sn2_reduction -> ../../../dataFolder/mds_sn1_sn2_reduction
 data/mds_best_practices -> ../../dataFolder/mds_best_practices
 ```
 
 Override paths with environment variables if needed:
 
 - `MCQ_DATA_DIR`
-- `MCQ_EXAMS_DIR`
+- `MCQ_MISCONCEPTIONS_DIR`
+- `MCQ_MISCONCEPTIONS_IMFS_DIR` / `MCQ_MISCONCEPTIONS_OX_REDOX_DIR` / `MCQ_MISCONCEPTIONS_SN1_SN2_DIR`
 - `MCQ_BEST_PRACTICES_DIR`
 
 ## Build the vector database
@@ -77,10 +80,11 @@ Chroma persists to `mcq_agent/.chroma/` by default (`MCQ_VECTORSTORE_DIR` to ove
 
 ```bash
 python generate_mcqs.py \
-  --topic "toxicology" \
-  --learning_objective "Understand dose-response relationships" \
+  --topic "intermolecular forces" \
+  --learning_objective "Explain how IMFs affect boiling points" \
   --difficulty medium \
-  --num_questions 5
+  --num_questions 7 \
+  --batch_size 5
 ```
 
 Outputs:
@@ -124,6 +128,8 @@ Optional flags (generation):
 
 | Flag | Description |
 |------|-------------|
+| `--batch_size 5` | Number of MCQs to blueprint and generate per batch |
+| `--output_name NAME` | Base filename for outputs (`outputs/NAME.json`, `.md`, `_rejected.json`) |
 | `--max_revision_rounds 3` | Max evaluate/revise loops per question |
 | `--rebuild-index` | Re-ingest documents before running |
 | `--output-json PATH` | Custom JSON output path |
@@ -142,11 +148,12 @@ Tests cover quality-gate routing, structured evaluator schemas, finalize/reject 
 
 ```mermaid
 flowchart TD
-    START([START]) --> SPEC["create_question_blueprint"]
-    SPEC --> R1["retrieve_exam_examples"]
-    R1 --> R2["retrieve_best_practices"]
-    R2 --> G["generate_mcq"]
-    G --> C["content_accuracy_check"]
+    START([START]) --> RM["retrieve_misconceptions"]
+    RM --> BB["create_batch_blueprints"]
+    BB --> BP["retrieve_best_practices"]
+    BP --> GB["generate_batch_mcqs"]
+    GB --> SQ["select_batch_question"]
+    SQ --> C["content_accuracy_check"]
     C --> Q["mcq_quality_check"]
     Q --> D["duplicate_check"]
     D --> QC["quality_gate"]
@@ -156,28 +163,31 @@ flowchart TD
     REV --> C
 
     QC -->|"failed after max rounds"| REJECT["reject_or_regenerate"]
-    REJECT --> SPEC
-    REJECT -->|"attempt cap reached"| END
+    F --> ADV["advance_batch"]
+    REJECT --> ADV
 
-    F -->|"completed < num_questions"| SPEC
-    F -->|"batch complete"| END([END])
+    ADV -->|"more in batch"| SQ
+    ADV -->|"batch done, more needed"| RM
+    ADV -->|"target reached"| END([END])
 ```
 
 `generate_mcqs.py` calls `write_outputs()` after the graph finishes (not a LangGraph node).
 
 ### Pipeline nodes
 
-1. **create_question_blueprint** — LLM plans the next question (misconception, reasoning path, cognitive level) before writing. Avoids repeating completed or rejected designs.
-2. **retrieve_exam_examples** — RAG from `exam_examples` using topic, learning objective, difficulty, and blueprint hints.
+1. **retrieve_misconceptions** — RAG from merged topic corpora (`mds_IMFs`, `mds_ox_redox`, `mds_sn1_sn2_reduction`) using topic and learning objective. Runs at the start of each batch.
+2. **create_batch_blueprints** — LLM plans up to `--batch_size` questions (or fewer if remaining), each targeting a distinct misconception.
 3. **retrieve_best_practices** — RAG from `best_practices` for item-writing constraints (used at generation and evaluation).
-4. **generate_mcq** — LLM writes one MCQ from the blueprint, exam style context, and best-practice guidance.
-5. **content_accuracy_check** — Verifies scientific correctness, correct answer key, and that no distractor is accidentally correct.
-6. **mcq_quality_check** — Evaluates MCQ-writing quality (stem clarity, distractors, alignment, ambiguity, clueing, rubric adherence).
-7. **duplicate_check** — Compares the candidate against `completed_questions` for near-duplicate stems, concepts, or misconceptions.
-8. **quality_gate** — Combines all three reviewer results and routes to finalize, revise, or reject.
-9. **revise_mcq** — Revises using structured feedback from content, quality, and duplicate checks; re-enters the review chain.
-10. **finalize_question** — Appends an approved `CompletedMCQRecord` and clears per-question working state.
-11. **reject_or_regenerate** — Records a `RejectedQuestionRecord` and starts a fresh blueprint (does **not** finalize failed questions).
+4. **generate_batch_mcqs** — LLM writes a batch of MCQs from the blueprints, misconception context, and best-practice guidance.
+5. **select_batch_question** — Selects the current question from the batch for per-question evaluation.
+6. **content_accuracy_check** — Verifies scientific correctness, correct answer key, and that no distractor is accidentally correct.
+7. **mcq_quality_check** — Evaluates MCQ-writing quality (stem clarity, distractors, alignment, ambiguity, clueing, rubric adherence).
+8. **duplicate_check** — Compares the candidate against `completed_questions` for near-duplicate stems, concepts, or misconceptions.
+9. **quality_gate** — Combines all three reviewer results and routes to finalize, revise, or reject.
+10. **revise_mcq** — Revises using structured feedback from content, quality, and duplicate checks; re-enters the review chain.
+11. **finalize_question** — Appends an approved `CompletedMCQRecord` and clears per-question working state.
+12. **reject_or_regenerate** — Records a `RejectedQuestionRecord` (does **not** finalize failed questions).
+13. **advance_batch** — Moves to the next question in the batch or starts a new batch.
 
 ### Quality gate routing
 
@@ -192,7 +202,7 @@ else:
     route = "reject_or_regenerate"
 ```
 
-Questions are **never** finalized just because max revision rounds were reached. Failed candidates go to `reject_or_regenerate` → new blueprint.
+Questions are **never** finalized just because max revision rounds were reached. Failed candidates go to `reject_or_regenerate` → `advance_batch` → next question or new batch.
 
 A generation attempt cap (`num_questions × (max_revision_rounds + 4)`) prevents infinite reject/regenerate loops.
 
@@ -213,7 +223,7 @@ OPENAI_TEMPERATURE=0.3
 ### Retrieval
 
 ```env
-RETRIEVAL_EXAM_K=6
+RETRIEVAL_MISCONCEPTIONS_K=8
 RETRIEVAL_BEST_PRACTICES_K=5
 INGESTION_CHUNK_SIZE=1200
 INGESTION_CHUNK_OVERLAP=200
@@ -239,6 +249,7 @@ state = run_workflow(
     learning_objective="Balance chemical equations",
     difficulty="medium",
     num_questions=3,
+    batch_size=5,
 )
 batch = MCQBatchOutput(
     topic="stoichiometry",

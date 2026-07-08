@@ -13,20 +13,17 @@ from src.agents import (
     check_content_accuracy,
     check_duplicate,
     check_mcq_quality,
-    create_question_blueprint,
-    generate_mcq,
+    create_batch_blueprints,
+    generate_batch_mcqs,
     revise_mcq,
 )
 from src.prompts import (
     RETRIEVAL_QUERY_BEST_PRACTICES,
-    RETRIEVAL_QUERY_EXAM,
     RETRIEVAL_QUERY_MISCONCEPTIONS,
 )
 from src.schemas import (
     CompletedMCQRecord,
     DuplicateCheckResult,
-    MCQQuestion,
-    QuestionBlueprint,
     RejectedQuestionRecord,
     StructuredEvaluation,
     WorkflowState,
@@ -34,7 +31,7 @@ from src.schemas import (
 )
 from src.utils import (
     BEST_PRACTICES_COLLECTION,
-    EXAM_COLLECTION,
+    DEFAULT_BATCH_SIZE,
     MISCONCEPTIONS_COLLECTION,
 )
 from src.vectorstore import VectorStoreManager, ensure_indexes
@@ -60,6 +57,11 @@ class GraphDependencies:
 def _blueprint_hint(state: WorkflowState) -> str:
     blueprint = state.get("question_blueprint")
     if blueprint is None:
+        batch_blueprints = state.get("batch_blueprints", [])
+        batch_index = state.get("batch_index", 0)
+        if batch_index < len(batch_blueprints):
+            blueprint = batch_blueprints[batch_index]
+    if blueprint is None:
         return ""
     return (
         f"{blueprint.cognitive_level} {blueprint.correct_answer_concept} "
@@ -71,15 +73,6 @@ def _retrieval_query_misconceptions(state: WorkflowState) -> str:
     return RETRIEVAL_QUERY_MISCONCEPTIONS.format(
         topic=state["topic"],
         learning_objective=state["learning_objective"],
-        blueprint_hint=_blueprint_hint(state),
-    )
-
-
-def _retrieval_query_exam(state: WorkflowState) -> str:
-    return RETRIEVAL_QUERY_EXAM.format(
-        topic=state["topic"],
-        learning_objective=state["learning_objective"],
-        difficulty=state["difficulty"],
         blueprint_hint=_blueprint_hint(state),
     )
 
@@ -100,6 +93,16 @@ def _attempts_exceeded(state: WorkflowState) -> bool:
     attempts = state.get("generation_attempts", 0)
     cap = state.get("max_total_attempts", 1)
     return attempts >= cap
+
+
+def _remaining_questions(state: WorkflowState) -> int:
+    completed = len(state.get("completed_questions", []))
+    return max(state.get("num_questions", 1) - completed, 0)
+
+
+def _current_batch_count(state: WorkflowState) -> int:
+    batch_size = state.get("batch_size", DEFAULT_BATCH_SIZE)
+    return min(batch_size, _remaining_questions(state))
 
 
 def route_after_quality_gate(
@@ -137,39 +140,56 @@ def route_after_quality_gate(
     return "reject_or_regenerate"
 
 
-def route_after_finalize(
+def route_after_advance(
     state: WorkflowState,
-) -> Literal["create_question_blueprint", "__end__"]:
-    """Start a new blueprint when more approved questions are needed."""
-    completed = len(state.get("completed_questions", []))
-    target = state.get("num_questions", 1)
-    if completed < target:
-        if _attempts_exceeded(state):
-            logger.error(
-                "Generation attempt cap reached with %d/%d questions completed.",
-                completed,
-                target,
-            )
-            return "__end__"
-        return "create_question_blueprint"
-    return "__end__"
-
-
-def route_after_reject(
-    state: WorkflowState,
-) -> Literal["create_question_blueprint", "__end__"]:
-    """After rejection, try a fresh blueprint unless attempt cap is hit."""
+) -> Literal["select_batch_question", "retrieve_misconceptions", "__end__"]:
+    """Advance to the next question in the batch or start a new batch."""
     completed = len(state.get("completed_questions", []))
     target = state.get("num_questions", 1)
     if completed >= target:
         return "__end__"
     if _attempts_exceeded(state):
+        logger.error(
+            "Generation attempt cap reached with %d/%d questions completed.",
+            completed,
+            target,
+        )
         return "__end__"
-    return "create_question_blueprint"
+
+    batch_index = state.get("batch_index", 0)
+    batch_len = len(state.get("batch_blueprints", []))
+    if batch_index < batch_len:
+        return "select_batch_question"
+    return "retrieve_misconceptions"
 
 
-def make_create_question_blueprint_node(deps: GraphDependencies):
-    def create_question_blueprint_node(state: WorkflowState) -> dict:
+def make_retrieve_misconceptions_node(deps: GraphDependencies):
+    def retrieve_misconceptions(state: WorkflowState) -> dict:
+        if _remaining_questions(state) == 0:
+            return {}
+        query = _retrieval_query_misconceptions(state)
+        context = deps.vector_manager.retrieve(MISCONCEPTIONS_COLLECTION, query)
+        if not context:
+            logger.warning(
+                "No misconceptions retrieved; blueprint will rely on model knowledge."
+            )
+        return {
+            "misconceptions_context": context,
+            "batch_index": 0,
+            "batch_blueprints": [],
+            "batch_candidates": [],
+            "best_practices_context": [],
+        }
+
+    return retrieve_misconceptions
+
+
+def make_create_batch_blueprints_node(deps: GraphDependencies):
+    def create_batch_blueprints_node(state: WorkflowState) -> dict:
+        remaining = _remaining_questions(state)
+        if remaining == 0:
+            return {}
+
         if _attempts_exceeded(state):
             return {
                 "error": (
@@ -179,55 +199,37 @@ def make_create_question_blueprint_node(deps: GraphDependencies):
                 )
             }
 
-        index = len(state.get("completed_questions", [])) + 1
-        blueprint = create_question_blueprint(
+        batch_count = _current_batch_count(state)
+        if batch_count == 0:
+            return {}
+
+        start_question_number = len(state.get("completed_questions", [])) + 1
+        batch = create_batch_blueprints(
             topic=state["topic"],
             learning_objective=state["learning_objective"],
             difficulty=state["difficulty"],
-            question_number=index,
+            start_question_number=start_question_number,
             num_questions=state["num_questions"],
+            batch_count=batch_count,
             completed_questions=state.get("completed_questions", []),
             rejected_questions=state.get("rejected_questions", []),
             misconceptions_context=state.get("misconceptions_context", []),
             model=deps.model,
         )
         return {
-            "current_question_index": index,
-            "question_blueprint": blueprint,
-            "generation_attempts": state.get("generation_attempts", 0) + 1,
+            "batch_start_index": start_question_number,
+            "batch_blueprints": batch.blueprints,
+            "batch_candidates": [],
+            "batch_index": 0,
+            "generation_attempts": state.get("generation_attempts", 0) + batch_count,
+            "question_blueprint": None,
             "candidate_question": None,
             "content_evaluation": None,
             "quality_evaluation": None,
             "duplicate_evaluation": None,
-            "exam_examples_context": [],
-            "best_practices_context": [],
         }
 
-    return create_question_blueprint_node
-
-
-def make_retrieve_misconceptions_node(deps: GraphDependencies):
-    def retrieve_misconceptions(state: WorkflowState) -> dict:
-        query = _retrieval_query_misconceptions(state)
-        context = deps.vector_manager.retrieve(MISCONCEPTIONS_COLLECTION, query)
-        if not context:
-            logger.warning(
-                "No misconceptions retrieved; blueprint will rely on model knowledge."
-            )
-        return {"misconceptions_context": context}
-
-    return retrieve_misconceptions
-
-
-def make_retrieve_exam_examples_node(deps: GraphDependencies):
-    def retrieve_exam_examples(state: WorkflowState) -> dict:
-        query = _retrieval_query_exam(state)
-        context = deps.vector_manager.retrieve(EXAM_COLLECTION, query)
-        if not context:
-            logger.warning("No exam examples retrieved; generation will rely on defaults.")
-        return {"exam_examples_context": context}
-
-    return retrieve_exam_examples
+    return create_batch_blueprints_node
 
 
 def make_retrieve_best_practices_node(deps: GraphDependencies):
@@ -243,28 +245,46 @@ def make_retrieve_best_practices_node(deps: GraphDependencies):
     return retrieve_best_practices
 
 
-def make_generate_mcq_node(deps: GraphDependencies):
-    def generate_mcq_node(state: WorkflowState) -> dict:
-        blueprint = state.get("question_blueprint")
-        if blueprint is None:
-            return {"error": "No question blueprint available for generation."}
+def make_generate_batch_mcqs_node(deps: GraphDependencies):
+    def generate_batch_mcqs_node(state: WorkflowState) -> dict:
+        blueprints = state.get("batch_blueprints", [])
+        if not blueprints:
+            return {"error": "No batch blueprints available for generation."}
 
-        question = generate_mcq(
-            blueprint=blueprint,
-            question_number=state.get("current_question_index", 1),
-            num_questions=state["num_questions"],
-            exam_context=state.get("exam_examples_context", []),
+        batch = generate_batch_mcqs(
+            blueprints=blueprints,
+            misconceptions_context=state.get("misconceptions_context", []),
             best_practices_context=state.get("best_practices_context", []),
             model=deps.model,
         )
         return {
-            "candidate_question": question,
+            "batch_candidates": batch.questions,
+            "candidate_question": None,
             "content_evaluation": None,
             "quality_evaluation": None,
             "duplicate_evaluation": None,
         }
 
-    return generate_mcq_node
+    return generate_batch_mcqs_node
+
+
+def select_batch_question_node(state: WorkflowState) -> dict:
+    """Select the current question from the active batch for evaluation."""
+    batch_index = state.get("batch_index", 0)
+    blueprints = state.get("batch_blueprints", [])
+    candidates = state.get("batch_candidates", [])
+    if batch_index >= len(blueprints) or batch_index >= len(candidates):
+        return {"error": "Batch index out of range for question selection."}
+
+    start_index = state.get("batch_start_index", 1)
+    return {
+        "question_blueprint": blueprints[batch_index],
+        "candidate_question": candidates[batch_index],
+        "current_question_index": start_index + batch_index,
+        "content_evaluation": None,
+        "quality_evaluation": None,
+        "duplicate_evaluation": None,
+    }
 
 
 def make_content_accuracy_check_node(deps: GraphDependencies):
@@ -370,8 +390,15 @@ def make_revise_mcq_node(deps: GraphDependencies):
             revision_round=next_round,
             model=deps.model,
         )
+
+        batch_index = state.get("batch_index", 0)
+        batch_candidates = list(state.get("batch_candidates", []))
+        if batch_index < len(batch_candidates):
+            batch_candidates[batch_index] = revised
+
         return {
             "candidate_question": revised,
+            "batch_candidates": batch_candidates,
             "content_evaluation": None,
             "quality_evaluation": None,
             "duplicate_evaluation": None,
@@ -416,14 +443,11 @@ def finalize_question_node(state: WorkflowState) -> dict:
         "content_evaluation": None,
         "quality_evaluation": None,
         "duplicate_evaluation": None,
-        "exam_examples_context": [],
-        "best_practices_context": [],
-        "misconceptions_context": [],
     }
 
 
 def reject_or_regenerate_node(state: WorkflowState) -> dict:
-    """Reject a failed question and prepare for a new blueprint (no finalize)."""
+    """Reject a failed question and prepare for the next batch slot."""
     question = state.get("candidate_question")
     blueprint = state.get("question_blueprint")
     content = state.get("content_evaluation")
@@ -465,10 +489,12 @@ def reject_or_regenerate_node(state: WorkflowState) -> dict:
         "content_evaluation": None,
         "quality_evaluation": None,
         "duplicate_evaluation": None,
-        "exam_examples_context": [],
-        "best_practices_context": [],
-        "misconceptions_context": [],
     }
+
+
+def advance_batch_node(state: WorkflowState) -> dict:
+    """Move to the next question slot within the current batch."""
+    return {"batch_index": state.get("batch_index", 0) + 1}
 
 
 def build_mcq_graph(
@@ -490,18 +516,18 @@ def build_mcq_graph(
         make_retrieve_misconceptions_node(dependencies),
     )
     graph.add_node(
-        "create_question_blueprint",
-        make_create_question_blueprint_node(dependencies),
-    )
-    graph.add_node(
-        "retrieve_exam_examples",
-        make_retrieve_exam_examples_node(dependencies),
+        "create_batch_blueprints",
+        make_create_batch_blueprints_node(dependencies),
     )
     graph.add_node(
         "retrieve_best_practices",
         make_retrieve_best_practices_node(dependencies),
     )
-    graph.add_node("generate_mcq", make_generate_mcq_node(dependencies))
+    graph.add_node(
+        "generate_batch_mcqs",
+        make_generate_batch_mcqs_node(dependencies),
+    )
+    graph.add_node("select_batch_question", select_batch_question_node)
     graph.add_node(
         "content_accuracy_check",
         make_content_accuracy_check_node(dependencies),
@@ -512,14 +538,14 @@ def build_mcq_graph(
     graph.add_node("revise_mcq", make_revise_mcq_node(dependencies))
     graph.add_node("finalize_question", finalize_question_node)
     graph.add_node("reject_or_regenerate", reject_or_regenerate_node)
+    graph.add_node("advance_batch", advance_batch_node)
 
-    # Per-question pipeline: retrieve misconceptions -> blueprint -> retrieve both -> generate.
     graph.add_edge(START, "retrieve_misconceptions")
-    graph.add_edge("retrieve_misconceptions", "create_question_blueprint")
-    graph.add_edge("create_question_blueprint", "retrieve_exam_examples")
-    graph.add_edge("retrieve_exam_examples", "retrieve_best_practices")
-    graph.add_edge("retrieve_best_practices", "generate_mcq")
-    graph.add_edge("generate_mcq", "content_accuracy_check")
+    graph.add_edge("retrieve_misconceptions", "create_batch_blueprints")
+    graph.add_edge("create_batch_blueprints", "retrieve_best_practices")
+    graph.add_edge("retrieve_best_practices", "generate_batch_mcqs")
+    graph.add_edge("generate_batch_mcqs", "select_batch_question")
+    graph.add_edge("select_batch_question", "content_accuracy_check")
     graph.add_edge("content_accuracy_check", "mcq_quality_check")
     graph.add_edge("mcq_quality_check", "duplicate_check")
     graph.add_edge("duplicate_check", "quality_gate")
@@ -534,20 +560,15 @@ def build_mcq_graph(
         },
     )
     graph.add_edge("revise_mcq", "content_accuracy_check")
+    graph.add_edge("finalize_question", "advance_batch")
+    graph.add_edge("reject_or_regenerate", "advance_batch")
 
     graph.add_conditional_edges(
-        "finalize_question",
-        route_after_finalize,
+        "advance_batch",
+        route_after_advance,
         {
-            "create_question_blueprint": "create_question_blueprint",
-            "__end__": END,
-        },
-    )
-    graph.add_conditional_edges(
-        "reject_or_regenerate",
-        route_after_reject,
-        {
-            "create_question_blueprint": "create_question_blueprint",
+            "select_batch_question": "select_batch_question",
+            "retrieve_misconceptions": "retrieve_misconceptions",
             "__end__": END,
         },
     )
@@ -561,6 +582,7 @@ def run_workflow(
     learning_objective: str,
     difficulty: str,
     num_questions: int,
+    batch_size: int = DEFAULT_BATCH_SIZE,
     max_revision_rounds: int = 3,
     rebuild_indexes: bool = False,
 ) -> dict:
@@ -572,13 +594,17 @@ def run_workflow(
         "learning_objective": learning_objective,
         "difficulty": difficulty,
         "num_questions": num_questions,
+        "batch_size": batch_size,
         "max_revision_rounds": max_revision_rounds,
         "max_total_attempts": max_total,
         "generation_attempts": 0,
+        "batch_start_index": 1,
+        "batch_index": 0,
+        "batch_blueprints": [],
+        "batch_candidates": [],
         "current_question_index": 0,
         "question_blueprint": None,
         "misconceptions_context": [],
-        "exam_examples_context": [],
         "best_practices_context": [],
         "completed_questions": [],
         "rejected_questions": [],

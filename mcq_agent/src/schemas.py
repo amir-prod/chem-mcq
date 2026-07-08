@@ -67,6 +67,18 @@ class QuestionBlueprint(BaseModel):
     question_style_notes: str = ""
 
 
+class QuestionBlueprintBatch(BaseModel):
+    """Structured plans for a batch of MCQs before generation."""
+
+    blueprints: list[QuestionBlueprint] = Field(min_length=1)
+
+
+class MCQQuestionBatch(BaseModel):
+    """Structured batch of generated MCQs."""
+
+    questions: list[MCQQuestion] = Field(min_length=1)
+
+
 class StructuredEvaluation(BaseModel):
     """Structured output from content or quality evaluators."""
 
@@ -134,7 +146,7 @@ class DocumentMetadata(BaseModel):
     source_folder: str
     filename: str
     document_type: Literal["md", "json", "png", "image"]
-    collection: Literal["exam_examples", "best_practices", "misconceptions"]
+    collection: Literal["best_practices", "misconceptions"]
     relative_path: str
 
 
@@ -153,15 +165,21 @@ class WorkflowState(TypedDict, total=False):
     learning_objective: str
     difficulty: str
     num_questions: int
+    batch_size: int
     max_revision_rounds: int
     max_total_attempts: int
 
-    # Retrieval context (per-question cycle)
+    # Retrieval context (per batch cycle)
     misconceptions_context: list[str]
-    exam_examples_context: list[str]
     best_practices_context: list[str]
 
-    # Per-question working state
+    # Batch working state
+    batch_start_index: int
+    batch_blueprints: list[QuestionBlueprint]
+    batch_candidates: list[MCQQuestion]
+    batch_index: int
+
+    # Per-question working state (view into current batch slot)
     current_question_index: int
     question_blueprint: QuestionBlueprint | None
     candidate_question: MCQQuestion | None

@@ -15,7 +15,6 @@ from src.ingestion import ingest_all
 from src.schemas import IngestedDocument
 from src.utils import (
     BEST_PRACTICES_COLLECTION,
-    EXAM_COLLECTION,
     MISCONCEPTIONS_COLLECTION,
     MISCONCEPTIONS_DIR,
     VECTORSTORE_DIR,
@@ -114,7 +113,7 @@ class VectorStoreManager:
         self._stores.pop(collection_name, None)
 
     def build_indexes(self, *, reset: bool = False) -> dict[str, int]:
-        """Ingest source data and build both collections."""
+        """Ingest source data and build vector collections."""
         corpora = ingest_all()
         counts = {}
         for collection_name, docs in corpora.items():
@@ -138,9 +137,7 @@ class VectorStoreManager:
     ) -> list[str]:
         """Retrieve top-k text chunks as plain strings."""
         default_k = (
-            get_retrieval_config()["exam_k"]
-            if collection_name == EXAM_COLLECTION
-            else get_retrieval_config()["misconceptions_k"]
+            get_retrieval_config()["misconceptions_k"]
             if collection_name == MISCONCEPTIONS_COLLECTION
             else get_retrieval_config()["best_practices_k"]
         )
@@ -170,11 +167,10 @@ def ensure_indexes(
 ) -> VectorStoreManager:
     """Ensure vector indexes exist; build them when empty or when rebuild=True."""
     mgr = manager or VectorStoreManager()
-    exam_count = mgr.collection_count(EXAM_COLLECTION)
     bp_count = mgr.collection_count(BEST_PRACTICES_COLLECTION)
     misc_count = mgr.collection_count(MISCONCEPTIONS_COLLECTION)
 
-    needs_build = rebuild or exam_count == 0 or bp_count == 0
+    needs_build = rebuild or bp_count == 0 or misc_count == 0
     if (
         MISCONCEPTIONS_DIR.exists()
         and misc_count == 0
@@ -187,9 +183,7 @@ def ensure_indexes(
         mgr.build_indexes(reset=rebuild)
     else:
         logger.info(
-            "Using existing indexes (%s=%d, %s=%d, %s=%d chunks)",
-            EXAM_COLLECTION,
-            exam_count,
+            "Using existing indexes (%s=%d, %s=%d chunks)",
             BEST_PRACTICES_COLLECTION,
             bp_count,
             MISCONCEPTIONS_COLLECTION,

@@ -1,4 +1,4 @@
-"""Document ingestion pipeline for exams and best-practice materials."""
+"""Document ingestion pipeline for misconceptions and best-practice materials."""
 
 from __future__ import annotations
 
@@ -12,8 +12,6 @@ from src.schemas import DocumentMetadata, IngestedDocument
 from src.utils import (
     BEST_PRACTICES_DIR,
     BEST_PRACTICES_COLLECTION,
-    EXAM_COLLECTION,
-    EXAMS_DIR,
     MISCONCEPTIONS_COLLECTION,
     MISCONCEPTIONS_DIR,
     SUPPORTED_EXTENSIONS,
@@ -47,16 +45,12 @@ class PlaceholderImageTextExtractor(ImageTextExtractor):
 def _collection_for_root(root: Path) -> str:
     """Map a data root path to its vector collection name."""
     resolved = root.resolve()
-    if resolved == EXAMS_DIR.resolve():
-        return EXAM_COLLECTION
     if resolved == BEST_PRACTICES_DIR.resolve():
         return BEST_PRACTICES_COLLECTION
     if resolved == MISCONCEPTIONS_DIR.resolve():
         return MISCONCEPTIONS_COLLECTION
     name = root.name.lower()
-    if "exam" in name:
-        return EXAM_COLLECTION
-    if "misconception" in name:
+    if "misconception" in name or name.startswith("mds_"):
         return MISCONCEPTIONS_COLLECTION
     if "practice" in name or "best" in name:
         return BEST_PRACTICES_COLLECTION
@@ -195,24 +189,22 @@ def ingest_directory(
 def ingest_all(
     image_extractor: ImageTextExtractor | None = None,
 ) -> dict[str, list[IngestedDocument]]:
-    """Ingest exam examples, best-practice, and misconception corpora."""
+    """Ingest misconception and best-practice corpora."""
+    if not MISCONCEPTIONS_DIR.exists():
+        raise FileNotFoundError(
+            f"Misconceptions directory not found: {MISCONCEPTIONS_DIR}"
+        )
+
     corpora = {
-        EXAM_COLLECTION: ingest_directory(EXAMS_DIR, EXAM_COLLECTION, image_extractor),
+        MISCONCEPTIONS_COLLECTION: ingest_directory(
+            MISCONCEPTIONS_DIR,
+            MISCONCEPTIONS_COLLECTION,
+            image_extractor,
+        ),
         BEST_PRACTICES_COLLECTION: ingest_directory(
             BEST_PRACTICES_DIR,
             BEST_PRACTICES_COLLECTION,
             image_extractor,
         ),
     }
-    if MISCONCEPTIONS_DIR.exists():
-        corpora[MISCONCEPTIONS_COLLECTION] = ingest_directory(
-            MISCONCEPTIONS_DIR,
-            MISCONCEPTIONS_COLLECTION,
-            image_extractor,
-        )
-    else:
-        logger.warning(
-            "Misconceptions directory not found (optional): %s", MISCONCEPTIONS_DIR
-        )
-        corpora[MISCONCEPTIONS_COLLECTION] = []
     return corpora

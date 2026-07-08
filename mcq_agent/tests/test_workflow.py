@@ -7,11 +7,13 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from src.graph import (
+    _current_batch_count,
+    _remaining_questions,
+    advance_batch_node,
     finalize_question_node,
     reject_or_regenerate_node,
-    route_after_finalize,
+    route_after_advance,
     route_after_quality_gate,
-    route_after_reject,
     run_workflow,
 )
 from src.schemas import (
@@ -77,9 +79,14 @@ def _base_state(**overrides):
         "learning_objective": "Balance chemical equations",
         "difficulty": "medium",
         "num_questions": 2,
+        "batch_size": 5,
         "max_revision_rounds": 2,
         "max_total_attempts": compute_max_total_attempts(2, 2),
         "generation_attempts": 1,
+        "batch_start_index": 1,
+        "batch_index": 0,
+        "batch_blueprints": [_sample_blueprint()],
+        "batch_candidates": [_sample_mcq()],
         "current_question_index": 1,
         "question_blueprint": _sample_blueprint(),
         "candidate_question": _sample_mcq(),
@@ -178,27 +185,61 @@ class FinalizeAndRejectNodeTests(unittest.TestCase):
         self.assertIsNone(result.get("completed_questions"))
 
 
-class BatchLoopRoutingTests(unittest.TestCase):
-    def test_finalize_loops_to_blueprint_when_more_needed(self):
+class BatchRoutingTests(unittest.TestCase):
+    def test_remaining_questions_accounts_for_completed(self):
         state = _base_state(completed_questions=[MagicMock(spec=CompletedMCQRecord)])
-        self.assertEqual(route_after_finalize(state), "create_question_blueprint")
+        self.assertEqual(_remaining_questions(state), 1)
 
-    def test_finalize_ends_when_batch_complete(self):
-        completed = [MagicMock(spec=CompletedMCQRecord) for _ in range(2)]
-        state = _base_state(completed_questions=completed)
-        self.assertEqual(route_after_finalize(state), "__end__")
+    def test_current_batch_count_uses_remaining_when_smaller_than_batch_size(self):
+        state = _base_state(num_questions=7, batch_size=5, completed_questions=[])
+        self.assertEqual(_current_batch_count(state), 5)
 
-    def test_reject_retries_blueprint_when_under_target(self):
-        state = _base_state(rejected_questions=[MagicMock(spec=RejectedQuestionRecord)])
-        self.assertEqual(route_after_reject(state), "create_question_blueprint")
+        state = _base_state(
+            num_questions=7,
+            batch_size=5,
+            completed_questions=[MagicMock(spec=CompletedMCQRecord) for _ in range(5)],
+        )
+        self.assertEqual(_current_batch_count(state), 2)
 
-    def test_reject_ends_when_attempt_cap_hit(self):
+    def test_advance_batch_increments_index(self):
+        result = advance_batch_node(_base_state(batch_index=0))
+        self.assertEqual(result["batch_index"], 1)
+
+    def test_advance_routes_to_next_question_in_batch(self):
+        state = _base_state(
+            batch_index=1,
+            batch_blueprints=[_sample_blueprint(), _sample_blueprint()],
+            batch_candidates=[_sample_mcq(), _sample_mcq()],
+        )
+        self.assertEqual(route_after_advance(state), "select_batch_question")
+
+    def test_advance_routes_to_new_batch_when_current_batch_exhausted(self):
+        state = _base_state(
+            batch_index=2,
+            batch_blueprints=[_sample_blueprint(), _sample_blueprint()],
+            batch_candidates=[_sample_mcq(), _sample_mcq()],
+            completed_questions=[MagicMock(spec=CompletedMCQRecord)],
+            num_questions=5,
+        )
+        self.assertEqual(route_after_advance(state), "retrieve_misconceptions")
+
+    def test_advance_ends_when_target_reached(self):
+        state = _base_state(
+            batch_index=1,
+            batch_blueprints=[_sample_blueprint()],
+            completed_questions=[MagicMock(spec=CompletedMCQRecord) for _ in range(2)],
+            num_questions=2,
+        )
+        self.assertEqual(route_after_advance(state), "__end__")
+
+    def test_advance_ends_when_attempt_cap_hit(self):
         state = _base_state(
             generation_attempts=20,
             max_total_attempts=10,
-            rejected_questions=[MagicMock(spec=RejectedQuestionRecord)],
+            batch_index=1,
+            batch_blueprints=[_sample_blueprint(), _sample_blueprint()],
         )
-        self.assertEqual(route_after_reject(state), "__end__")
+        self.assertEqual(route_after_advance(state), "__end__")
 
 
 class LoopGuardTests(unittest.TestCase):
@@ -225,6 +266,7 @@ class LoopGuardTests(unittest.TestCase):
             learning_objective="Identify conjugate pairs",
             difficulty="medium",
             num_questions=1,
+            batch_size=5,
             max_revision_rounds=2,
         )
         self.assertEqual(result["generation_attempts"], 8)

@@ -13,8 +13,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from src.graph import run_workflow
 from src.schemas import Difficulty, MCQBatchOutput
 from src.utils import (
-    OUTPUT_DIR,
     PROJECT_ROOT,
+    resolve_output_paths,
     setup_logging,
     validate_data_directories,
     write_outputs,
@@ -48,6 +48,12 @@ def parse_args() -> argparse.Namespace:
         help="Number of MCQs to generate.",
     )
     parser.add_argument(
+        "--batch_size",
+        type=int,
+        default=5,
+        help="Number of MCQs to blueprint and generate per batch (default: 5).",
+    )
+    parser.add_argument(
         "--max_revision_rounds",
         type=int,
         default=3,
@@ -64,20 +70,37 @@ def parse_args() -> argparse.Namespace:
         help="Only build vector indexes and exit (no generation).",
     )
     parser.add_argument(
+        "--output_name",
+        help=(
+            "Base output filename without extension (written under outputs/). "
+            "Creates <name>.json, <name>.md, and <name>_rejected.json when needed."
+        ),
+    )
+    parser.add_argument(
         "--output-json",
         type=Path,
-        default=OUTPUT_DIR / "generated_mcqs.json",
-        help="Path for JSON output.",
+        default=None,
+        help="Path for JSON output (overrides --output_name for JSON).",
     )
     parser.add_argument(
         "--output-md",
         type=Path,
-        default=OUTPUT_DIR / "generated_mcqs.md",
-        help="Path for Markdown output.",
+        default=None,
+        help="Path for Markdown output (overrides --output_name for Markdown).",
     )
     args = parser.parse_args()
     if not args.index_only and (not args.topic or not args.learning_objective):
         parser.error("--topic and --learning_objective are required unless using --index-only")
+    if args.batch_size < 1:
+        parser.error("--batch_size must be at least 1")
+    try:
+        args.output_json, args.output_md, args.output_rejected_json = resolve_output_paths(
+            output_name=args.output_name,
+            output_json=args.output_json,
+            output_md=args.output_md,
+        )
+    except ValueError as exc:
+        parser.error(str(exc))
     return args
 
 
@@ -109,6 +132,7 @@ def main() -> int:
             learning_objective=args.learning_objective,
             difficulty=args.difficulty,
             num_questions=args.num_questions,
+            batch_size=args.batch_size,
             max_revision_rounds=args.max_revision_rounds,
             rebuild_indexes=args.rebuild_index,
         )
@@ -145,7 +169,12 @@ def main() -> int:
         questions=questions,
         rejected_questions=rejected,
     )
-    json_path, md_path = write_outputs(batch, args.output_json, args.output_md)
+    json_path, md_path = write_outputs(
+        batch,
+        args.output_json,
+        args.output_md,
+        args.output_rejected_json,
+    )
     logger.info(
         "Wrote %d approved question(s) to %s and %s (%d rejected)",
         len(questions),

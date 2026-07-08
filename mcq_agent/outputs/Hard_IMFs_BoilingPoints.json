@@ -1,0 +1,1003 @@
+{
+  "topic": "intermolecular forces",
+  "learning_objective": "Explain how IMFs affect boiling points",
+  "difficulty": "hard",
+  "num_questions": 7,
+  "questions": [
+    {
+      "mcq": {
+        "question": "Methoxyethane (CH3CH2OCH3) and ethanol (CH3CH2OH) have the same molecular formula, C2H6O, but ethanol boils at a much higher temperature. Which statement best explains why?",
+        "options": {
+          "A": "Ethanol has an O-H bond, so ethanol molecules can donate and accept hydrogen bonds to each other, whereas methoxyethane cannot donate hydrogen bonds in a pure sample.",
+          "B": "Methoxyethane contains oxygen, so it hydrogen-bonds more strongly with itself than ethanol does.",
+          "C": "Methoxyethane has more nonpolar C-H bonds, so it must have stronger intermolecular forces than ethanol.",
+          "D": "Ethanol has a higher boiling point because boiling breaks the C-O bond more slowly than in methoxyethane."
+        },
+        "correct_answer": "A",
+        "explanation": "For a pure substance to hydrogen-bond to itself, it needs a hydrogen directly bonded to O, N, or F. Ethanol has an O-H group, so it can both donate and accept hydrogen bonds. Methoxyethane has oxygen but no O-H bond, so it can accept hydrogen bonds but cannot donate them to itself, giving weaker intermolecular attractions overall.",
+        "learning_objective": "Explain how the ability to form intermolecular hydrogen bonds affects boiling point, distinguishing donor and acceptor roles.",
+        "difficulty": "hard",
+        "cognitive_level": "application",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Strongly targets the misconception that any oxygen-containing molecule self-hydrogen-bonds. The isomer pair controls for formula and molar mass effectively.",
+        "revision_rounds": 0,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "Hydrogen bonding and boiling point comparisons",
+        "learning_objective": "Explain how the ability to form intermolecular hydrogen bonds affects boiling point, distinguishing donor and acceptor roles.",
+        "difficulty": "hard",
+        "cognitive_level": "Application",
+        "target_misconception": "Any molecule containing oxygen, nitrogen, or fluorine automatically hydrogen-bonds strongly with itself and therefore has an elevated boiling point.",
+        "correct_answer_concept": "Self-hydrogen bonding in a pure substance requires a hydrogen directly bonded to N, O, or F to act as a donor; molecules that only contain O/N/F as acceptors may not hydrogen-bond to themselves and can have much lower boiling points than similarly sized alcohols or amines.",
+        "expected_reasoning": "Students must inspect functional groups and determine whether each molecule can donate and/or accept hydrogen bonds in a pure sample. They should recognize that ethers, ketones, and many halogenated compounds may be polar yet lack self-H-bond donation, leading to weaker IMFs than alcohols. The boiling point difference should then be attributed to donor capability rather than merely the presence of oxygen.",
+        "question_style_notes": "Use a pairwise comparison or assertion-reason item featuring an alcohol versus an ether or aldehyde of similar molar mass. Distractors should reflect 'contains oxygen so it hydrogen-bonds' and 'more polar bond automatically means highest boiling point' thinking."
+      },
+      "revision_rounds": 0,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.99,
+        "issues": [],
+        "revision_instructions": "",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.93,
+        "issues": [
+          "Difficulty is labeled 'hard,' but the item likely functions closer to medium for students already familiar with hydrogen-bond donor/acceptor rules.",
+          "Option A is somewhat longer and more specific than the distractors, creating a mild cueing risk.",
+          "The stem says the compounds have the same molecular formula and then prints C2H6O; this is helpful, but the names plus formulas may make the item slightly more recall-oriented than necessary rather than fully application-heavy.",
+          "Distractor D is clearly implausible because boiling involves overcoming intermolecular forces, not breaking C-O bonds; this makes one distractor weaker than ideal."
+        ],
+        "revision_instructions": "Item is ready for use. For an even stronger version, consider tightening cueing by shortening A slightly and strengthening D so it reflects a realistic misconception about polarity or dipole-dipole forces rather than bond breaking. If strict blueprint alignment to 'hard' is required, increase complexity by asking students to compare multiple similar compounds or requiring explicit distinction between donor-only/acceptor-only/self-hydrogen-bonding behavior.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "",
+        "most_similar_question_id": null,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "mcq": {
+        "question": "Which ordering of boiling points for the three C5H12 isomers is most consistent with the effect of branching on London dispersion forces?",
+        "options": {
+          "A": "neopentane > isopentane > n-pentane",
+          "B": "n-pentane > isopentane > neopentane",
+          "C": "isopentane > neopentane > n-pentane",
+          "D": "n-pentane = isopentane = neopentane"
+        },
+        "correct_answer": "B",
+        "explanation": "All three substances have the same formula and molar mass, but their shapes differ. The straight-chain isomer, n-pentane, has the greatest surface contact between molecules and therefore the strongest cumulative London dispersion forces. Increased branching makes molecules more compact, reducing contact area and lowering boiling point.",
+        "learning_objective": "Explain how molecular shape influences London dispersion forces and boiling point among nonpolar molecules.",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Clean ranking item with one correct order. Distractors directly reflect equal-formula and 'more branching adds bonds' style errors.",
+        "revision_rounds": 0,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "Branching, surface area, and dispersion forces in boiling points",
+        "learning_objective": "Explain how molecular shape influences London dispersion forces and boiling point among nonpolar molecules.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "For isomers with the same formula, boiling points are essentially the same because they have identical molar mass and the same types of atoms.",
+        "correct_answer_concept": "Among isomers, increased branching generally lowers boiling point because more compact shapes have less surface contact and weaker cumulative London dispersion forces than less branched isomers.",
+        "expected_reasoning": "Students must compare constitutional isomers with equal molar mass, infer differences in shape and contact area, and relate those to dispersion-force strength. They should conclude that IMF magnitude can vary even when chemical formula and bond types are unchanged.",
+        "question_style_notes": "Use a ranking or explanation question with several C5/C6 alkane isomers. Require students to justify why a straight-chain isomer boils higher than a branched one. Distractors should focus on equal formula meaning equal boiling point or on branch points 'adding bonds' and raising boiling point."
+      },
+      "revision_rounds": 0,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.99,
+        "issues": [],
+        "revision_instructions": "No revision needed. The keyed answer is scientifically correct, the explanation accurately links increased branching to reduced surface area/contact and weaker cumulative London dispersion forces, and the distractors are not accidentally correct.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.93,
+        "issues": [
+          "Difficulty may be overstated: the item is more straightforward ranking/recall-application than truly hard analysis for many students.",
+          "Options are not arranged in a clearly logical sequence, though this is minor for verbal ranking choices.",
+          "The stem asks only for the ordering, so the justification component in the blueprint/ style notes is assessed only indirectly rather than explicitly."
+        ],
+        "revision_instructions": "Item is usable as written. If revising to better match the blueprint and intended hard/analysis level, increase reasoning demand by adding a brief rationale in the stem or response options (e.g., ask which order and explanation best fits surface area/dispersion-force reasoning), or use additional isomers/paired comparisons that require transfer rather than simple recall. Keep one clearly correct ranking and preserve plausible misconception-based distractors.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The only completed question also concerns boiling point, but it targets a different underlying concept and misconception: presence/absence of self-hydrogen bonding in constitutional isomers with the same formula. The candidate instead targets how branching changes surface area, London dispersion forces, and boiling point among C5H12 isomers. The stem pattern, answer logic, and misconception are meaningfully different.",
+        "most_similar_question_id": 1,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "mcq": {
+        "question": "Ethylene glycol (HOCH2CH2OH), 1-propanol (CH3CH2CH2OH), and methanol (CH3OH) are all capable of hydrogen bonding. Which substance is expected to have the highest boiling point, and why?",
+        "options": {
+          "A": "Methanol, because its smaller molecules can pack most closely",
+          "B": "1-Propanol, because the longest carbon chain always gives the highest boiling point",
+          "C": "Ethylene glycol, because each molecule can form a more extensive intermolecular hydrogen-bonding network",
+          "D": "All three should have similar boiling points because each molecule can hydrogen-bond"
+        },
+        "correct_answer": "C",
+        "explanation": "All three can hydrogen-bond, but ethylene glycol has two –OH groups, giving each molecule more donor and acceptor opportunities for intermolecular hydrogen bonding. That allows a more extensive network of attractions between molecules, so more energy is needed to boil it.",
+        "learning_objective": "Explain how the extent of hydrogen-bonding opportunities influences boiling points.",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Question clearly compares molecules that all hydrogen-bond but to different extents. Distractors reflect both the 'any H-bonding is enough' misconception and overreliance on chain length or size alone.",
+        "revision_rounds": 1,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how the extent of hydrogen-bonding opportunities influences boiling points.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "If a molecule can hydrogen-bond at all, then all hydrogen-bonding molecules have similarly elevated boiling points; the number and arrangement of donor/acceptor sites do not matter much.",
+        "correct_answer_concept": "Boiling point can increase when molecules have more effective intermolecular hydrogen-bonding opportunities, because a larger intermolecular network requires more energy to separate.",
+        "expected_reasoning": "Students should compare molecules that all are capable of hydrogen bonding but differ in how many donors/acceptors are available or how effectively they can form intermolecular networks. They should reason that hydrogen bonding is not merely present/absent; its extent and connectivity affect overall IMF strength and thus boiling point.",
+        "question_style_notes": "Use a comparison such as monohydric vs dihydric alcohols, or analogous molecules where all options can hydrogen-bond but to different extents. Avoid repeating the ethanol vs ether contrast. Distractors should reflect the misconception that once hydrogen bonding is present, additional OH groups should not significantly affect boiling point, or that only molar mass matters."
+      },
+      "revision_rounds": 1,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.98,
+        "issues": [
+          "Option B uses the absolute word 'always,' which is scientifically overbroad in general, though it is clearly false in this set and functions acceptably as a distractor.",
+          "The explanation could be slightly strengthened by noting that ethylene glycol also has a substantially higher molar mass than methanol, although the key comparison being tested is the greater extent of hydrogen bonding."
+        ],
+        "revision_instructions": "Content is scientifically sound and the keyed answer is correct. Optional refinement: soften option B to avoid an unnecessarily absolute claim (e.g., '1-propanol, because its longer carbon chain makes its boiling point highest') while keeping it incorrect due to ethylene glycol’s stronger intermolecular hydrogen-bonding network. Optionally mention that boiling point trends here reflect both dispersion and hydrogen bonding, but the dominant distinguishing factor is ethylene glycol’s two hydroxyl groups and greater intermolecular connectivity.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.92,
+        "issues": [
+          "Difficulty may be slightly overstated as 'hard'; for many students this functions more as medium-to-hard analysis/comparison.",
+          "Option B uses the absolute term 'always,' which makes it somewhat less plausible and slightly easier to eliminate via test-wise reasoning.",
+          "The correct option/explanation is longer and more conceptually specific than most distractors, creating mild length/content cueing.",
+          "Option A's rationale about 'pack most closely' is somewhat vague and not tightly grounded in the target misconception."
+        ],
+        "revision_instructions": "Item is ready for use. For further refinement, consider increasing distractor parity by revising Option B to remove 'always' and making distractors more evenly plausible and similar in length. Example: replace B with a less absolute chain-length argument, and sharpen A so it reflects a more common student misconception about size or dispersion forces. If maintaining a 'hard' label is important, consider using more closely matched compounds (e.g., monohydric vs dihydric alcohols with more comparable molar masses) to require deeper analysis.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate is in the same broad intermolecular-forces/boiling-point domain as ID 1, but it tests a different concept and misconception. ID 1 focuses on whether a molecule can self-hydrogen-bond at all (donor requirement) versus merely having an electronegative atom. The candidate instead compares substances that all can hydrogen-bond and asks how the extent/number of hydrogen-bonding sites changes boiling point. This is not a near-duplicate in stem pattern, answer pattern, or target misconception.",
+        "most_similar_question_id": 1,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "mcq": {
+        "question": "Acetone (CH3COCH3) and propane (C3H8) have similar molar masses, and neither can donate hydrogen bonds to itself in a pure liquid. Why does acetone have a much higher boiling point than propane?",
+        "options": {
+          "A": "Acetone has a stronger permanent dipole, so dipole-dipole attractions add to London dispersion forces",
+          "B": "Acetone can hydrogen-bond strongly to other acetone molecules, while propane cannot",
+          "C": "Propane is nonpolar, so it has no intermolecular forces at all",
+          "D": "Because their molar masses are similar, their boiling points should be nearly the same"
+        },
+        "correct_answer": "A",
+        "explanation": "Both substances experience London dispersion forces, but acetone is also strongly polar because of its carbonyl group. That gives acetone additional dipole-dipole attractions between molecules, raising its boiling point relative to the nearly nonpolar propane.",
+        "learning_objective": "Explain how molecular dipole strength affects boiling points when comparing substances of similar size that lack hydrogen bonding.",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Appropriately isolates polarity without relying on hydrogen bonding. Distractors target the intended misconceptions cleanly and avoid bond-dipole-cancellation-centered design.",
+        "revision_rounds": 1,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how molecular dipole strength affects boiling points when comparing substances of similar size that lack hydrogen bonding.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "Polar molecules only differ from nonpolar ones in solubility; boiling points are governed almost entirely by London dispersion unless hydrogen bonding is present.",
+        "correct_answer_concept": "For molecules of comparable size that do not hydrogen-bond, stronger permanent dipoles can raise boiling point because dipole-dipole attractions add to dispersion forces.",
+        "expected_reasoning": "Students should compare similarly sized molecules, rule out hydrogen bonding, and recognize that permanent molecular polarity contributes additional intermolecular attraction. They should reason that a more polar molecule can boil at a higher temperature than a less polar or nonpolar analog even when molar masses are similar.",
+        "question_style_notes": "Use a pair or set where hydrogen bonding is absent but polarity differs clearly, such as halogenated or carbonyl-containing molecules versus less polar analogs of similar size. Avoid the previously rejected symmetric-nonpolar design that centers on bond-dipole cancellation. Distractors should claim that only hydrogen bonding matters for boiling-point increases or that similar masses imply similar boiling points."
+      },
+      "revision_rounds": 1,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.98,
+        "issues": [],
+        "revision_instructions": "No substantive revision needed. Optional minor refinement: replace 'nearly nonpolar propane' with 'nonpolar propane' in the explanation for maximum precision, since propane is effectively nonpolar overall.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.91,
+        "issues": [
+          "The stem says neither substance can donate hydrogen bonds to itself, which is accurate but slightly indirect; some students may momentarily wonder whether acetone can still participate in hydrogen bonding despite the learning objective aiming to exclude it.",
+          "Option A is slightly longer and more conceptually complete than the distractors, creating mild length-based clueing.",
+          "The item is labeled hard, but the comparison may function closer to moderate difficulty for many students because acetone vs propane strongly separates polarity and the distractors are easy to eliminate.",
+          "Option C uses absolute wording ('no intermolecular forces at all'), making it an obviously weak distractor for well-prepared students."
+        ],
+        "revision_instructions": "Item is usable as written. For an even stronger version, tighten the stem to explicitly state that hydrogen bonding between identical molecules is not the cause being tested, reduce clueing by making option lengths more parallel, and strengthen distractors so they reflect subtler misconceptions (for example, claiming dispersion alone determines boiling point for similar-mass molecules, or that similar molar mass outweighs polarity differences). If the blueprint truly requires hard difficulty, consider using a less familiar pair of similarly sized non-hydrogen-bonding molecules with a narrower boiling-point contrast.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate targets a different intermolecular-force comparison than the completed questions. Its core concept is that a permanent dipole can significantly raise boiling point relative to a similarly sized nonpolar molecule even when neither substance self-hydrogen-bonds. Completed Q1 focuses on presence vs absence of self-hydrogen-bond donation, Q2 on branching effects on London dispersion among isomers, and Q3 on differing extent of hydrogen-bond networks. While Q1 is thematically closest because it concerns boiling point and the misconception that oxygen automatically implies hydrogen bonding, the candidate’s stem pattern, correct reasoning, and target misconception are materially different.",
+        "most_similar_question_id": 1,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "mcq": {
+        "question": "A student observes that the boiling points of the noble gases increase from Ne to Ar to Kr to Xe. Which explanation best accounts for this trend?",
+        "options": {
+          "A": "They all have London dispersion forces, so their boiling points should be about the same; the trend is mostly experimental error",
+          "B": "As the atoms get larger, their electron clouds become more polarizable, so London dispersion forces become stronger",
+          "C": "The heavier noble gases must develop hydrogen bonding more easily",
+          "D": "Only xenon has intermolecular forces strong enough to affect boiling point"
+        },
+        "correct_answer": "B",
+        "explanation": "All noble gases are nonpolar, so London dispersion is the dominant intermolecular force throughout the series. However, dispersion-force strength increases as atoms get larger and more polarizable. That stronger attraction raises boiling points from Ne to Xe.",
+        "learning_objective": "Explain how IMF trends account for boiling-point changes across a homologous series or related molecular set.",
+        "difficulty": "hard",
+        "cognitive_level": "evaluation",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "This item directly assesses evaluation of a trend within a single IMF category and targets the all-or-none misconception about IMF types. Options are concise and plausible.",
+        "revision_rounds": 1,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how IMF trends account for boiling-point changes across a homologous series or related molecular set.",
+        "difficulty": "hard",
+        "cognitive_level": "Evaluation",
+        "target_misconception": "Boiling point depends on a single IMF category only, so once the dominant force type is identified, changes within that category do not significantly affect boiling point.",
+        "correct_answer_concept": "Even when substances share the same dominant IMF type, boiling points can still vary systematically because the magnitude of that force changes with electron cloud size, polarizability, or molecular surface area.",
+        "expected_reasoning": "Students should evaluate a trend across related compounds that all share the same general IMF type—such as nonpolar molecules dominated by London dispersion or a series of similar polar molecules—and explain that IMF strength is quantitative, not just categorical. They should use changes in polarizability or surface area to justify the boiling-point trend.",
+        "question_style_notes": "Ask for the best explanation of an observed trend across a homologous series rather than mere ranking recall. A strong option set would include statements like 'all have dispersion, so their boiling points should be about the same' as distractors. Ensure this does not duplicate the rejected 'mass alone' design by focusing on the misconception that IMF categories are all-or-none rather than variable in magnitude within a category."
+      },
+      "revision_rounds": 1,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.99,
+        "issues": [],
+        "revision_instructions": "No substantive revision needed. The item is scientifically sound, the keyed answer is correct, and the distractors are clearly incorrect. Optional minor enhancement: replace 'heavier' in option C with 'larger' if revising for precision elsewhere, since hydrogen bonding is impossible for noble gases regardless of mass.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.93,
+        "issues": [
+          "Difficulty may be slightly overstated: the item is more upper-bloom conceptual explanation than truly hard for many chemistry students familiar with periodic trends and dispersion forces.",
+          "Option B is somewhat longer and more specific than the distractors, creating mild cueing through answer length/precision.",
+          "The stem asks for the 'best' explanation, which is acceptable here, but could still invite minor concern if more than one option were partially true; in this set that risk is low.",
+          "The molecular set is related rather than a homologous series; this still fits the objective, but the blueprint emphasis on trend reasoning across a series could be made even more explicit."
+        ],
+        "revision_instructions": "Item is ready for use. If revising, consider increasing difficulty by asking students to compare two possible explanations (mass vs polarizability/surface area) or by requiring evaluation of a less familiar related set. To reduce cueing, make distractors more parallel in scientific specificity and length. For example, revise distractors so each offers a mechanistic claim rather than obviously incorrect categorical statements.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate is in the same broad intermolecular-forces domain as the completed items, but it tests a distinct concept: boiling-point increase within a set of nonpolar noble gases due to increasing polarizability and stronger London dispersion forces with atomic size. The closest prior item is ID 2, which also involves London dispersion affecting boiling point, but that question focuses on branching/surface area among structural isomers, not periodic increase in polarizability within a monatomic series. The stem pattern, answer rationale, and targeted misconception are related but not near-duplicates.",
+        "most_similar_question_id": 2,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "mcq": {
+        "question": "Four students discuss why the substances CH4, I2, and SiO2 have very different boiling or phase-change temperatures. Which explanation is scientifically valid?",
+        "options": {
+          "A": "SiO2 has the highest temperature because its molecules have the strongest London dispersion forces, since it contains the most atoms.",
+          "B": "I2 and CH4 are molecular substances, so their boiling-point difference can be explained by stronger intermolecular forces in I2; SiO2 is a covalent network solid, so its very high temperature is due to breaking covalent bonds in the network rather than overcoming intermolecular forces.",
+          "C": "All three substances can be compared by the same intermolecular-force rules, and SiO2 is highest because all high boiling points come from especially strong intermolecular forces.",
+          "D": "CH4 has the lowest boiling point because its C-H bonds are weak, while SiO2 has the highest because its Si-O bonds are polar and therefore intermolecular forces are strongest."
+        },
+        "correct_answer": "B",
+        "explanation": "CH4 and I2 are molecular substances, so intermolecular forces determine their boiling points; I2 has stronger dispersion forces than CH4. SiO2 is not made of discrete molecules but of an extended covalent network, so its very high phase-change temperature comes from breaking covalent bonds in the lattice, not from intermolecular forces.",
+        "learning_objective": "Explain how differences in intermolecular forces affect boiling points by distinguishing molecular boiling from network-covalent melting/boiling behavior.",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "The stem requires classification before explanation, directly targeting the category-error misconception. Distractors are plausible and reflect misuse of IMF language for network solids.",
+        "revision_rounds": 0,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how differences in intermolecular forces affect boiling points by distinguishing molecular boiling from network-covalent melting/boiling behavior.",
+        "difficulty": "hard",
+        "cognitive_level": "Analyze",
+        "target_misconception": "Substances with strong covalent bonds within an extended structure can be compared to molecular substances by the same IMF rules, so a giant covalent substance may be said to have a high boiling point because of strong intermolecular forces between its particles.",
+        "correct_answer_concept": "Boiling-point trends based on IMFs apply to molecular substances; extended covalent network solids do not consist of discrete molecules held together by intermolecular forces, so their very high phase-change temperatures arise from breaking covalent bonds in the network rather than overcoming IMFs.",
+        "expected_reasoning": "Students should classify each substance first as molecular or network covalent, then restrict IMF-based boiling-point reasoning to the molecular species only. They should recognize that a comparison such as iodine vs a molecular compound is IMF-based, but silicon dioxide or diamond cannot be explained by stronger London forces between molecules because there are no discrete molecules. The correct response should explicitly separate 'stronger IMFs raise boiling point among molecular substances' from 'network covalent substances have high boiling points for a different structural reason.'",
+        "question_style_notes": "Use a comparison set mixing 2–3 molecular substances with one network-covalent substance, asking which student explanation about boiling point is scientifically valid. Avoid focusing on intramolecular bond strength in ordinary molecules, since that misconception was already used; instead emphasize category error between molecular IMFs and extended covalent lattices. Distractors should include statements like 'SiO2 has the strongest London forces because it is largest' or 'all high boiling points are due to strong IMFs.'"
+      },
+      "revision_rounds": 0,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.98,
+        "issues": [
+          "Option A uses 'molecules' for SiO2, which is scientifically inaccurate but appropriately functions as part of the distractor.",
+          "The stem says 'boiling or phase-change temperatures,' which is acceptable, though SiO2 does not have a normal molecular-style boiling-point discussion and may decompose/sublime behavior complicates wording at some conditions."
+        ],
+        "revision_instructions": "Content is scientifically sound and the keyed answer is correct. For maximum precision, consider changing 'its molecules' in option A to 'its particles' or leaving as-is if the inaccuracy is intentional as part of the distractor. Optionally revise the stem to 'very different temperatures required to change phase' to avoid overemphasis on boiling for SiO2.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.92,
+        "issues": [
+          "The stem says 'boiling or phase-change temperatures,' which is scientifically cautious for SiO2 but slightly reduces parallelism across substances.",
+          "Option B is noticeably longer and more qualified than the distractors, creating mild length-based cueing.",
+          "The item asks for a 'scientifically valid' explanation, which can function somewhat like a true/false judgment across options, though here it remains manageable because all options address the same comparison and only one is fully correct.",
+          "The explanation uses 'breaking covalent bonds in the lattice' for SiO2 phase change; depending on course level, this may oversimplify whether decomposition/softening/sublimation language is more appropriate than 'boiling.'"
+        ],
+        "revision_instructions": "This item is strong and ready for use. For an even better revision, tighten cueing by making option lengths more parallel, and consider revising the stem to 'very different boiling points or other phase-change temperatures' or 'very different temperatures required to separate particles in the condensed phase.' You could also rephrase the prompt to 'Which student best explains these differences?' to reduce the true/false flavor. Keep the core distinction between molecular substances and network-covalent solids, since it aligns very well with the learning objective and target misconception.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate is in the same broad intermolecular-forces/boiling-point domain as the completed questions, but it targets a distinct misconception and stem pattern: distinguishing molecular substances from a network-covalent solid (SiO2) and rejecting the misuse of IMF language for giant covalent structures. None of the completed questions address classification of a substance as molecular vs network covalent or the specific error of explaining SiO2's high phase-change temperature via intermolecular forces.",
+        "most_similar_question_id": 5,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "mcq": {
+        "question": "The same pure sample of water is heated in two open containers: one at sea level and one on a high mountain where the atmospheric pressure is lower. The water on the mountain boils at a lower temperature. Which explanation best accounts for this observation?",
+        "options": {
+          "A": "Boiling point depends only on the strength of water's intermolecular forces, so both samples should boil at the same temperature if the water is pure.",
+          "B": "The lower atmospheric pressure on the mountain means water's vapor pressure equals the external pressure at a lower temperature, even though the intermolecular forces in water are unchanged.",
+          "C": "At higher altitude, the intermolecular forces between water molecules become weaker, so less energy is needed to separate them into gas.",
+          "D": "Because molecules move faster at high altitude at the same temperature, the mountain sample reaches boiling sooner and therefore boils at a lower temperature."
+        },
+        "correct_answer": "B",
+        "explanation": "Boiling occurs when a liquid's vapor pressure matches the external pressure. Water's hydrogen bonding affects how much heating is needed to raise vapor pressure, but the observed boiling temperature also depends on the surrounding pressure. Lower external pressure allows boiling at a lower temperature without changing the intermolecular forces.",
+        "learning_objective": "Explain how intermolecular forces affect boiling points by distinguishing boiling-point trends due to intermolecular attractions from volatility changes caused by external pressure.",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Meets the blueprint by using the same liquid in two pressure environments and requiring students to connect IMF strength with the definition of boiling. Distractors target the specified misconceptions without introducing unnecessary complexity.",
+        "revision_rounds": 0,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how intermolecular forces affect boiling points by distinguishing boiling-point trends due to intermolecular attractions from volatility changes caused by external pressure.",
+        "difficulty": "hard",
+        "cognitive_level": "Analyze",
+        "target_misconception": "Boiling point is set only by the substance’s intermolecular forces, so changing external pressure should not change the boiling temperature as long as the substance itself is unchanged.",
+        "correct_answer_concept": "For a given substance, stronger intermolecular forces generally require a higher temperature to reach a vapor pressure equal to the external pressure, but the observed boiling point also depends on external pressure. Lower external pressure lowers the boiling temperature even though the substance’s IMFs are unchanged.",
+        "expected_reasoning": "Students should apply the definition of boiling: boiling occurs when vapor pressure equals external pressure. They must recognize that IMFs influence how rapidly vapor pressure rises with temperature, but the actual boiling point is the temperature at which that vapor pressure matches the surrounding pressure. Therefore, the same liquid can boil at different temperatures under different pressures, and a lower-pressure environment produces a lower boiling point without any change in IMF strength.",
+        "question_style_notes": "Use a scenario comparing the same pure liquid heated in two locations with different atmospheric pressures (for example, sea level vs high altitude, or an open beaker vs reduced-pressure setup). Ask which explanation best connects IMF strength to the observed boiling-point difference. Distractors should include: (1) pressure does not matter because IMFs alone determine boiling point, (2) lower pressure weakens the liquid’s IMFs, (3) boiling at lower temperature means the liquid has become less polar or has fewer hydrogen bonds, and (4) higher altitude causes molecules to move faster at the same temperature. Avoid relying on numeric vapor-pressure data; require conceptual interpretation."
+      },
+      "revision_rounds": 0,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.99,
+        "issues": [],
+        "revision_instructions": "No substantive revision needed. The item is scientifically accurate, the keyed answer is correct, and the distractors are clearly incorrect. Optional minor refinement: in option D, replace 'reaches boiling sooner' with wording focused only on the incorrect kinetic-theory claim, to avoid introducing heating-rate ambiguity.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.95,
+        "issues": [
+          "Option B is noticeably longer and more specific than the distractors, creating a mild length/clueing cue.",
+          "The item is conceptually strong but is closer to upper-medium difficulty than truly hard for many students, since the stem directly signals the canonical sea-level vs high-altitude boiling scenario.",
+          "Distractors A, C, and D are plausible misconceptions, but A is somewhat absolute ('depends only') and may be easier to eliminate than the others."
+        ],
+        "revision_instructions": "Item is ready for use. If desired, strengthen quality further by reducing cueing from option length and making distractors more parallel in structure. To better match 'hard' difficulty, consider adding a slightly more interpretive twist while preserving a single best answer—for example, comparing the same liquid under open vs reduced-pressure conditions without naming altitude, or asking which statement best explains why the IMF strength is unchanged despite the lower boiling temperature.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate is about the effect of external pressure on the boiling point of the same liquid and targets the misconception that boiling temperature is determined only by intermolecular forces. None of the completed questions assess pressure-dependent boiling of a single substance; they all focus on comparing boiling-point differences across substances or structures based on IMF type, branching, polarity, hydrogen bonding, polarizability, or network covalent bonding.",
+        "most_similar_question_id": null,
+        "revision_instructions": ""
+      }
+    }
+  ],
+  "rejected_questions": [
+    {
+      "question_blueprint": {
+        "topic": "Intermolecular forces and boiling point trends",
+        "learning_objective": "Explain how intermolecular forces affect boiling points by comparing molecules with different dominant IMFs while controlling for molar mass.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "Boiling point is determined mainly by molar mass or size, so the heaviest molecule always has the highest boiling point regardless of IMF type.",
+        "correct_answer_concept": "A substance capable of hydrogen bonding can have a higher boiling point than a heavier substance that only exhibits London dispersion forces, because IMF strength—not mass alone—governs the energy required to separate molecules.",
+        "expected_reasoning": "Students must compare a set of molecules where mass trends conflict with IMF trends, identify the strongest intermolecular interaction present in each, and conclude that hydrogen bonding outweighs a simple 'heavier means higher boiling point' rule. Reasoning should explicitly separate intramolecular bond type from intermolecular attraction and use boiling as a process of overcoming IMFs.",
+        "question_style_notes": "Use a ranking or 'which has the highest boiling point' format with 4 molecules such as an alcohol, ether, alkane, and haloalkane chosen so molar masses are deceptively similar or the non-H-bonding option is slightly heavier. Distractors should map to choosing the heaviest or the most atoms."
+      },
+      "last_candidate": {
+        "question": "The following liquids have similar molar masses: 1-propanol (60.1 g/mol), methyl ethyl ether (60.1 g/mol), butane (58.1 g/mol), and 2-chloropropane (78.5 g/mol). Which substance is expected to have the highest boiling point, even though it is not the heaviest molecule listed?",
+        "options": {
+          "A": "1-propanol",
+          "B": "methyl ethyl ether",
+          "C": "butane",
+          "D": "2-chloropropane"
+        },
+        "correct_answer": "A",
+        "explanation": "1-Propanol has the highest boiling point because boiling a liquid requires overcoming intermolecular attractions between molecules, not breaking the covalent bonds within each molecule. Among these substances, 1-propanol can hydrogen-bond to itself through its O-H group, giving it the strongest intermolecular forces. Methyl ethyl ether has dipole-dipole attractions, but it lacks a hydrogen-bond donor, so in a pure sample it cannot hydrogen-bond strongly to itself. Butane is nonpolar and relies only on London dispersion forces. 2-Chloropropane is heavier and more polarizable than some of the others, so its dispersion forces are stronger, but it still lacks hydrogen bonding. Therefore, intermolecular force strength—not mass alone—makes 1-propanol the unique highest-boiling substance here.",
+        "learning_objective": "Explain how IMFs affect boiling points",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: Revise the molecule set so the stem accurately reflects the mass comparison and better matches the blueprint. Use four compounds with more tightly clustered molar masses, keeping one alcohol, one ether, one alkane, and one haloalkane (or similar non-H-bonding polarizable molecule). Ensure the alcohol remains the unique highest-boiling option. Then update the stem to say 'similar molar masses' only if that is actually true. Consider increasing difficulty by asking for a ranking or using a subtler comparison while preserving a single best answer. Keep the explanation focused on boiling as overcoming intermolecular attractions, explicitly noting that the ether lacks a hydrogen-bond donor and therefore cannot hydrogen-bond strongly to itself in a pure sample.; Quality: Revise the molecule set so the stem's mass-control claim is fully accurate. Use four compounds with more tightly clustered molar masses, preserving one alcohol, one ether, one alkane, and one haloalkane or other non-hydrogen-bonding polarizable compound, with the non-hydrogen-bonding comparator only slightly heavier than the alcohol if possible. Then update the stem wording accordingly. To better meet 'hard' and 'analysis,' consider changing the task to a ranking or asking students to justify which compound has the highest boiling point despite not being the heaviest. Keep a single best answer and maintain plausible distractors that map to the 'heaviest molecule' misconception. Retain the explanation but add an explicit statement that boiling overcomes intermolecular attractions, not covalent bonds within molecules.; Duplicate:",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "content accuracy failed; MCQ quality failed",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": false,
+        "score": 0.72,
+        "issues": [
+          "The stem says the liquids have 'similar molar masses,' but 2-chloropropane (78.5 g/mol) is not similar to the others (~58–60 g/mol). This weakens the intended control of molar mass.",
+          "The item only partially matches the blueprint, which called for controlling molar mass so IMF differences, not a large mass difference, drive the comparison.",
+          "Difficulty is labeled hard/analysis, but the task is still a straightforward single-choice identification rather than a more analytical comparison or ranking.",
+          "The phrase 'even though it is not the heaviest molecule listed' is pedagogically useful but also highlights the flawed mass set, since the heaviest option is much heavier rather than only slightly heavier."
+        ],
+        "revision_instructions": "Revise the molecule set so the molar masses are genuinely close, while preserving one alcohol as the correct answer and non-hydrogen-bonding distractors (e.g., an ether, alkane, and haloalkane or similar polarizable compound). If using the phrase 'similar molar masses,' ensure the values support it. Ideally make the non-hydrogen-bonding comparator only slightly heavier than the alcohol so the misconception test is cleaner. Consider increasing cognitive demand by asking students to rank boiling points or justify which is highest based on dominant IMFs. Keep the explanation that boiling overcomes intermolecular attractions, not covalent bonds, and that the ether lacks an H-bond donor so it cannot hydrogen-bond strongly to itself in a pure sample.",
+        "blocking_errors": [
+          "The mass-control claim in the stem is scientifically/methodologically inaccurate: one listed compound has a substantially larger molar mass, so the item does not validly isolate IMF effects as intended."
+        ]
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.76,
+        "issues": [
+          "Stem contains an inaccurate mass-control claim: it says the liquids have 'similar molar masses,' but 2-chloropropane (78.5 g/mol) is not similar to the others (~58-60 g/mol).",
+          "Item only partially aligns with the blueprint requirement to compare IMF effects while controlling for molar mass; the large mass difference weakens the intended contrast.",
+          "Difficulty is lower than labeled 'hard' because the alcohol with an O-H group is an obvious hydrogen-bonding choice and the stem cues students with 'even though it is not the heaviest molecule listed.'",
+          "The wording in the stem provides strong clueing toward the target misconception and effectively points away from option D, reducing discrimination.",
+          "Cognitive level is closer to application/recognition than analysis; students mainly identify which molecule can hydrogen-bond rather than deeply compare conflicting trends.",
+          "Distractors are plausible at a basic level, especially the heaviest molecule, but the item could better exploit misconception-based distractors by making the mass comparison subtler.",
+          "Explanation is strong and aligned with the learning objective, but the item itself does not fully realize the harder analytic comparison described in the blueprint.",
+          "Metadata inconsistency: item marked approved in the source despite substantive quality issues noted in evaluator feedback."
+        ],
+        "revision_instructions": "Revise the molecule set so the mass-control premise is accurate and the comparison is more analytically demanding. Use four compounds with more tightly clustered molar masses, ideally one alcohol, one ether, one alkane, and one haloalkane or similarly polarizable non-hydrogen-bonding molecule, with the non-H-bonding comparator only slightly heavier than the alcohol. Then rewrite the stem to avoid the explicit clue 'even though it is not the heaviest molecule listed.' Consider a harder format such as ranking the compounds by boiling point or asking which has the highest boiling point with a less leading stem. Preserve a single best answer, keep distractors misconception-based, and retain the explanation's emphasis that boiling overcomes intermolecular attractions rather than covalent bonds.",
+        "blocking_errors": [
+          "Inaccurate statement in the stem about 'similar molar masses.'",
+          "Insufficient alignment with the blueprint's requirement to control for molar mass.",
+          "Item is not yet at the claimed 'hard' difficulty/analysis level due to overt cueing and obvious hydrogen-bonding signal."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "",
+        "most_similar_question_id": null,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "question_blueprint": {
+        "topic": "Intermolecular forces and molecular polarity in boiling points",
+        "learning_objective": "Explain how molecular shape and symmetry affect polarity and thus boiling point through IMF differences.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "If a molecule contains polar bonds, the molecule must exhibit strong dipole-dipole forces and therefore a higher boiling point than nonpolar molecules of similar size.",
+        "correct_answer_concept": "Molecular polarity depends on the vector sum of bond dipoles; symmetric molecules can be nonpolar despite polar bonds, so they may rely mainly on London dispersion forces and have lower boiling points than less symmetric polar isomers or analogs.",
+        "expected_reasoning": "Students must analyze structures, determine whether bond dipoles cancel, classify the resulting IMF pattern, and connect weaker overall intermolecular attraction to lower boiling point. They should avoid inferring polarity solely from electronegative atoms and instead reason from geometry plus IMF type.",
+        "question_style_notes": "Use isomeric or closely related molecules where one is symmetric and nonpolar and another is polar. Ask for the better explanation of a boiling-point difference rather than a direct recall ranking. Include structural formulas or names that require shape-based reasoning."
+      },
+      "last_candidate": {
+        "question": "Two isomers of 1,2-dichloroethene have different boiling points: cis-1,2-dichloroethene boils at about 60 °C, while trans-1,2-dichloroethene boils at about 48 °C.\n\nCondensed structures:\n- cis: ClHC=CHCl, with both Cl atoms on the same side of the C=C bond\n- trans: ClHC=CHCl, with the Cl atoms on opposite sides of the C=C bond\n\nWhich explanation best accounts for the higher boiling point of the cis isomer?",
+        "options": {
+          "A": "The cis isomer has stronger London dispersion forces because having both Cl atoms on the same side gives it a larger effective surface area for intermolecular contact.",
+          "B": "The cis isomer is polar because its C–Cl bond dipoles do not cancel, so it has stronger dipole-dipole attractions than the more symmetric trans isomer.",
+          "C": "Both isomers contain two polar C–Cl bonds, so they should have similar dipole-dipole forces; the boiling-point difference must mainly come from small differences in bond rotation and molecular motion.",
+          "D": "Because the two isomers have the same formula and molar mass, their London dispersion forces are similar, so polarity should not significantly affect their boiling points."
+        },
+        "correct_answer": "B",
+        "explanation": "Both isomers have the same molecular formula and similar molar mass, so the key difference is geometry. In cis-1,2-dichloroethene, the C–Cl bond dipoles do not cancel, so the molecule has a net dipole and exhibits dipole-dipole attractions in addition to London dispersion forces. In trans-1,2-dichloroethene, the bond dipoles largely cancel because of the more symmetric arrangement, so it is treated as nonpolar in general chemistry and relies mainly on London dispersion forces. Thus the reasoning chain is geometry → dipole noncancellation or cancellation → different intermolecular forces → different boiling points. Stronger intermolecular attractions in the cis isomer require more energy to separate the molecules, giving it the higher boiling point.",
+        "learning_objective": "Explain how IMFs affect boiling points",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: Scientifically, the item is sound and the keyed answer B is correct. Keep the core comparison and explanation. To strengthen the item for hard difficulty, revise distractors to be more plausible and more directly tied to common misconceptions: e.g., include a distractor claiming that because both isomers contain two polar C–Cl bonds, they should have similar dipole-dipole forces regardless of geometry, or one claiming the trans isomer boils higher due to better packing/greater effective surface contact. Preserve the reasoning chain explicitly: molecular geometry -> dipole cancellation or noncancellation -> IMF differences -> boiling-point difference.; Quality: Keep the stem, context, and correct answer concept, but revise the distractors so all options are plausible and require genuine analysis. Replace C with a distractor that accepts the observed higher boiling point of the cis isomer but attributes it incorrectly to packing/surface area or dispersion dominance. Replace A with a more plausible misconception tied to intermolecular forces rather than intramolecular bond strength. Revise D so it reflects a realistic student error, such as assuming that the presence of polar C–Cl bonds guarantees both isomers are equally polar regardless of geometry, or that equal molar mass means equal dispersion so polarity cannot matter. Consider relabeling difficulty to medium-hard unless distractors are strengthened further. A simple structural sketch could also improve visual clarity, though the current wording is acceptable.; Duplicate:",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "MCQ quality failed",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.93,
+        "issues": [
+          "Option A is weaker than ideal because it invokes an unsupported surface-area/dispersion argument rather than a highly plausible IMF misconception.",
+          "Option D is somewhat implausible as written because it asserts polarity should not significantly affect boiling point, which many students may recognize as false too easily.",
+          "The item is scientifically correct, but distractor quality is a bit below the stated hard difficulty."
+        ],
+        "revision_instructions": "The keyed answer B is scientifically correct and the explanation accurately connects geometry, dipole cancellation, intermolecular forces, and boiling point. No distractor is accidentally correct. To strengthen the item for hard difficulty, keep the stem and correct answer but revise distractors to be more plausible misconception-based alternatives. For example, replace A with a claim about trans packing better or having stronger dispersion due to shape, and revise D to reflect the misconception that having two polar C–Cl bonds makes both isomers similarly polar regardless of geometry. If desired, relabel difficulty slightly downward unless distractors are strengthened.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.8,
+        "issues": [
+          "Stem is clear and aligned with the learning objective and blueprint, and the keyed answer is scientifically correct.",
+          "Cognitive level matches analysis because students must use geometry to infer polarity and connect IMF differences to boiling point.",
+          "The distractors are not equally plausible for a hard item. A relies on a vague and questionable 'effective surface area' claim, C invokes bond rotation in an alkene context and is weak, and D is too easily dismissed because it directly contradicts known IMF effects.",
+          "Difficulty is overstated as hard; in its current form the item functions more like medium to medium-hard because B stands out and several distractors are weak.",
+          "There is some clueing from option quality: B is the only option that explicitly follows the desired reasoning chain of geometry -> dipole cancellation -> IMF difference -> boiling point.",
+          "Option lengths and specificity are somewhat imbalanced, with B more conceptually complete than the distractors.",
+          "The item is not a true/false-in-MCQ or K-type item, which is good, but the response set could better target the stated misconception that polar bonds do not always make a molecule polar.",
+          "A minor clarity issue is that the condensed structures are text-based rather than visual; a simple structural sketch would reduce cognitive load unrelated to the objective."
+        ],
+        "revision_instructions": "Keep the stem, isomer comparison, and keyed concept. Revise the distractors so all are plausible and misconception-driven. Include alternatives such as: (1) both isomers are equally polar because both contain two C-Cl bonds, so geometry should not matter; (2) the trans isomer should boil higher because its more extended shape allows better packing or stronger dispersion; (3) the cis isomer boils higher because the C-Cl bonds themselves are stronger, confusing intramolecular and intermolecular forces. Ensure only one option correctly links symmetry to dipole cancellation and dipole-dipole forces. Consider adding a simple cis/trans sketch for clarity. If distractors are not strengthened, relabel difficulty to medium-hard rather than hard.",
+        "blocking_errors": [
+          "Distractor set is insufficiently plausible for the claimed hard difficulty.",
+          "Option B is noticeably better constructed than the distractors, creating cueing and reducing discrimination.",
+          "At least one distractor (C) is scientifically awkward in this context because 'bond rotation' is not a compelling explanation for an alkene isomer boiling-point difference."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "",
+        "most_similar_question_id": null,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "question_blueprint": {
+        "topic": "Separating bond strength from intermolecular force strength in boiling phenomena",
+        "learning_objective": "Explain that boiling point depends on overcoming intermolecular attractions rather than breaking covalent bonds within molecules.",
+        "difficulty": "hard",
+        "cognitive_level": "Evaluation",
+        "target_misconception": "A molecule with stronger internal covalent bonds or more bonds must have a higher boiling point because boiling involves breaking those bonds.",
+        "correct_answer_concept": "Boiling is a physical change that separates molecules without breaking covalent bonds; therefore boiling-point differences are explained by intermolecular forces between molecules, not by the strength or number of intramolecular covalent bonds within each molecule.",
+        "expected_reasoning": "Students must evaluate competing explanations for a boiling-point trend, reject statements about bond dissociation within molecules, and select the explanation based on IMF strength. They should articulate that even substances with strong covalent bonds can have low boiling points if intermolecular attractions are weak, while substances with similar covalent frameworks can differ greatly due to IMFs.",
+        "question_style_notes": "Use an explanation-focused stem with two candidate student arguments about why one molecular substance boils at a higher temperature than another. The correct choice should require critiquing the 'stronger bonds inside the molecule' claim and endorsing IMF-based reasoning. Avoid ionic/network solids so the focus stays on molecular substances."
+      },
+      "last_candidate": {
+        "question": "Two students are comparing the boiling points of carbon tetrafluoride (CF4) and chloromethane (CH3Cl). Student 1 says CH3Cl boils at a higher temperature because its bonds are more polar, so more energy is needed to break the molecule apart. Student 2 says CH3Cl boils at a higher temperature because its molecules attract each other more strongly, although both substances have covalent bonds within each molecule. Which evaluation is most accurate?",
+        "options": {
+          "A": "Student 1 is more accurate because boiling point is determined mainly by the strength and polarity of covalent bonds within each molecule.",
+          "B": "Student 2 is more accurate because boiling point depends primarily on overcoming intermolecular attractions, and CH3Cl has stronger intermolecular forces than CF4.",
+          "C": "Both students are partly correct because boiling requires weakening covalent bonds within molecules and also overcoming attractions between molecules.",
+          "D": "Neither student is fully accurate because CF4 and CH3Cl are similar in size, so their London dispersion forces should be similar enough to give nearly the same boiling point."
+        },
+        "correct_answer": "B",
+        "explanation": "Boiling is a physical change in which molecules separate from one another; the covalent bonds inside each molecule are not broken. Therefore Student 1 is not accurate: bond polarity within a molecule does not mean the molecule must be broken apart during boiling. The key factor is intermolecular force strength. CF4 is nonpolar, so its molecules interact through London dispersion forces only. CH3Cl is polar, so its molecules experience dipole-dipole attractions in addition to dispersion forces. These stronger intermolecular attractions make CH3Cl boil at a higher temperature than CF4.",
+        "learning_objective": "Explain how IMFs affect boiling points",
+        "difficulty": "hard",
+        "cognitive_level": "evaluation",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: Approve as scientifically sound. Clean up encoding artifacts in bond labels and IMF terminology. If desired for improved item quality at the hard/evaluation level, make Student 2's statement slightly less complete and strengthen distractors so they are more plausibly IMF-related rather than obviously incorrect. However, no scientific revision is required for correctness.; Quality: Revise the item to better match a hard, evaluation-level objective. Keep the core concept that boiling separates molecules without breaking covalent bonds, but make both student arguments more plausible and partially defensible on the surface. Remove the explicit statement in the stem that covalent bonds remain intact during boiling; instead require students to infer that principle. Rewrite all options as parallel evaluative statements of similar length and sophistication, each addressing IMF-based reasoning versus intramolecular-bond reasoning. Replace the weak absolute distractor with nuanced misconceptions such as equal molar mass implying equal boiling point, bond polarity inside a molecule being confused with intermolecular strength, or stronger individual bonds being mistaken for stronger attractions between molecules. Correct all encoding/character issues. Approve only after the distractors are more plausible, the cueing is reduced, and the item better reflects hard/evaluation-level reasoning.; Duplicate:",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "content accuracy failed; MCQ quality failed",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": false,
+        "score": 0.74,
+        "issues": [
+          "Scientifically, the keyed answer B is correct: boiling separates molecules by overcoming intermolecular forces, not by breaking covalent bonds within molecules.",
+          "The explanation that CH3Cl has stronger intermolecular forces than CF4 is correct because CH3Cl is polar and exhibits dipole-dipole attractions in addition to London dispersion forces, whereas CF4 is nonpolar and has only dispersion forces.",
+          "Option D is scientifically problematic as written. Although the compounds are of comparable size/molar mass, it is not valid to conclude their London dispersion forces are 'similar enough to give nearly the same boiling point'; overall boiling point also depends on polarity, and in fact their boiling points are not nearly the same.",
+          "The item does not fully meet the stated 'hard' and 'evaluation' target. The stem and options make B too obvious and several distractors are weak or absolute rather than plausibly competing explanations.",
+          "Student 2's statement in the stem is already quite complete and effectively gives away the target principle, reducing the need for evaluation.",
+          "There is slight risk of conflating bond polarity with intermolecular force strength without clarifying that bond polarity matters only insofar as it creates a molecular dipole and stronger intermolecular attractions."
+        ],
+        "revision_instructions": "Keep answer B as the key, but revise the item for stronger assessment quality. Remove explicit cueing from Student 2 so students must infer that boiling does not break covalent bonds. Rewrite distractors to be more plausible and parallel, focusing on nuanced misconceptions: e.g., confusing bond polarity with intermolecular attraction, assuming similar molar mass means similar boiling point, or claiming stronger individual C–Cl/C–F bonds directly cause higher boiling point. Replace option D so it is not scientifically overbroad or easily dismissed. Ensure all options are evaluative statements of similar length and sophistication. If desired, mention that bond polarity contributes to boiling point only through molecular polarity and resulting IMFs, not because the covalent bonds themselves are broken during boiling.",
+        "blocking_errors": [
+          "Option D contains an unsound scientific inference by asserting that similar size implies London dispersion forces should be similar enough to produce nearly the same boiling point. This makes the distractor scientifically inaccurate in a way that is broader than the intended misconception and should be revised before approval."
+        ]
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.72,
+        "issues": [
+          "The item is scientifically correct and aligned to the learning objective, but it does not fully match the requested hard/evaluation level.",
+          "The stem strongly cues the correct reasoning by making Student 2's claim clearly normative and more complete than Student 1's, reducing cognitive demand.",
+          "Option B is noticeably the most precise and instructionally polished response, creating clueing through differential quality.",
+          "Distractors are weaker than the correct answer and are not equally plausible for stronger students; A and C are relatively easy to eliminate, and D is less compelling than IMF-based misconception distractors.",
+          "The item functions partly like a 'which student is correct' true/false-style comparison rather than a more nuanced evaluative judgment among competing explanations.",
+          "Options are not fully parallel in structure and sophistication; this makes the correct answer stand out.",
+          "The blueprint calls for two candidate student arguments that are both superficially plausible and require critique; here Student 1 is too clearly wrong because it explicitly says boiling breaks the molecule apart.",
+          "Difficulty is likely moderate rather than hard because students can answer using a single common rule: boiling overcomes intermolecular forces, not covalent bonds.",
+          "Minor notation/formatting concerns remain possible from source history (prior encoding/artifact feedback), so chemical formatting should be checked before use."
+        ],
+        "revision_instructions": "Revise the item to better target hard, evaluation-level reasoning. Keep the CF4 vs CH3Cl comparison if desired, but rewrite the two student claims so both sound initially plausible. Remove the explicit 'break the molecule apart' phrasing from Student 1 and instead frame the misconception more subtly, such as confusing bond polarity within molecules with stronger attractions between molecules. Rewrite all answer choices as parallel evaluative statements of similar length and tone. Strengthen distractors using nuanced misconceptions: equal molar mass/size implies similar boiling point, polar bonds automatically mean higher boiling point without distinguishing intra- vs intermolecular effects, or dispersion-only reasoning that ignores molecular polarity. Ensure only one option clearly integrates the key idea that boiling separates molecules and that higher boiling point reflects stronger intermolecular attractions. Clean up chemical notation and formatting artifacts before deployment.",
+        "blocking_errors": [
+          "Item quality does not sufficiently meet the stated hard/evaluation blueprint because the correct answer is too strongly cued and distractors are not plausibly competitive.",
+          "Options need revision for parallelism and reduced clueing before the item is ready for operational use."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate is in the same broad topic area of boiling points and intermolecular forces, but it targets a different misconception and stem pattern than the completed questions. Unlike ID 1, it is not about hydrogen-bond donor requirements in isomeric compounds with the same formula; unlike ID 2, it is not about branching effects among isomers with equal molar mass. This item specifically assesses the misconception that boiling breaks intramolecular covalent bonds, contrasted with the correct idea that boiling depends on intermolecular attractions.",
+        "most_similar_question_id": 1,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how intermolecular forces affect boiling points by relating molecular shape and contact surface area to London dispersion strength.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "Molecules with the same molar mass and formula have nearly identical boiling points, even if their shapes differ in ways that change how effectively molecules attract each other.",
+        "correct_answer_concept": "Among isomeric molecules with the same formula, the less compact structure can have the higher boiling point because greater surface contact strengthens London dispersion forces.",
+        "expected_reasoning": "Students should compare molecules of equal molar mass, recognize that IMF differences must arise from shape rather than composition, and infer that a more extended or less compact molecular geometry allows stronger temporary attractions between neighboring molecules. The answer should be based on how molecular shape changes dispersion-force effectiveness, not on mass.",
+        "question_style_notes": "Use a novel set of same-formula constitutional isomers that is not the C5H12 branching case already used. Ask for the best explanation of why one isomer has the higher boiling point, or for the most plausible boiling-point ranking. Include distractors claiming identical formula means identical boiling point, or that the most branched structure boils highest because it is 'more crowded.'"
+      },
+      "last_candidate": {
+        "question": "Three constitutional isomers with formula C3H8O have nearly the same molar mass: 1-propanol, 2-propanol, and methoxyethane. Their normal boiling points follow the trend 1-propanol > 2-propanol >> methoxyethane. Which explanation best accounts for this trend?",
+        "options": {
+          "A": "Because all three compounds have the same formula and nearly the same molar mass, their boiling points should be nearly identical.",
+          "B": "Methoxyethane has the lowest boiling point because, unlike the alcohol isomers, it cannot donate hydrogen bonds; between the two alcohols, the less compact 1-propanol has the higher boiling point because its shape allows more effective intermolecular contact and stronger dispersion attractions than 2-propanol.",
+          "C": "2-propanol has the highest boiling point because branching creates greater internal crowding, which strengthens attractions between molecules more than hydrogen bonding does.",
+          "D": "Methoxyethane boils much lower only because oxygen-containing molecules are always nonpolar, while both alcohols are polar."
+        },
+        "correct_answer": "B",
+        "explanation": "All three compounds have the same molecular formula and similar molar mass, so the boiling-point differences must come from the kinds and effectiveness of their intermolecular forces rather than mass alone. Methoxyethane is an ether: it can accept hydrogen bonds but cannot donate them to other ether molecules, so pure methoxyethane lacks the strong alcohol–alcohol hydrogen-bonding network present in 1-propanol and 2-propanol. That makes its boiling point much lower. Between the two alcohol isomers, both can hydrogen-bond, so the remaining difference is best explained by shape: 1-propanol is less compact than 2-propanol, giving greater surface contact between molecules and therefore somewhat stronger London dispersion forces. Thus 1-propanol boils higher than 2-propanol, and both boil far above methoxyethane.",
+        "learning_objective": "Explain how IMFs affect boiling points",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: Revise the item so that all compared molecules are same-formula constitutional isomers with the same functional group, allowing shape/branching and contact surface area to be the main variable. For example, compare aldehyde isomers only or ketone isomers only, or switch to haloalkane/ether isomers where hydrogen bonding is absent and functional-group differences are minimized. Then rewrite the explanation to explicitly state that because the molecules have the same formula and same functional group, differences in boiling point are most plausibly due to molecular shape affecting packing/contact area and thus London dispersion forces. Keep distractors that reflect the target misconceptions, but avoid absolute false claims like 'ketones always...' unless the stem cleanly supports why that is wrong.; Quality: Revise the item so molecular shape/contact area is the dominant and defensible variable. Prefer a set of constitutional isomers with the same functional group, same formula, and minimal competing polarity differences. Then ask either for the boiling-point ranking or for the best explanation of why the least compact isomer boils highest due to stronger London dispersion from greater surface contact. Make distractors equally plausible and similar in length; avoid absolutes like 'always.' If keeping a 'best explanation' format, explicitly frame the comparison around London dispersion effectiveness among isomers of equal molar mass and comparable polarity.; Duplicate: Revise to assess a meaningfully different IMF idea or change the task so branching/surface-area is not the primary determinant. Good options: (1) compare isomers/similar-mass compounds where hydrogen bonding vs no hydrogen-bond donation is decisive; (2) contrast dipole-dipole vs London dispersion without relying on branching; (3) use oxygen-containing isomers to test aldehyde vs alcohol vs ether intermolecular forces; or (4) keep boiling points but focus on why same formula does not guarantee similar bp through a different mechanism than compactness/branching.",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "content accuracy failed; MCQ quality failed; duplicate: The candidate substantially overlaps with two completed items, especially ID 2. Like ID 2, it targets the misconception that same-formula/same-mass isomers should have similar boiling points and uses branching/compactness → surface contact → London dispersion as the key explanation pattern. It also partially overlaps with ID 1 by contrasting an ether with an alcohol via self-hydrogen-bond donation vs acceptance. Although the candidate combines both ideas in one item, the dominant assessed concept and misconception are too close to ID 2, with secondary overlap to ID 1.",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": false,
+        "score": 0.32,
+        "issues": [
+          "The item does not cleanly assess the stated learning objective of relating molecular shape/contact surface area to London dispersion strength, because the largest boiling-point difference in the set is driven by functional-group-dependent hydrogen bonding rather than shape among comparable molecules.",
+          "The compared molecules are not all same-functional-group isomers: 1-propanol and 2-propanol are alcohols, while methoxyethane is an ether. This introduces a major IMF difference beyond molecular shape.",
+          "Although answer B is the best option provided, its first clause explains methoxyethane's low boiling point by lack of hydrogen-bond donation, which shifts the conceptual focus away from the blueprint's intended same-formula shape/dispersion comparison.",
+          "The stem says the compounds have 'nearly the same molar mass'; as constitutional isomers of C3H8O they have the same molar mass exactly. This is a minor scientific imprecision.",
+          "The explanation claims 'the boiling-point differences must come from the kinds and effectiveness of their intermolecular forces rather than mass alone,' which is true, but for this set the key difference is not primarily shape/contact area across all three molecules.",
+          "The distractor set is uneven: option D contains an absolute false statement ('oxygen-containing molecules are always nonpolar'), making it too easy and not plausibly competitive at the target difficulty.",
+          "Option C is also scientifically poor because 'internal crowding' is not a standard reason for stronger intermolecular attraction, and the statement that it strengthens attractions more than hydrogen bonding does is clearly false rather than subtly misconception-based.",
+          "Because the item mixes hydrogen bonding and branching effects, students can answer correctly without demonstrating the targeted reasoning that among equal-formula isomers with comparable polarity, the less compact structure has the higher boiling point due to stronger dispersion forces.",
+          "The provided evaluator feedback already identifies a critical design flaw, yet the item is marked approved; that approval is not justified by the science-alignment criteria."
+        ],
+        "revision_instructions": "Revise the question so all compared compounds are constitutional isomers with the same molecular formula and the same functional group, minimizing differences in hydrogen-bonding capability and overall polarity. Then ask for the best boiling-point ranking or explanation based specifically on molecular shape, packing/contact area, and London dispersion strength. Examples: compare isomeric aldehydes, ketones, ethers, or haloalkanes of the same formula where hydrogen bonding is absent or equivalent. If you want to keep alcohols, compare only alcohol isomers and make the question explicitly about why the less branched alcohol has a slightly higher boiling point once hydrogen-bonding ability is held constant. Also revise distractors to avoid obvious absolutes ('always') and make them plausible misconceptions about equal formula implying equal bp or branching increasing bp by 'crowding.' Correct the wording from 'nearly the same molar mass' to 'the same molar mass.'",
+        "blocking_errors": [
+          "Misalignment between the item and the stated learning objective/blueprint: functional-group-dependent hydrogen bonding, not shape-dependent dispersion among comparable isomers, is the dominant variable.",
+          "Item should not be approved as written because it does not isolate the intended concept and the keyed explanation partly relies on a different IMF principle than the target one."
+        ]
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.42,
+        "issues": [
+          "The item does not cleanly align with the stated blueprint because the compared isomers do not keep the same functional group constant; methoxyethane is an ether while 1-propanol and 2-propanol are alcohols.",
+          "The main intended construct is shape/contact surface area affecting London dispersion, but the largest boiling-point gap is actually dominated by hydrogen-bonding differences, so the target concept is confounded.",
+          "The correct option tests two different ideas at once: hydrogen-bond donation versus no donation, and linear versus more compact alcohol shape. This weakens focus on a single learning objective.",
+          "The item only partially matches the blueprint note to use a novel same-formula isomer set where shape/branching is the principal explanatory variable.",
+          "Option B is substantially longer and more specific than the distractors, creating length-based clueing.",
+          "Distractors are not equally plausible or parallel in construction; C and D contain exaggerated or scientifically poor claims, making elimination too easy for test-wise students.",
+          "Option D uses an absolute statement ('oxygen-containing molecules are always nonpolar') that is obviously false and not a high-quality distractor.",
+          "Option A reflects the misconception well, but the item overall becomes easier than intended because B is the only nuanced, scientifically balanced choice.",
+          "The stem is clear, but the phrase 'best accounts for this trend' allows multiple contributing factors; because hydrogen bonding and dispersion both matter here, the item is less cleanly discriminating than ideal.",
+          "Although labeled hard/analysis, many students can answer by recognizing alcohols hydrogen-bond and ethers do not, making the item function closer to moderate conceptual recall than true analysis of shape-dependent dispersion."
+        ],
+        "revision_instructions": "Revise the item so all compared molecules are same-formula constitutional isomers with the same functional group and similar polarity, making molecular shape/contact area the dominant variable. For example, compare aldehyde isomers, ketone isomers, haloalkane isomers, or ether isomers where hydrogen-bonding differences do not overwhelm the comparison. Ask either for the most plausible boiling-point ranking or for the best explanation of why the least compact isomer has the highest boiling point. Rewrite options so they are similar in length and structure, avoid absolute words like 'always,' and keep distractors tied to the target misconceptions: same formula means same boiling point, or more branching means higher boiling point because molecules are more 'crowded.' Ensure the explanation explicitly states that with same formula and same functional group, differences are best attributed to molecular shape affecting surface contact and London dispersion strength.",
+        "blocking_errors": [
+          "Construct-irrelevant confounding: functional-group differences and hydrogen-bonding ability dominate the comparison, so the item does not validly isolate shape-dependent London dispersion as required by the learning objective and blueprint.",
+          "Item is not ready for use because the keyed answer is supported by a mixed explanation rather than a single dominant principle aligned to the target objective.",
+          "Response set quality is below best-practice standard due to obvious distractors and a noticeably longer correct option that cues the answer."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": true,
+        "similarity_reason": "The candidate substantially overlaps with two completed items, especially ID 2. Like ID 2, it targets the misconception that same-formula/same-mass isomers should have similar boiling points and uses branching/compactness → surface contact → London dispersion as the key explanation pattern. It also partially overlaps with ID 1 by contrasting an ether with an alcohol via self-hydrogen-bond donation vs acceptance. Although the candidate combines both ideas in one item, the dominant assessed concept and misconception are too close to ID 2, with secondary overlap to ID 1.",
+        "most_similar_question_id": 2,
+        "revision_instructions": "Revise to assess a different IMF idea than branching/surface-area among isomers of similar mass. Avoid making the main reasoning hinge on compactness lowering boiling point, since that is already covered by ID 2. Also avoid reusing the alcohol-vs-ether self-hydrogen-bonding contrast from ID 1 unless it is clearly embedded in a new task type. Good options: (1) compare compounds of similar size where dipole-dipole vs London dispersion is decisive without branching; (2) focus on why an ether can accept but not donate hydrogen bonds in a ranking that does not also test branching; (3) compare same-functional-group isomers but ask about viscosity, vapor pressure, or enthalpy of vaporization instead of boiling point; or (4) compare molecules with similar mass where polarity differences, not shape, dominate."
+      }
+    },
+    {
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how intramolecular hydrogen bonding can alter boiling point by reducing intermolecular attraction.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "Any hydrogen bond always raises boiling point, regardless of whether it occurs within a molecule or between different molecules.",
+        "correct_answer_concept": "Intramolecular hydrogen bonding can lower a compound’s boiling point relative to a comparable isomer if it decreases the molecule’s ability to form intermolecular hydrogen bonds with neighboring molecules.",
+        "expected_reasoning": "Students should distinguish intramolecular from intermolecular hydrogen bonding and connect boiling to forces between molecules. They should infer that when an H-bond is 'used up' internally, fewer or weaker attractions remain between separate molecules, so less energy may be needed to boil the liquid than for an isomer that forms stronger intermolecular networks.",
+        "question_style_notes": "Frame as a comparison between two isomers where one can form intramolecular H-bonding and the other favors intermolecular H-bonding. Ask which has the lower boiling point and why. Distractors should assert that the molecule with any H-bonding must boil higher, or confuse intramolecular stabilization with stronger attractions between molecules."
+      },
+      "last_candidate": {
+        "question": "A student observes that one nitrophenol isomer distills more readily in steam and has a lower boiling point than the other. Based on hydrogen-bonding considerations, which explanation best accounts for this difference between o-nitrophenol and p-nitrophenol?",
+        "options": {
+          "A": "o-Nitrophenol has the lower boiling point because it can form an intramolecular hydrogen bond, which reduces its ability to form strong intermolecular hydrogen bonds with neighboring molecules",
+          "B": "o-Nitrophenol has the higher boiling point because its intramolecular hydrogen bond adds stability to each molecule and therefore makes the liquid harder to vaporize",
+          "C": "p-Nitrophenol has the lower boiling point because its para arrangement favors intramolecular hydrogen bonding more than intermolecular hydrogen bonding",
+          "D": "p-Nitrophenol has the lower boiling point because intermolecular hydrogen bonding in the para isomer is weaker than in the ortho isomer"
+        },
+        "correct_answer": "A",
+        "explanation": "o-Nitrophenol can form an intramolecular hydrogen bond between the –OH group and a nitro oxygen because the groups are adjacent. That internal hydrogen bond reduces the molecule’s ability to form strong intermolecular hydrogen-bonding interactions with other molecules. As a result, the liquid has weaker attractions between molecules and boils more easily. In p-nitrophenol, the groups are too far apart for the same intramolecular hydrogen bond, so it forms stronger intermolecular hydrogen-bonded associations, giving it the higher boiling point.",
+        "learning_objective": "Explain how IMFs affect boiling points",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: Keep answer A as the key. For a stronger item, revise distractors C and D to reflect more realistic student misconceptions specifically about intramolecular vs intermolecular hydrogen bonding rather than vague claims about symmetry or reduced importance. Also consider softening absolutes in B while preserving its incorrect reasoning.; Quality: Keep the stem and core comparison, since the concept tested is strong and the scientific content is accurate. Revise the distractors to be more parallel, more plausible, and more directly tied to the target misconception. Remove absolute words like 'always.' Make all options similar in length and reasoning depth to reduce cueing. For example, have each option explicitly compare whether o- or p-nitrophenol has the lower boiling point and attribute that trend to either intramolecular or intermolecular hydrogen bonding, rather than using weak ideas such as symmetry or 'less important' hydrogen bonding. If this exam already contains another intramolecular-vs-intermolecular boiling-point item, either change the context/property tested or substantially alter the reasoning demand to avoid redundancy.; Duplicate: Revise away from boiling point as the outcome, since that concept is already covered by completed questions. Keep intramolecular-vs-intermolecular hydrogen bonding, but shift to a distinct property such as water solubility, steam volatility, IR O–H stretching behavior, acidity, or chromatographic mobility. Alternatively, if boiling point must be retained, use a substantially different task structure and misconception focus—for example, ask students to predict which isomer shows less association in the vapor phase or to justify an experimental observation rather than directly comparing boiling points. Avoid preserving the same answer pattern 'intramolecular H-bond lowers intermolecular H-bonding, so lower boiling point.'",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "MCQ quality failed; duplicate: The candidate is a near-duplicate of the completed intermolecular-forces/boiling-point items, especially ID 3. Both assess the same core concept that boiling point depends on the extent/effectiveness of intermolecular hydrogen bonding rather than merely the presence of hydrogen-bonding functionality. The candidate uses a specific ortho/para nitrophenol context and introduces intramolecular H-bonding, but the answer pattern is still the same: reduced intermolecular H-bonding leads to lower boiling point. It also overlaps with ID 1 in targeting the misconception that any oxygen-containing structure or any hydrogen bond automatically increases boiling point. The evaluator feedback explicitly notes that this exact boiling-point outcome and reasoning pattern are already represented.",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.92,
+        "issues": [
+          "The keyed answer A is scientifically correct: o-nitrophenol can form an intramolecular hydrogen bond, which reduces intermolecular association relative to p-nitrophenol and helps explain its greater steam volatility/lower boiling point.",
+          "The explanation accurately links boiling point to intermolecular rather than intramolecular hydrogen bonding.",
+          "Distractors B, C, and D are incorrect and not accidentally correct in standard introductory/general organic chemistry treatment.",
+          "Option B is a plausible misconception, but its wording may slightly overemphasize 'stability to each molecule' rather than explicitly contrasting intermolecular forces.",
+          "Options C and D are weaker distractors than A/B because they are less parallel and somewhat less realistic as student reasoning."
+        ],
+        "revision_instructions": "Content is sound and the key is correct. If revising for quality only, make distractors more parallel and misconception-driven: have each option explicitly compare which isomer has the lower boiling point and whether the cause is intra- or intermolecular hydrogen bonding. You could also tighten the stem by saying 'lower boiling point and is more readily steam-distilled' to avoid any ambiguity. But no scientific correction is required.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.78,
+        "issues": [
+          "The item aligns well with the blueprint conceptually, but it does not fully adhere to response-set best practices because the options are not sufficiently parallel in structure and plausibility.",
+          "Option A is noticeably more complete and instructionally precise than the distractors, creating potential key cueing by length and specificity.",
+          "Distractors C and D are relatively weak and less plausible for the stated target misconception; they do not mirror the main conceptual confusion as directly as they should.",
+          "Option B is plausible but relies on a somewhat simplistic 'more stable molecule = higher boiling point' framing that is less chemically focused on intermolecular forces than the learning objective requires.",
+          "The stem is clear and scientifically grounded, but it partly gives away the intended mechanism by explicitly invoking 'hydrogen-bonding considerations,' reducing analytical demand somewhat.",
+          "The item is close to analysis level, but because students familiar with the standard o-/p-nitrophenol example may recall a memorized fact, the reasoning demand may function closer to recognition in some contexts.",
+          "There is some redundancy between the stem and option wording, and all options repeat isomer names and causal clauses in a way that could be tightened for readability.",
+          "Given the provided evaluator feedback, the item should not remain approved as-is because distractor quality and distinctiveness from similar existing boiling-point items are unresolved."
+        ],
+        "revision_instructions": "Keep the core comparison because the scientific content is accurate and aligned to the learning objective. Revise the response set so all four options are parallel, similar in length, and explicitly compare which isomer has the lower boiling point for a reason tied to intra- vs intermolecular hydrogen bonding. Strengthen distractors to reflect realistic misconceptions: for example, that any hydrogen bond raises boiling point, that intramolecular hydrogen bonding strengthens attractions between molecules, or that para placement permits stronger internal hydrogen bonding. Reduce cueing by making the correct option no longer the most nuanced or longest. If item-bank redundancy is a concern, either change the measured property (e.g., steam volatility, water solubility, vapor-phase association) or alter the task structure so students must interpret an observation rather than directly restate the standard principle.",
+        "blocking_errors": [
+          "Distractor set is not yet strong or balanced enough for high-quality operational use.",
+          "The correct answer is cued by superior specificity and conceptual precision relative to the distractors.",
+          "The item has unresolved redundancy concerns with similar intramolecular-vs-intermolecular hydrogen-bonding/boiling-point items noted in prior feedback."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": true,
+        "similarity_reason": "The candidate is a near-duplicate of the completed intermolecular-forces/boiling-point items, especially ID 3. Both assess the same core concept that boiling point depends on the extent/effectiveness of intermolecular hydrogen bonding rather than merely the presence of hydrogen-bonding functionality. The candidate uses a specific ortho/para nitrophenol context and introduces intramolecular H-bonding, but the answer pattern is still the same: reduced intermolecular H-bonding leads to lower boiling point. It also overlaps with ID 1 in targeting the misconception that any oxygen-containing structure or any hydrogen bond automatically increases boiling point. The evaluator feedback explicitly notes that this exact boiling-point outcome and reasoning pattern are already represented.",
+        "most_similar_question_id": 3,
+        "revision_instructions": "Revise away from boiling point as the measured property. Keep the intramolecular-vs-intermolecular hydrogen-bonding idea, but assess it through a different observable such as steam volatility, water solubility, IR O–H stretching behavior, acidity, extraction behavior, or chromatographic mobility. Also avoid preserving the same causal chain 'intramolecular H-bond reduces intermolecular H-bonding, therefore lower boiling point.' If boiling point must remain, substantially change the task structure—for example, ask students to interpret an experimental observation, compare association in different phases, or evaluate competing explanations—so it does not duplicate the existing IMF/boiling-point concept coverage."
+      }
+    },
+    {
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how IMFs affect boiling points by evaluating boiling-point trends in homologous molecular series where increasing chain length changes dispersion forces.",
+        "difficulty": "hard",
+        "cognitive_level": "Analyze",
+        "target_misconception": "If molecules in a homologous series have the same kind of strongest intermolecular force (for example, all can hydrogen-bond or all are nonpolar), then their boiling points should be nearly the same because the IMF type is unchanged.",
+        "correct_answer_concept": "Even when molecules share the same IMF categories, boiling points can increase systematically because the magnitude of those forces changes with molar mass, polarizability, and surface area; for example, longer-chain alcohols or alkanes have stronger dispersion forces and thus higher boiling points than smaller homologs.",
+        "expected_reasoning": "Students should compare molecules that all exhibit the same general IMF type and realize that 'same category' does not mean 'same strength.' They should infer that adding carbon atoms increases electron cloud size and contact area, strengthening London dispersion; in alcohols, hydrogen bonding remains present across the series, but differences in dispersion still shift boiling points upward. The correct choice should therefore explain a trend such as methanol < ethanol < 1-propanol < 1-butanol without claiming that all alcohols boil similarly just because each can hydrogen-bond.",
+        "question_style_notes": "Use a data-interpretation or claim-evaluation format with a short boiling-point trend across a homologous series, preferably alcohols to make the misconception less obvious than simple alkanes. Ask for the best explanation of why the boiling points are not nearly identical even though each molecule can hydrogen-bond. Distractors should include 'hydrogen bonding is either present or absent, so all alcohols should have similar boiling points' and 'only bond polarity matters, not size once IMF type is fixed.'"
+      },
+      "last_candidate": {
+        "question": "The boiling points of four straight-chain alcohols are shown below: methanol (64.7 °C), ethanol (78.4 °C), 1-propanol (97.2 °C), and 1-butanol (117.7 °C). Which statement best explains why the boiling points increase across this series even though each molecule can hydrogen-bond?",
+        "options": {
+          "A": "Each alcohol can hydrogen-bond, so their boiling points should stay nearly the same; the differences mainly reflect measurement variation.",
+          "B": "Each alcohol can hydrogen-bond, but the larger alcohols form more hydrogen bonds per molecule, so hydrogen bonding alone causes the increase.",
+          "C": "Each alcohol can hydrogen-bond, but boiling point is controlled mainly by O–H bond polarity; the longer carbon chain makes that bond much more polar.",
+          "D": "Each alcohol can hydrogen-bond, but longer carbon chains increase electron cloud size and surface area, strengthening dispersion forces and raising boiling point."
+        },
+        "correct_answer": "D",
+        "explanation": "All four alcohols have similar hydrogen-bonding capability because each contains one O–H group. However, boiling point depends on the overall strength of intermolecular attractions, not just whether hydrogen bonding is present. From methanol to 1-butanol, increasing chain length increases molar mass, polarizability, and surface area, which strengthens London dispersion forces. Those stronger dispersion forces add to hydrogen bonding, so the boiling points rise systematically across the series.",
+        "learning_objective": "Explain how IMFs affect boiling points",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: Scientifically sound as written. Optional polish: ensure special characters render correctly and keep option wording parallel. No substantive chemistry revision is required.; Quality: Keep the stem and data table/trend, since they align well with the learning objective and blueprint. Revise the response set so all options are parallel in length and plausibility. Replace one of the redundant distractors (A or C) with a distinct misconception, such as 'boiling point depends only on bond polarity once hydrogen bonding is present' or 'the number of hydrogen bonds per molecule must increase across the series.' Strengthen option B so it reflects a plausible but incorrect student idea without being scientifically obviously false. Shorten option D or expand the distractors to reduce answer-length cueing. Ensure chemical notation and degree symbols render cleanly. After these revisions, the item should be ready for use.; Duplicate: Revise to target a different IMF concept rather than the 'same IMF category but stronger overall attractions due to larger size/surface area' idea. Good alternatives: compare an alcohol vs an ether of similar molar mass to test donor vs acceptor and self-hydrogen-bonding ability; compare a diol vs a monoalcohol to assess how number/placement of hydrogen-bonding sites affects boiling point; compare similar-size polar molecules that cannot hydrogen-bond to focus on dipole-dipole forces; or distinguish intermolecular-force trends from network-covalent phase changes.",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "MCQ quality failed; duplicate: This candidate is a near-duplicate of ID 5. Both assess the same core concept and misconception: even when all substances in a set share the same dominant IMF category, boiling points still increase because the strength of that IMF contribution changes with size/polarizability/surface area. The stem pattern is also very similar: present a homologous/related series with the same IMF type, ask why boiling points rise anyway, and key the explanation to stronger dispersion forces in larger electron clouds. Although this candidate uses straight-chain alcohols with hydrogen bonding and ID 5 uses noble gases with dispersion only, the targeted reasoning and answer pattern are essentially the same.",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.94,
+        "issues": [
+          "Option B is somewhat implausible/oversimplified because these straight-chain monohydric alcohols do not simply 'form more hydrogen bonds per molecule' as chain length increases; each has one O–H group and similar hydrogen-bonding functionality.",
+          "There is a mild answer-length cue: D is the most complete and mechanistic option.",
+          "A and C are both misconception-based distractors, but one distractor could be made more parallel in plausibility and wording."
+        ],
+        "revision_instructions": "Chemistry is sound and the keyed answer D is correct. Keep the stem, data, and explanation. For polish, revise option B to a more plausible incorrect idea (for example, that hydrogen bonding becomes stronger because the O–H bond becomes more polar in larger alcohols, or that boiling point depends mostly on the presence of hydrogen bonding so differences should be small). Make options more parallel in length to reduce cueing. Ensure notation renders cleanly (°C, O–H).",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.81,
+        "issues": [
+          "Stem is clear, focused, and aligned with the learning objective and blueprint; the data trend supports analysis of IMF strength within a homologous series.",
+          "Correct answer is scientifically accurate and targets the intended misconception that same IMF category does not imply same boiling point.",
+          "Cognitive demand is appropriate for analyze-level claim evaluation, though the item remains closer to explanation selection than full analysis.",
+          "Distractor set is somewhat uneven in plausibility: option A is too easily dismissible because the boiling-point differences are far too large to be 'measurement variation.'",
+          "Option B invokes a common misconception, but the phrasing 'larger alcohols form more hydrogen bonds per molecule' is somewhat simplistic and may be rejected as obviously false by stronger students rather than functioning as a plausible distractor.",
+          "Option C is plausible but overlaps conceptually with A as another weak explanation centered on the wrong controlling factor; the distractor set would be stronger with four more distinct misconceptions.",
+          "Response options are not parallel in length or structure; option D is more complete and mechanistic, creating answer-length cueing.",
+          "The item is generally free of ambiguity, but minor wording polish could improve parallelism and readability.",
+          "Formatting/rendering should be checked for chemical notation and degree symbols to ensure clean presentation.",
+          "Because approval should be limited to items fully ready for use, the cueing and distractor-quality issues prevent approval in its current form."
+        ],
+        "revision_instructions": "Keep the stem and the alcohol boiling-point data. Revise the answer choices so they are more parallel in length and grammatical structure, and reduce cueing by shortening D or expanding the distractors comparably. Replace or strengthen the weakest distractor (especially A) so it reflects a realistic student misconception rather than an implausible claim about measurement error. Consider using four explanation statements built from distinct misconceptions: (1) same hydrogen bonding means similar boiling points, (2) larger alcohols can form more hydrogen bonds per molecule, (3) O–H bond polarity increases down the series, and (4) dispersion forces increase with chain length, polarizability, and surface area. Ensure all options begin similarly and are comparable in specificity. After these revisions, the item would likely be ready for use.",
+        "blocking_errors": [
+          "Answer-length/quality cueing: the correct option is more mechanistic and more fully developed than the distractors.",
+          "At least one distractor (A) is insufficiently plausible for a hard, high-quality item."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": true,
+        "similarity_reason": "This candidate is a near-duplicate of ID 5. Both assess the same core concept and misconception: even when all substances in a set share the same dominant IMF category, boiling points still increase because the strength of that IMF contribution changes with size/polarizability/surface area. The stem pattern is also very similar: present a homologous/related series with the same IMF type, ask why boiling points rise anyway, and key the explanation to stronger dispersion forces in larger electron clouds. Although this candidate uses straight-chain alcohols with hydrogen bonding and ID 5 uses noble gases with dispersion only, the targeted reasoning and answer pattern are essentially the same.",
+        "most_similar_question_id": 5,
+        "revision_instructions": "Revise to target a meaningfully different IMF concept rather than the 'same IMF type, but stronger overall attractions due to larger size/surface area' idea. Good alternatives: (1) compare an alcohol and an ether of similar molar mass to test self-hydrogen-bond donor vs acceptor requirements; (2) compare a diol with a monoalcohol to test how the number/placement of hydrogen-bonding sites changes boiling point; (3) compare similarly sized polar molecules that cannot hydrogen-bond to focus on dipole-dipole forces; or (4) contrast molecular substances with a network-covalent solid to distinguish IMF-based boiling from bond-breaking in extended lattices. If keeping alcohols, shift the reasoning away from homologous-series size trends and toward hydrogen-bonding-site effects or structural constraints."
+      }
+    },
+    {
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how intermolecular forces affect boiling points by distinguishing the effect of IMF strength from the effect of the number of molecules present in a sample.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "Boiling point depends on how many intermolecular attractions are present in the sample as a whole, so a larger amount of a substance or more total molecule–molecule contacts means a higher boiling point.",
+        "correct_answer_concept": "Boiling point is an intensive property determined by the strength and nature of attractions between particles in the substance, not by sample size or the total number of intermolecular contacts present in a particular amount. Increasing the amount changes the energy needed to vaporize the entire sample, but not the temperature at which vapor pressure equals external pressure.",
+        "expected_reasoning": "Students should analyze a comparison in which the same pure liquid is considered in different sample sizes, or where a student's explanation appeals to 'more molecules means more forces to break.' The correct reasoning is that boiling occurs when individual molecules can escape such that the liquid's vapor pressure matches external pressure; this depends on average intermolecular attraction per particle environment, which is unchanged by sample amount. More liquid requires more total heat to vaporize completely, but the boiling point remains the same under the same pressure. Stronger IMFs raise boiling point because they lower vapor pressure at a given temperature, not because a beaker contains more total attractions overall.",
+        "question_style_notes": "Use a scenario-based stem with two sealed or open containers holding different amounts of the same pure liquid at the same external pressure, asking which claim about boiling point is correct and why. Make distractors explicitly invoke the misconception that the larger sample has a higher boiling point because there are more intermolecular attractions to overcome in total. Keep focus on boiling point rather than heat capacity or time to boil, but include tempting wording about 'requires more energy' so students must distinguish total energy from boiling temperature."
+      },
+      "last_candidate": {
+        "question": "Two open beakers at 1.00 atm contain the same pure liquid. Beaker 1 contains 50 mL and Beaker 2 contains 200 mL. Two students debate whether the larger sample should have a different boiling point when heated.\n\nWhich statement is correct?",
+        "options": {
+          "A": "Beaker 2 has a higher boiling point because it contains more molecules, so the total intermolecular attractions in the sample are greater.",
+          "B": "Beaker 2 has the same boiling point because boiling starts when the liquid's vapor pressure reaches 1.00 atm, and sample size does not change the liquid's intermolecular-force strength.",
+          "C": "Beaker 2 has a lower boiling point because the larger sample exposes more liquid surface, so vapor pressure reaches 1.00 atm at a lower temperature.",
+          "D": "Beaker 2 has a higher boiling point because the larger sample needs more total energy to vaporize, so it must boil at a higher temperature."
+        },
+        "correct_answer": "B",
+        "explanation": "Both beakers contain the same pure liquid at the same external pressure, so they have the same boiling point. Boiling begins when the liquid's vapor pressure equals the external pressure (1.00 atm here). That temperature depends on the nature and strength of intermolecular forces in the liquid, not on how much of the liquid is present. A larger sample does require more total energy to vaporize completely, but that changes the amount of heat needed, not the boiling temperature.",
+        "learning_objective": "Explain how IMFs affect boiling points",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: No scientific revision is required. If improving item quality, make the options more parallel in wording and sophistication so the correct answer is less cued. For example, phrase each choice as 'same/higher/lower boiling point because ...' and keep lengths similar. You could also sharpen distractors to reflect realistic misconceptions about total intermolecular attractions, vapor pressure, or confusing total energy required with boiling temperature, while preserving that only B is correct.; Quality: Keep the same core scenario because it is well aligned to the objective, but revise the item so it is genuinely hard and less cueable. Make all options parallel in structure, ideally each stating a boiling-point claim plus a reason in similar length and style. Reduce clueing by shortening or simplifying the correct answer so it is not obviously the most complete or polished option. Strengthen distractors to reflect realistic misconceptions: total number of IMFs in the sample, confusion between energy needed and boiling temperature, and mistaken ideas about vapor pressure or surface exposure, while ensuring they remain clearly incorrect. Consider framing the choices explicitly as competing student explanations ('Student 1 is correct because...') to match the stem. Replace 'most accurate' with wording like 'Which statement is correct?' to avoid implying partial truth. If the goal is truly analysis/hard difficulty, add a small layer of reasoning complexity, such as comparing total energy required versus boiling temperature under the same pressure, or asking which student explanation correctly distinguishes IMF strength from sample size.; Duplicate:",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "MCQ quality failed",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.95,
+        "issues": [
+          "Option B is noticeably more precise and polished than the distractors, which may make the item somewhat cueable despite being scientifically correct.",
+          "Option C's mention of 'more liquid surface' is underspecified because surface area depends on beaker geometry, not simply sample volume; while still incorrect as a boiling-point explanation, it is a weaker distractor formulation."
+        ],
+        "revision_instructions": "Scientifically, the item is sound and the keyed answer is correct. If revising for higher item quality, make the options more parallel in wording and sophistication, and avoid implying that a larger volume necessarily has more exposed surface area unless container geometry is specified. Keep the core concept unchanged: boiling point is intensive and depends on IMF strength and external pressure, whereas larger sample size changes total energy/time to vaporize, not boiling temperature.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.84,
+        "issues": [
+          "Correct answer is somewhat cued by being the longest, most precise, and most conceptually polished option.",
+          "Options are not fully parallel in structure or sophistication; B uses a more mechanistic explanation than the distractors.",
+          "Difficulty labeled 'hard' is not fully realized; the item is solid but likely medium for prepared students because the misconception is directly exposed and the correct rationale is easy to spot.",
+          "Distractor C introduces surface area/exposed surface, which may be less central to the stated target misconception than the stronger amount-versus-boiling-point confusion in A and D.",
+          "The stem says 'Two students debate' but the options are not framed as student claims, creating a mild mismatch between stem and response set.",
+          "The item is essentially a single-best conceptual question and does align to the objective, but it could demand more analysis by explicitly contrasting boiling point with total energy or time to boil."
+        ],
+        "revision_instructions": "Keep the scenario and correct concept, but revise for better item-writing quality and to match the intended hard/analysis level. Make all answer choices parallel in wording and length, ideally each in the form 'Same/higher/lower boiling point because ...'. Reduce cueing by shortening the correct option and making distractors equally polished. Align the options more tightly to the target misconception: larger sample has more total IMFs to overcome, larger sample needs more energy so students infer higher boiling point, and possibly a distractor about longer time to reach boiling being confused with a higher boiling point. Consider explicitly asking which student reasoning correctly distinguishes boiling temperature from total energy required under the same external pressure. Preserve one clearly correct answer and avoid introducing irrelevant complexity.",
+        "blocking_errors": [
+          "Item is not fully ready for use as a 'hard' analysis question because the correct answer is noticeably cued by option quality/length.",
+          "Response set lacks parallel construction, which weakens assessment validity and increases test-wiseness."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "No completed question tests the same stem pattern or target misconception about sample size/amount affecting the boiling point of a pure liquid at fixed external pressure. The existing items all focus on comparing different substances or structures based on IMF type/strength, not on rejecting the misconception that more total molecules or more total intermolecular contacts in a larger sample changes boiling temperature.",
+        "most_similar_question_id": null,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "question_blueprint": {
+        "topic": "Intermolecular forces",
+        "learning_objective": "Explain how intermolecular forces affect boiling points by distinguishing boiling from bond breaking and by recognizing when ionic interactions, rather than molecular IMFs, dominate phase-change behavior.",
+        "difficulty": "hard",
+        "cognitive_level": "Analysis",
+        "target_misconception": "Ionic compounds can be explained with the same intermolecular-force framework as molecular substances, so an ionic substance is said to have a high boiling point because it has especially strong intermolecular forces between molecules.",
+        "correct_answer_concept": "A molecular substance’s boiling point depends on intermolecular forces between molecules, whereas an ionic compound’s very high boiling point is due to strong electrostatic attractions in an extended ionic lattice; it does not consist of discrete molecules held together by IMFs. Therefore comparisons must distinguish molecular boiling from disruption of an ionic lattice.",
+        "expected_reasoning": "Students should classify each substance first as molecular or ionic, then identify the relevant particle-particle attractions. For molecular substances, boiling separates intact molecules by overcoming IMFs such as London dispersion, dipole-dipole forces, and hydrogen bonding. For an ionic compound, the phase-change temperature is high because separating particles requires overcoming strong Coulombic attractions throughout the crystal lattice, not intermolecular forces between molecules. The correct option should therefore reject statements that describe ionic compounds as simply having the strongest IMF and instead explain the high boiling point using lattice attractions.",
+        "question_style_notes": "Use a comparison among two or three substances that includes at least one ionic compound and one molecular compound with hydrogen bonding so the distractors can tempt students to rank everything on a single IMF scale. Frame the stem around evaluating student explanations rather than direct recall of definitions. Avoid giant covalent network examples because that misconception was already used; focus specifically on ionic vs molecular. Distractors should include: (1) ionic compound has the highest boiling point because it has the strongest intermolecular forces between molecules, (2) molecular substance with hydrogen bonding must always exceed the ionic compound because hydrogen bonding is the strongest IMF, and (3) boiling an ionic compound breaks covalent bonds within formula units. The correct explanation should explicitly mention extended ionic lattice and absence of discrete molecules."
+      },
+      "last_candidate": {
+        "question": "A student writes the following explanation for why NaCl has a much higher boiling point than H2O and CH3OH: \"NaCl boils at a higher temperature because its molecules experience stronger intermolecular forces than the molecules of H2O and CH3OH.\" Which response best evaluates this explanation?",
+        "options": {
+          "A": "It is correct because NaCl, H2O, and CH3OH can all be compared on a single scale of intermolecular force strength, and ionic compounds simply lie at the strongest end of that scale.",
+          "B": "It is incorrect because H2O and CH3OH boil when intermolecular forces between intact molecules are overcome, whereas NaCl does not consist of discrete molecules; its high boiling point reflects strong ion-ion attractions in an extended ionic lattice.",
+          "C": "It is incorrect because hydrogen bonding in H2O and CH3OH is stronger than the attractions in NaCl, so molecular substances with O-H bonds should have higher boiling points than ionic substances.",
+          "D": "It is correct because boiling any substance requires breaking the strongest bonds present, so NaCl, H2O, and CH3OH differ mainly in the strengths of the bonds within their particles."
+        },
+        "correct_answer": "B",
+        "explanation": "H2O and CH3OH are molecular substances. When they boil, the molecules remain intact and the phase change involves overcoming intermolecular forces, including hydrogen bonding. NaCl is different: it is an ionic solid made of an extended lattice of Na+ and Cl− ions, not discrete NaCl molecules held together by intermolecular forces. Its much higher boiling point is therefore explained by strong Coulombic attractions in the ionic lattice rather than by placing it on the same IMF scale as molecular substances.",
+        "learning_objective": "Explain how IMFs affect boiling points",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: No scientific revision is required. If desired, improve item quality by making the options more parallel in sophistication and by giving CH3OH a more explicit comparative role, but keep the core distinction: molecular boiling overcomes IMFs between intact molecules, whereas NaCl's high boiling point reflects strong ion-ion attractions in an extended ionic lattice rather than 'intermolecular forces between molecules.'; Quality: Revise the item to preserve the ionic-vs-molecular distinction while increasing parallelism, reducing cueing, and raising cognitive demand. Use a stem that asks which explanation best accounts for the different boiling behaviors of NaCl, H2O, and CH3OH, or which student explanation is most defensible and why. Rewrite all four options to be similar in length, sophistication, and technicality. Ensure each option references all three substances in a comparable way and gives CH3OH a meaningful role, such as contrasting hydrogen bonding in H2O/CH3OH with the nonmolecular nature of NaCl. Replace blatantly false distractors like covalent O-H bond breaking with more plausible misconceptions, such as treating ionic lattice attractions as an extreme case on a single IMF continuum or claiming hydrogen bonding must always produce the highest boiling point. Avoid the multiple-true feel by not asking students to decide which combination of student statements is correct unless each response option represents a fully developed alternative interpretation. Keep the scientifically correct idea that NaCl is an extended ionic lattice without discrete molecules and that boiling molecular substances separates intact molecules by overcoming IMFs.; Duplicate: Revise to assess a more distinct concept or task rather than the general 'nonmolecular substances are not explained by IMFs' idea. Good options: (1) focus specifically on ionic solids using lattice energy factors such as ion charge and ionic radius; (2) ask about a different property of ionic lattices, such as conductivity in solid vs molten NaCl, brittleness, or dissolution; (3) restrict the item to molecular substances only and probe a different IMF misconception; or (4) change the task format so students must diagnose or generate particle-level reasoning about why 'NaCl molecules' is incorrect instead of selecting the standard molecular-vs-nonmolecular comparison.",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "MCQ quality failed; duplicate: The candidate is a near-duplicate of Question 6. Both use the same stem pattern of evaluating a student's explanation about boiling-point differences, and both target the same overarching misconception: incorrectly applying the intermolecular-force framework used for molecular substances to a nonmolecular substance. Question 6 does this with a network covalent solid (SiO2), while the candidate does it with an ionic solid (NaCl). The correct reasoning structure is also highly similar: molecular substances boil by overcoming IMFs between intact molecules, whereas the nonmolecular solid's high phase-change temperature is due to strong particle-particle attractions in an extended structure, not 'intermolecular forces between molecules.'",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": true,
+        "score": 0.94,
+        "issues": [
+          "Option D is somewhat less plausible than the other distractors because it invokes breaking bonds within particles during boiling, which may make the item slightly cueable.",
+          "CH3OH is included appropriately, but its comparative role is still somewhat secondary relative to H2O and NaCl."
+        ],
+        "revision_instructions": "The science is sound and the keyed answer is correct. If revising for item quality only, make distractors more parallel and plausible: replace option D with a more realistic misconception about placing ionic lattice attractions on the same continuum as molecular IMFs, or about hydrogen bonding necessarily dominating boiling-point comparisons. You could also give CH3OH a more explicit role in the reasoning by contrasting its hydrogen bonding and molecular nature with H2O and the nonmolecular ionic lattice of NaCl.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.74,
+        "issues": [
+          "The stem is clear and aligned with the learning objective, but the task is still close to a true/false-style evaluation of one quoted statement rather than a fully independent analytical comparison among substances.",
+          "Option quality is uneven: B is more precise and sophisticated than the distractors, creating cueing by length and technical specificity.",
+          "Distractors C and especially D are not equally plausible for a hard, analysis-level item; D is overly blatant because it invokes breaking the strongest bonds within particles during boiling.",
+          "CH3OH is included but plays little meaningful role in the reasoning beyond being grouped with H2O; the comparison underuses the three-substance design suggested by the blueprint.",
+          "The item tests the intended misconception well, but cognitive demand is somewhat reduced because only one option correctly invokes lattice vs molecular structure in an obviously distinctive way.",
+          "The stem asks students to evaluate a student explanation, which is acceptable, but the options are not parallel in structure and do not all address the same comparison with comparable completeness.",
+          "There is some test-wise cueing because the correct option contains the most nuanced explanation and the key phrase 'does not consist of discrete molecules,' while the distractors are simplified misconceptions."
+        ],
+        "revision_instructions": "Revise the item so all four answer choices are parallel in length, structure, and technical level. Keep the core distinction between molecular boiling and disruption of an ionic lattice, but rewrite distractors to be more plausible for advanced students. For example, make each option explicitly compare NaCl, H2O, and CH3OH and offer a complete explanatory framework: one could wrongly place all three on a single IMF continuum; one could wrongly claim hydrogen bonding dominates all boiling-point comparisons; one could wrongly treat NaCl as composed of molecules with exceptionally strong attractions; and the correct one should distinguish intact molecules in H2O/CH3OH from the extended ionic lattice in NaCl. Consider revising the stem to ask which explanation best accounts for the different boiling behaviors of all three substances, rather than simply judging whether one statement is correct. Preserve the scientifically accurate idea that boiling H2O and CH3OH overcomes IMFs between intact molecules, whereas NaCl’s high boiling point reflects strong ion-ion attractions in a nonmolecular lattice.",
+        "blocking_errors": [
+          "Response options are not sufficiently parallel, making the correct answer too easy to identify through style rather than chemistry reasoning.",
+          "At least one distractor is implausible for the stated hard difficulty and analysis cognitive level, so the item is not yet ready for operational use."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": true,
+        "similarity_reason": "The candidate is a near-duplicate of Question 6. Both use the same stem pattern of evaluating a student's explanation about boiling-point differences, and both target the same overarching misconception: incorrectly applying the intermolecular-force framework used for molecular substances to a nonmolecular substance. Question 6 does this with a network covalent solid (SiO2), while the candidate does it with an ionic solid (NaCl). The correct reasoning structure is also highly similar: molecular substances boil by overcoming IMFs between intact molecules, whereas the nonmolecular solid's high phase-change temperature is due to strong particle-particle attractions in an extended structure, not 'intermolecular forces between molecules.'",
+        "most_similar_question_id": 6,
+        "revision_instructions": "Revise to assess a more distinct concept or task rather than the general molecular-vs-nonmolecular boiling-point misconception. Good options: (1) focus specifically on ionic solids using lattice-energy factors such as ion charge, ionic radius, or comparing NaCl with MgO/KBr; (2) assess a different ionic-property concept such as conductivity in solid vs molten NaCl, brittleness, or dissolution; (3) keep the topic on boiling point but restrict the comparison to molecular substances only and probe a different IMF misconception; or (4) change the task format so students must generate or diagnose particle-level reasoning about why 'NaCl molecules' is incorrect, instead of selecting the standard nonmolecular-vs-molecular explanation."
+      }
+    }
+  ]
+}

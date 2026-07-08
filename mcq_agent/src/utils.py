@@ -14,17 +14,37 @@ from src.schemas import CompletedMCQRecord, MCQBatchOutput, MCQQuestion, Rejecte
 # Project root is the mcq_agent directory (parent of src/).
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = Path(os.getenv("MCQ_DATA_DIR", PROJECT_ROOT / "data"))
-EXAMS_DIR = Path(os.getenv("MCQ_EXAMS_DIR", DATA_DIR / "mds_exams"))
+DATAFOLDER_ROOT = Path(os.getenv("MCQ_DATAFOLDER_DIR", PROJECT_ROOT.parent / "dataFolder"))
 BEST_PRACTICES_DIR = Path(os.getenv("MCQ_BEST_PRACTICES_DIR", DATA_DIR / "mds_best_practices"))
 MISCONCEPTIONS_DIR = Path(
     os.getenv("MCQ_MISCONCEPTIONS_DIR", DATA_DIR / "mds_misconceptions")
 )
+MISCONCEPTION_TOPIC_DIRS = [
+    Path(
+        os.getenv(
+            "MCQ_MISCONCEPTIONS_IMFS_DIR",
+            MISCONCEPTIONS_DIR / "mds_IMFs",
+        )
+    ),
+    Path(
+        os.getenv(
+            "MCQ_MISCONCEPTIONS_OX_REDOX_DIR",
+            MISCONCEPTIONS_DIR / "mds_ox_redox",
+        )
+    ),
+    Path(
+        os.getenv(
+            "MCQ_MISCONCEPTIONS_SN1_SN2_DIR",
+            MISCONCEPTIONS_DIR / "mds_sn1_sn2_reduction",
+        )
+    ),
+]
 VECTORSTORE_DIR = Path(os.getenv("MCQ_VECTORSTORE_DIR", PROJECT_ROOT / ".chroma"))
 OUTPUT_DIR = Path(os.getenv("MCQ_OUTPUT_DIR", PROJECT_ROOT / "outputs"))
 
-EXAM_COLLECTION = "exam_examples"
 BEST_PRACTICES_COLLECTION = "best_practices"
 MISCONCEPTIONS_COLLECTION = "misconceptions"
+DEFAULT_BATCH_SIZE = 5
 
 SUPPORTED_EXTENSIONS = {".md", ".json", ".png"}
 
@@ -64,9 +84,8 @@ def get_embedding_config() -> dict[str, str]:
 def get_retrieval_config() -> dict[str, int]:
     """Default retrieval settings (overridable via env)."""
     return {
-        "exam_k": int(os.getenv("RETRIEVAL_EXAM_K", "6")),
         "best_practices_k": int(os.getenv("RETRIEVAL_BEST_PRACTICES_K", "5")),
-        "misconceptions_k": int(os.getenv("RETRIEVAL_MISCONCEPTIONS_K", "5")),
+        "misconceptions_k": int(os.getenv("RETRIEVAL_MISCONCEPTIONS_K", "8")),
         "chunk_size": int(os.getenv("INGESTION_CHUNK_SIZE", "1200")),
         "chunk_overlap": int(os.getenv("INGESTION_CHUNK_OVERLAP", "200")),
     }
@@ -81,17 +100,51 @@ def ensure_directories() -> None:
 def validate_data_directories(logger: logging.Logger | None = None) -> None:
     """Raise FileNotFoundError when expected data folders are absent."""
     log = logger or logging.getLogger("mcq_agent")
-    for label, path in (
-        ("exams", EXAMS_DIR),
-        ("best practices", BEST_PRACTICES_DIR),
-    ):
-        if not path.exists():
-            raise FileNotFoundError(
-                f"Missing {label} directory: {path}. "
-                "Place data under mcq_agent/data/ or set MCQ_DATA_DIR."
-            )
+    if not BEST_PRACTICES_DIR.exists():
+        raise FileNotFoundError(
+            f"Missing best practices directory: {BEST_PRACTICES_DIR}. "
+            "Place data under mcq_agent/data/ or set MCQ_BEST_PRACTICES_DIR."
+        )
+    if not any(BEST_PRACTICES_DIR.rglob("*")):
+        log.warning("Data directory is empty: %s", BEST_PRACTICES_DIR)
+
+    missing_topics = [
+        path for path in MISCONCEPTION_TOPIC_DIRS if not path.exists()
+    ]
+    if missing_topics:
+        missing_list = "\n  - ".join(str(path) for path in missing_topics)
+        raise FileNotFoundError(
+            f"Missing misconception topic director"
+            f"{'y' if len(missing_topics) == 1 else 'ies'}:\n  - {missing_list}\n"
+            "Symlink dataFolder/mds_* folders under mcq_agent/data/mds_misconceptions/ "
+            "or set MCQ_MISCONCEPTIONS_*_DIR env vars."
+        )
+
+    for path in MISCONCEPTION_TOPIC_DIRS:
         if not any(path.rglob("*")):
-            log.warning("Data directory is empty: %s", path)
+            log.warning("Misconception topic directory is empty: %s", path)
+
+
+def resolve_output_paths(
+    *,
+    output_name: str | None = None,
+    output_json: Path | None = None,
+    output_md: Path | None = None,
+) -> tuple[Path, Path, Path]:
+    """Resolve JSON, Markdown, and rejected JSON paths from CLI options."""
+    stem = (output_name or "generated_mcqs").strip()
+    if not stem:
+        raise ValueError("output_name must not be empty")
+    if Path(stem).suffix:
+        raise ValueError("output_name must not include a file extension")
+
+    json_path = output_json or OUTPUT_DIR / f"{stem}.json"
+    md_path = output_md or OUTPUT_DIR / f"{stem}.md"
+    if output_name:
+        rejected_path = OUTPUT_DIR / f"{stem}_rejected.json"
+    else:
+        rejected_path = OUTPUT_DIR / "rejected_mcqs.json"
+    return json_path, md_path, rejected_path
 
 
 def write_outputs(

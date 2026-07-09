@@ -37,12 +37,24 @@ class ExportError(RuntimeError):
 def find_pandoc() -> str:
     """Return the pandoc executable path or raise PandocNotFoundError."""
     path = shutil.which("pandoc")
-    if not path:
-        raise PandocNotFoundError(
-            "Pandoc is not installed or not on PATH. "
-            "Install it from https://pandoc.org/installing.html"
-        )
-    return path
+    if path:
+        return path
+
+    # Prefer the binary shipped with pypandoc_binary when system pandoc is absent.
+    try:
+        import pypandoc
+
+        bundled = pypandoc.get_pandoc_path()
+        if bundled and Path(bundled).is_file():
+            return str(bundled)
+    except Exception:  # noqa: BLE001
+        pass
+
+    raise PandocNotFoundError(
+        "Pandoc is not installed or not on PATH. "
+        "Install with `pip install pypandoc_binary` (see requirements.txt) "
+        "or from https://pandoc.org/installing.html"
+    )
 
 
 def find_pdf_engine(preferred: str | None = None) -> str:

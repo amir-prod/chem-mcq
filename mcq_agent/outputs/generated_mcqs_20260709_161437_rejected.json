@@ -1,0 +1,138 @@
+[
+  {
+    "question_blueprint": {
+      "topic": "Intermolecular forces",
+      "learning_objective": "Explain how London dispersion forces impact boiling point and why they increase with electron cloud size/surface area even in nonpolar substances.",
+      "difficulty": "medium",
+      "cognitive_level": "Application",
+      "target_misconception": "Nonpolar molecules have no meaningful intermolecular forces, so all nonpolar substances should have similarly low boiling points and branching or chain length should not matter.",
+      "correct_answer_concept": "All molecules, including nonpolar ones, experience London dispersion forces; these become stronger with greater polarizability and more effective surface contact, so larger/less branched nonpolar molecules generally have higher boiling points than smaller/more branched ones.",
+      "expected_reasoning": "Students should recognize that temporary induced dipoles exist in all molecules. They should compare either chain length or branching among hydrocarbons and infer that increased size or surface area strengthens dispersion forces, requiring more energy for boiling. The correct answer should rest on stronger dispersion in the larger or less branched molecule, not on permanent dipoles.",
+      "question_style_notes": "Use a set of alkanes or hydrocarbon isomers to isolate dispersion effects. Ask for the highest boiling point or the best explanation of a boiling-point trend. Include distractors based on 'nonpolar means no IMFs' and 'more branching raises boiling point because it makes molecules bigger'."
+    },
+    "last_candidate": {
+      "question": "Among the C5H12 isomers n-pentane, 2-methylbutane, and neopentane, which has the highest boiling point, and why?",
+      "options": {
+        "A": "Neopentane, because greater branching makes the molecule bigger and raises its boiling point",
+        "B": "n-Pentane, because its less branched shape allows greater surface contact and stronger London dispersion forces",
+        "C": "All three have the same boiling point because they have the same molar mass",
+        "D": "2-Methylbutane, because nonpolar molecules have negligible intermolecular forces so shape does not matter"
+      },
+      "correct_answer": "B",
+      "explanation": "All three substances are nonpolar, but all molecules experience London dispersion forces. For isomers with the same molar mass, the key difference is shape. The less branched n-pentane has a more extended shape, which allows more surface contact between molecules and therefore stronger dispersion forces. Stronger intermolecular forces require more energy to overcome, so n-pentane has the highest boiling point. More branching makes molecules more compact, which lowers surface contact and generally lowers boiling point among these isomers.",
+      "learning_objective": "explain how IMFs impacts boiling point",
+      "difficulty": "medium",
+      "cognitive_level": "application",
+      "source_context_used": [
+        "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n\u251c\u2500\u2500 mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n\u251c\u2500\u2500 mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n\u2514\u2500\u2500 mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` \u2014 human-readable misconception entries\n- `extracted_misconceptions.json` \u2014 structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+      ],
+      "evaluator_feedback": "Content: Scientifically, the item is sound and the keyed answer is correct. Optional refinements: shorten the stem to explicitly ask which pentane isomer has the highest boiling point, and consider revising distractors to more directly target the intended misconceptions while keeping options parallel in form.; Quality: Revise the item so students must apply the IMF principle, not just recall the ranking. A stronger version would either (1) ask which isomer has the highest boiling point and then require the best explanation, or (2) ask directly for the best explanation of why the boiling points differ among the C5H12 isomers. Keep options parallel and concise. Include distractors that explicitly target: (a) same molar mass means same boiling point, (b) more branching increases boiling point, and (c) nonpolar molecules have negligible IMFs. Example direction: 'Among n-pentane, 2-methylbutane, and neopentane, which has the highest boiling point, and why?' If staying single-best-answer, make the stem: 'Which C5H12 isomer has the highest boiling point?' and follow with a separate explanation item or incorporate reasoning into answer choices of similar length.; Duplicate:",
+      "revision_rounds": 3,
+      "approved": true
+    },
+    "rejection_reason": "MCQ quality failed",
+    "revision_rounds": 3,
+    "content_evaluation": {
+      "approved": true,
+      "score": 0.98,
+      "issues": [],
+      "revision_instructions": "No scientific revisions required. Optional quality refinements: keep all options more parallel in structure and, if desired, streamline the stem to 'Which C5H12 isomer has the highest boiling point, and why?' to emphasize application of London dispersion-force reasoning.",
+      "blocking_errors": []
+    },
+    "quality_evaluation": {
+      "approved": false,
+      "score": 0.82,
+      "issues": [
+        "The item is scientifically correct and aligned to the stated learning objective, topic, and target misconception.",
+        "The stem is generally clear, but it combines identification of the highest-boiling isomer with the explanation in one step; this is acceptable but slightly increases construct complexity.",
+        "Cognitive level is closer to low-to-mid application, but students may answer partly from memorized boiling-point trends among isomers rather than fully applying the IMF principle.",
+        "Distractors target relevant misconceptions, but option D is weak because it states two ideas at once ('nonpolar molecules have negligible intermolecular forces' and 'shape does not matter'), making it less plausible and somewhat unfocused.",
+        "Options are not fully parallel in structure: each includes both a choice and a rationale, but some rationales are more precise and developed than others.",
+        "The correct option is somewhat more complete and instructionally polished than the distractors, creating mild clueing by answer quality.",
+        "Because the item asks both 'which' and 'why,' it risks partial knowledge effects: a student may know n-pentane has the highest boiling point without understanding dispersion-force reasoning.",
+        "The explanation is strong, but the item would better isolate the intended reasoning if it asked directly for the best explanation of the boiling-point trend or separated ranking from explanation."
+      ],
+      "revision_instructions": "Revise to strengthen application of the intended concept and improve distractor quality. Preferred revision: ask either (1) 'Which C5H12 isomer has the highest boiling point?' followed by answer choices that are only the three isomers plus one plausible distractor format change, then use a second item for explanation; or (2) 'Why does n-pentane have a higher boiling point than the other C5H12 isomers?' with options focused solely on reasoning. If keeping the combined format, make all options parallel in length and specificity, and rewrite distractors so each targets one misconception cleanly: same molar mass means same boiling point; more branching increases boiling point; nonpolar molecules lack meaningful IMFs. Keep the rationale wording concise and balanced to reduce clueing.",
+      "blocking_errors": [
+        "Item is not fully optimized for the stated application-level objective because students can answer via recall of isomer boiling-point ranking rather than demonstrating the intended IMF reasoning.",
+        "Distractor D is insufficiently well-constructed and conflates multiple misconceptions, reducing plausibility and diagnostic value.",
+        "Mild clueing is present because the keyed option is the most scientifically precise and best-articulated response."
+      ]
+    },
+    "duplicate_evaluation": {
+      "is_duplicate": false,
+      "similarity_reason": "The candidate is in the same broad topic area of boiling point and intermolecular forces as the completed questions, but it tests a distinct concept and misconception. It focuses on branching/shape effects on London dispersion forces among nonpolar constitutional isomers of equal molar mass, especially the misconception that nonpolar molecules have negligible IMFs or that branching does not matter. Completed question 1 focuses on hydrogen bonding versus molecular mass/size, and completed question 2 focuses on molecular polarity/net dipole versus merely having polar bonds. The stem pattern, answer pattern, and target misconception are meaningfully different.",
+      "most_similar_question_id": 1,
+      "revision_instructions": ""
+    }
+  },
+  {
+    "question_blueprint": {
+      "topic": "Intermolecular forces",
+      "learning_objective": "Explain how intermolecular forces impact boiling point by comparing substances capable of hydrogen bonding with those that are not.",
+      "difficulty": "medium",
+      "cognitive_level": "Application",
+      "target_misconception": "Hydrogen bonding is thought to occur whenever a molecule contains hydrogen anywhere in its formula, so students may predict similarly high boiling points for compounds with O atoms even when no O\u2013H, N\u2013H, or F\u2013H bond is present.",
+      "correct_answer_concept": "A compound can have a much higher boiling point than a similarly sized comparison molecule if it can hydrogen-bond to itself; merely having an oxygen atom or being polar is not sufficient. Alcohols boil higher than comparable ethers because alcohol molecules form intermolecular O\u2013H\u00b7\u00b7\u00b7O hydrogen bonds, whereas ethers cannot donate H-bonds to themselves.",
+      "expected_reasoning": "Students should compare two similarly sized molecules such as an alcohol and an ether, recognize that both have dispersion forces and some polarity, then identify that only the alcohol has an O\u2013H bond needed for self hydrogen bonding. They should conclude that the extra intermolecular attraction from hydrogen bonding raises the alcohol\u2019s boiling point above that of the ether, even when molar masses are similar.",
+      "question_style_notes": "Use a comparison-based stem with two or three named molecules of similar size, including at least one alcohol and one ether. Ask which has the highest boiling point or which explanation best justifies the difference. Make distractors reflect confusion between 'contains oxygen' and 'can hydrogen-bond to itself,' without reusing the exact butanol/diethyl ether/pentane set from completed question 1."
+    },
+    "last_candidate": {
+      "question": "Three compounds of comparable molar mass are ethanol, dimethyl ether, and propane. Which statement best explains why ethanol has the highest boiling point?",
+      "options": {
+        "A": "Ethanol has the highest boiling point because its molecules can form hydrogen bonds with each other through an O\u2013H bond.",
+        "B": "Dimethyl ether has the highest boiling point because its oxygen atom lets its molecules hydrogen-bond to each other even without an O\u2013H bond.",
+        "C": "Dimethyl ether has the highest boiling point because its polarity alone makes its intermolecular forces stronger than ethanol\u2019s.",
+        "D": "Propane has the highest boiling point because its nonpolar molecules experience stronger attractions than the oxygen-containing compounds of similar mass."
+      },
+      "correct_answer": "A",
+      "explanation": "Ethanol contains an O\u2013H bond, so ethanol molecules can both donate and accept hydrogen bonds to each other. Dimethyl ether contains oxygen and is polar, but it lacks an O\u2013H, N\u2013H, or F\u2013H bond, so it cannot hydrogen-bond to itself in the same way. Propane is nonpolar and has only London dispersion forces. Therefore, ethanol has the strongest overall intermolecular forces and the highest boiling point.",
+      "learning_objective": "explain how IMFs impacts boiling point",
+      "difficulty": "medium",
+      "cognitive_level": "application",
+      "source_context_used": [
+        "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n\u251c\u2500\u2500 mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n\u251c\u2500\u2500 mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n\u2514\u2500\u2500 mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` \u2014 human-readable misconception entries\n- `extracted_misconceptions.json` \u2014 structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+      ],
+      "evaluator_feedback": "Content: This item is scientifically sound and acceptable as written. For a stronger version, make distractors more parallel and misconception-focused. For example, keep all options in the form 'X has the highest boiling point because Y' and replace weaker absolutes like 'always' with more plausible reasoning errors about polarity or the presence of oxygen being sufficient for self hydrogen bonding. If desired, also tighten the stem wording from 'similar molar mass' to 'comparable molar mass.'; Quality: Keep the stem and key concept, but revise before operational use. Make all options parallel and comparably plausible, ideally with the same syntactic frame (for example, '___ has the higher boiling point because ___'). Replace weak distractor D with a misconception more tightly tied to the target, such as confusing dipole-dipole forces or oxygen presence with self hydrogen bonding. Reduce clueing from absolutes like 'always' and 'any' unless the correct option uses similar strength of language. If item-set diversity matters, consider a different comparison pair than alcohol versus ether, or ask students to explain why an ether cannot hydrogen-bond to itself rather than repeating the standard boiling-point comparison pattern.; Duplicate: Revise to test a meaningfully different IMF concept or misconception rather than another similar-mass alcohol-vs-ether boiling-point comparison. Good options: (1) compare two molecules where both contain oxygen but differ in branching, shape, or net polarity; (2) ask directly about why a molecule like acetone or dimethyl ether cannot hydrogen-bond to itself, without framing it as a boiling-point comparison against an alcohol; (3) test ranking by IMF strength across several compounds; or (4) target a different misconception such as symmetry vs polarity or branching effects on dispersion forces.",
+      "revision_rounds": 3,
+      "approved": true
+    },
+    "rejection_reason": "MCQ quality failed; duplicate: The candidate is a near-duplicate of Question 1. Both use the same stem pattern: compare compounds of similar/comparable molar mass, contrast an alcohol with an ether (plus a third comparator), and ask which has the highest boiling point due to hydrogen bonding. The correct reasoning and target misconception are essentially the same: students may overfocus on mass/polarity/oxygen presence and miss that an alcohol with an O\u2013H bond can self-hydrogen-bond whereas an ether cannot. The added propane comparator does not make the concept meaningfully distinct.",
+    "revision_rounds": 3,
+    "content_evaluation": {
+      "approved": true,
+      "score": 0.96,
+      "issues": [
+        "The stem says 'comparable molar mass,' but propane (44.1 g/mol) is notably lighter than ethanol and dimethyl ether (both 46.1 g/mol). This does not make the science wrong, but the comparison is slightly imprecise.",
+        "Distractor D is somewhat weak because propane is clearly expected to have the lowest boiling point, making it less plausible than the other options."
+      ],
+      "revision_instructions": "The keyed answer A is scientifically correct. Ethanol has the highest boiling point because it can form intermolecular hydrogen bonds via its O\u2013H group, whereas dimethyl ether cannot donate hydrogen bonds to itself and propane has only dispersion forces. For improvement, tighten the stem to say 'similar size' or compare ethanol only with dimethyl ether, since those two are true isomers with identical molar mass. Consider strengthening distractor D to better reflect the target misconception, such as claiming that dimethyl ether's oxygen is sufficient for self hydrogen bonding or that polarity alone outweighs hydrogen bonding.",
+      "blocking_errors": []
+    },
+    "quality_evaluation": {
+      "approved": false,
+      "score": 0.82,
+      "issues": [
+        "The item is scientifically correct and aligned to the learning objective, but it is not fully ready for operational use because distractor quality is uneven.",
+        "Distractors are not equally plausible: option D is weak and easy to eliminate because it claims nonpolar propane has stronger attractions than oxygen-containing compounds of similar mass.",
+        "The response set functions partly as a disguised series of true/false judgments about each statement rather than as four comparably competitive alternatives.",
+        "Options are not fully parallel in plausibility and rationale strength; B and C target the misconception well, but D is less aligned with the target misconception.",
+        "The stem says 'comparable molar mass,' but propane is noticeably smaller than ethanol and dimethyl ether, which may slightly weaken the comparison framing.",
+        "There is some clueing because the correct option is the most precise and instructionally polished explanation, while at least one distractor is scientifically implausible at a glance.",
+        "The item closely matches a very common alcohol-versus-ether comparison pattern; if blueprint diversity matters, it may be too repetitive."
+      ],
+      "revision_instructions": "Keep the stem focus on why an alcohol has a higher boiling point than a similar ether, but revise before use. Use compounds with more closely matched molar masses and a tighter comparison frame. Make all options parallel in structure, such as '___ has the highest boiling point because ___.' Replace option D with a more misconception-based distractor, for example one claiming that any molecule containing oxygen can hydrogen-bond to itself or that polarity alone outweighs hydrogen bonding. Ensure all distractors are plausible and tied to the target misconception that oxygen presence is not sufficient for self hydrogen bonding. If item-pool diversity is needed, consider asking directly why an ether cannot hydrogen-bond to itself or use a different alcohol/ether pair.",
+      "blocking_errors": [
+        "Distractor D is insufficiently plausible and reduces item discrimination.",
+        "The comparison set does not fully satisfy the 'similar size/comparable molar mass' expectation because propane is substantially smaller than the other two compounds.",
+        "Response options are not yet balanced enough in plausibility for best-practice operational MCQ quality."
+      ]
+    },
+    "duplicate_evaluation": {
+      "is_duplicate": true,
+      "similarity_reason": "The candidate is a near-duplicate of Question 1. Both use the same stem pattern: compare compounds of similar/comparable molar mass, contrast an alcohol with an ether (plus a third comparator), and ask which has the highest boiling point due to hydrogen bonding. The correct reasoning and target misconception are essentially the same: students may overfocus on mass/polarity/oxygen presence and miss that an alcohol with an O\u2013H bond can self-hydrogen-bond whereas an ether cannot. The added propane comparator does not make the concept meaningfully distinct.",
+      "most_similar_question_id": 1,
+      "revision_instructions": "Revise to test a different IMF misconception or use a different question structure. Avoid another similar-mass alcohol-vs-ether boiling-point comparison. Good alternatives: (1) ask directly why dimethyl ether or acetone cannot hydrogen-bond to itself despite containing oxygen; (2) compare molecules where both contain oxygen but differ in branching, symmetry, or net polarity; (3) ask students to rank several compounds by dominant IMF/boiling point rather than identify the highest among an alcohol and ether; or (4) target a different misconception such as 'any polar bond means strong intermolecular forces' or 'oxygen presence alone guarantees hydrogen bonding.'"
+    }
+  }
+]

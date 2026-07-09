@@ -43,6 +43,9 @@ class VectorStoreManager:
 
     @staticmethod
     def _build_embeddings() -> OpenAIEmbeddings:
+        # OpenAIEmbeddings does not accept LangChain callbacks as constructor
+        # kwargs (they are mis-routed into the OpenAI client call). Cost
+        # tracking covers chat LLM usage only.
         config = get_embedding_config()
         if not config["api_key"]:
             raise ValueError(

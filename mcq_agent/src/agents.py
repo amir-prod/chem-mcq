@@ -3,29 +3,13 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import Any, Sequence
 
+from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 
-from src.prompts import (
-    BATCH_BLUEPRINT_SYSTEM_PROMPT,
-    BATCH_BLUEPRINT_USER_PROMPT,
-    BATCH_GENERATION_SYSTEM_PROMPT,
-    BATCH_GENERATION_USER_PROMPT,
-    BLUEPRINT_SYSTEM_PROMPT,
-    BLUEPRINT_USER_PROMPT,
-    CONTENT_CHECK_SYSTEM_PROMPT,
-    CONTENT_CHECK_USER_PROMPT,
-    DUPLICATE_CHECK_SYSTEM_PROMPT,
-    DUPLICATE_CHECK_USER_PROMPT,
-    GENERATION_SYSTEM_PROMPT,
-    GENERATION_USER_PROMPT,
-    QUALITY_CHECK_SYSTEM_PROMPT,
-    QUALITY_CHECK_USER_PROMPT,
-    REVISION_SYSTEM_PROMPT,
-    REVISION_USER_PROMPT,
-)
+from src.prompt_store import get_prompt
 from src.schemas import (
     CompletedMCQRecord,
     DuplicateCheckResult,
@@ -41,7 +25,9 @@ from src.utils import dumps_json, get_model_config
 logger = logging.getLogger("mcq_agent.agents")
 
 
-def build_chat_model() -> ChatOpenAI:
+def build_chat_model(
+    callbacks: Sequence[BaseCallbackHandler] | None = None,
+) -> ChatOpenAI:
     """Create an OpenAI-compatible chat model from environment settings."""
     config = get_model_config()
     if not config["api_key"]:
@@ -55,6 +41,8 @@ def build_chat_model() -> ChatOpenAI:
     }
     if config["base_url"]:
         kwargs["base_url"] = config["base_url"]
+    if callbacks:
+        kwargs["callbacks"] = list(callbacks)
     return ChatOpenAI(**kwargs)
 
 
@@ -139,7 +127,7 @@ def create_question_blueprint(
 ) -> QuestionBlueprint:
     """Create a structured plan for the next MCQ."""
     llm = model or build_chat_model()
-    user_prompt = BLUEPRINT_USER_PROMPT.format(
+    user_prompt = get_prompt("BLUEPRINT_USER_PROMPT").format(
         topic=topic,
         learning_objective=learning_objective,
         difficulty=difficulty,
@@ -149,7 +137,9 @@ def create_question_blueprint(
         rejected_summaries=_summarize_rejected(rejected_questions),
         misconceptions_context=_format_misconceptions_context(misconceptions_context),
     )
-    return _invoke_structured(llm, BLUEPRINT_SYSTEM_PROMPT, user_prompt, QuestionBlueprint)
+    return _invoke_structured(
+        llm, get_prompt("BLUEPRINT_SYSTEM_PROMPT"), user_prompt, QuestionBlueprint
+    )
 
 
 def create_batch_blueprints(
@@ -167,7 +157,7 @@ def create_batch_blueprints(
 ) -> QuestionBlueprintBatch:
     """Create structured plans for a batch of MCQs."""
     llm = model or build_chat_model()
-    user_prompt = BATCH_BLUEPRINT_USER_PROMPT.format(
+    user_prompt = get_prompt("BATCH_BLUEPRINT_USER_PROMPT").format(
         topic=topic,
         learning_objective=learning_objective,
         difficulty=difficulty,
@@ -180,7 +170,7 @@ def create_batch_blueprints(
     )
     batch = _invoke_structured(
         llm,
-        BATCH_BLUEPRINT_SYSTEM_PROMPT,
+        get_prompt("BATCH_BLUEPRINT_SYSTEM_PROMPT"),
         user_prompt,
         QuestionBlueprintBatch,
     )
@@ -200,12 +190,14 @@ def generate_mcq(
 ) -> MCQQuestion:
     """Generate a single MCQ from blueprint, misconceptions, and best-practice constraints."""
     llm = model or build_chat_model()
-    user_prompt = GENERATION_USER_PROMPT.format(
+    user_prompt = get_prompt("GENERATION_USER_PROMPT").format(
         blueprint_json=dumps_json(blueprint),
         misconceptions_context=_format_misconceptions_context(misconceptions_context),
         best_practices_context=_format_best_practices_context(best_practices_context),
     )
-    question = _invoke_structured(llm, GENERATION_SYSTEM_PROMPT, user_prompt, MCQQuestion)
+    question = _invoke_structured(
+        llm, get_prompt("GENERATION_SYSTEM_PROMPT"), user_prompt, MCQQuestion
+    )
     question.source_context_used = misconceptions_context[:]
     question.learning_objective = blueprint.learning_objective
     return question
@@ -220,7 +212,7 @@ def generate_batch_mcqs(
 ) -> MCQQuestionBatch:
     """Generate a batch of MCQs from blueprints and retrieved context."""
     llm = model or build_chat_model()
-    user_prompt = BATCH_GENERATION_USER_PROMPT.format(
+    user_prompt = get_prompt("BATCH_GENERATION_USER_PROMPT").format(
         blueprints_json=dumps_json(blueprints),
         batch_count=len(blueprints),
         misconceptions_context=_format_misconceptions_context(misconceptions_context),
@@ -228,7 +220,7 @@ def generate_batch_mcqs(
     )
     batch = _invoke_structured(
         llm,
-        BATCH_GENERATION_SYSTEM_PROMPT,
+        get_prompt("BATCH_GENERATION_SYSTEM_PROMPT"),
         user_prompt,
         MCQQuestionBatch,
     )
@@ -255,14 +247,14 @@ def check_content_accuracy(
 ) -> StructuredEvaluation:
     """Verify scientific correctness and answer key validity."""
     llm = model or build_chat_model()
-    user_prompt = CONTENT_CHECK_USER_PROMPT.format(
+    user_prompt = get_prompt("CONTENT_CHECK_USER_PROMPT").format(
         learning_objective=learning_objective,
         difficulty=difficulty,
         blueprint_json=dumps_json(blueprint),
         mcq_json=dumps_json(question),
     )
     return _invoke_structured(
-        llm, CONTENT_CHECK_SYSTEM_PROMPT, user_prompt, StructuredEvaluation
+        llm, get_prompt("CONTENT_CHECK_SYSTEM_PROMPT"), user_prompt, StructuredEvaluation
     )
 
 
@@ -277,7 +269,7 @@ def check_mcq_quality(
 ) -> StructuredEvaluation:
     """Evaluate MCQ-writing quality against best-practice rubric."""
     llm = model or build_chat_model()
-    user_prompt = QUALITY_CHECK_USER_PROMPT.format(
+    user_prompt = get_prompt("QUALITY_CHECK_USER_PROMPT").format(
         learning_objective=learning_objective,
         difficulty=difficulty,
         blueprint_json=dumps_json(blueprint),
@@ -285,7 +277,7 @@ def check_mcq_quality(
         best_practices_context=_format_best_practices_context(best_practices_context),
     )
     return _invoke_structured(
-        llm, QUALITY_CHECK_SYSTEM_PROMPT, user_prompt, StructuredEvaluation
+        llm, get_prompt("QUALITY_CHECK_SYSTEM_PROMPT"), user_prompt, StructuredEvaluation
     )
 
 
@@ -301,13 +293,13 @@ def check_duplicate(
         return DuplicateCheckResult(is_duplicate=False)
 
     llm = model or build_chat_model()
-    user_prompt = DUPLICATE_CHECK_USER_PROMPT.format(
+    user_prompt = get_prompt("DUPLICATE_CHECK_USER_PROMPT").format(
         mcq_json=dumps_json(question),
         target_misconception=blueprint.target_misconception,
         completed_questions_summary=_summarize_completed_for_duplicate(completed_questions),
     )
     return _invoke_structured(
-        llm, DUPLICATE_CHECK_SYSTEM_PROMPT, user_prompt, DuplicateCheckResult
+        llm, get_prompt("DUPLICATE_CHECK_SYSTEM_PROMPT"), user_prompt, DuplicateCheckResult
     )
 
 
@@ -344,7 +336,7 @@ def revise_mcq(
         f"reason={duplicate_evaluation.similarity_reason or 'None'}; "
         f"instructions={duplicate_evaluation.revision_instructions or 'None'}"
     )
-    user_prompt = REVISION_USER_PROMPT.format(
+    user_prompt = get_prompt("REVISION_USER_PROMPT").format(
         topic=topic,
         learning_objective=learning_objective,
         difficulty=difficulty,
@@ -355,7 +347,9 @@ def revise_mcq(
         duplicate_feedback=duplicate_feedback,
         revision_round=revision_round,
     )
-    revised = _invoke_structured(llm, REVISION_SYSTEM_PROMPT, user_prompt, MCQQuestion)
+    revised = _invoke_structured(
+        llm, get_prompt("REVISION_SYSTEM_PROMPT"), user_prompt, MCQQuestion
+    )
     revised.source_context_used = question.source_context_used
     revised.learning_objective = learning_objective
     revised.revision_rounds = revision_round

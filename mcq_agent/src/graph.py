@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import logging
 import operator
-from typing import Annotated, Literal
+from collections.abc import Iterator, Sequence
+from typing import Annotated, Any, Literal
 
+from langchain_core.callbacks import BaseCallbackHandler
 from langgraph.graph import END, START, StateGraph
 
 from src.agents import (
@@ -17,15 +19,10 @@ from src.agents import (
     generate_batch_mcqs,
     revise_mcq,
 )
-from src.prompts import (
-    RETRIEVAL_QUERY_BEST_PRACTICES,
-    RETRIEVAL_QUERY_MISCONCEPTIONS,
-)
+from src.prompt_store import get_prompt
 from src.schemas import (
     CompletedMCQRecord,
-    DuplicateCheckResult,
     RejectedQuestionRecord,
-    StructuredEvaluation,
     WorkflowState,
     compute_max_total_attempts,
 )
@@ -46,12 +43,14 @@ class GraphDependencies:
         self,
         vector_manager: VectorStoreManager | None = None,
         rebuild_indexes: bool = False,
+        callbacks: Sequence[BaseCallbackHandler] | None = None,
     ) -> None:
+        self.callbacks = list(callbacks) if callbacks else None
         self.vector_manager = ensure_indexes(
             vector_manager,
             rebuild=rebuild_indexes,
         )
-        self.model = build_chat_model()
+        self.model = build_chat_model(callbacks=self.callbacks)
 
 
 def _blueprint_hint(state: WorkflowState) -> str:
@@ -70,7 +69,7 @@ def _blueprint_hint(state: WorkflowState) -> str:
 
 
 def _retrieval_query_misconceptions(state: WorkflowState) -> str:
-    return RETRIEVAL_QUERY_MISCONCEPTIONS.format(
+    return get_prompt("RETRIEVAL_QUERY_MISCONCEPTIONS").format(
         topic=state["topic"],
         learning_objective=state["learning_objective"],
         blueprint_hint=_blueprint_hint(state),
@@ -78,10 +77,47 @@ def _retrieval_query_misconceptions(state: WorkflowState) -> str:
 
 
 def _retrieval_query_best_practices(state: WorkflowState) -> str:
-    return RETRIEVAL_QUERY_BEST_PRACTICES.format(
+    return get_prompt("RETRIEVAL_QUERY_BEST_PRACTICES").format(
         topic=state["topic"],
         blueprint_hint=_blueprint_hint(state),
     )
+
+
+def _initial_workflow_state(
+    *,
+    topic: str,
+    learning_objective: str,
+    difficulty: str,
+    num_questions: int,
+    batch_size: int,
+    max_revision_rounds: int,
+) -> WorkflowState:
+    max_total = compute_max_total_attempts(num_questions, max_revision_rounds)
+    return {
+        "topic": topic,
+        "learning_objective": learning_objective,
+        "difficulty": difficulty,
+        "num_questions": num_questions,
+        "batch_size": batch_size,
+        "max_revision_rounds": max_revision_rounds,
+        "max_total_attempts": max_total,
+        "generation_attempts": 0,
+        "batch_start_index": 1,
+        "batch_index": 0,
+        "batch_blueprints": [],
+        "batch_candidates": [],
+        "current_question_index": 0,
+        "question_blueprint": None,
+        "misconceptions_context": [],
+        "best_practices_context": [],
+        "completed_questions": [],
+        "rejected_questions": [],
+        "candidate_question": None,
+        "content_evaluation": None,
+        "quality_evaluation": None,
+        "duplicate_evaluation": None,
+        "error": None,
+    }
 
 
 def _revision_rounds(state: WorkflowState) -> int:
@@ -167,12 +203,18 @@ def make_retrieve_misconceptions_node(deps: GraphDependencies):
     def retrieve_misconceptions(state: WorkflowState) -> dict:
         if _remaining_questions(state) == 0:
             return {}
+        logger.info(
+            "Retrieving misconceptions for batch (need %d more question(s))...",
+            _remaining_questions(state),
+        )
         query = _retrieval_query_misconceptions(state)
         context = deps.vector_manager.retrieve(MISCONCEPTIONS_COLLECTION, query)
         if not context:
             logger.warning(
                 "No misconceptions retrieved; blueprint will rely on model knowledge."
             )
+        else:
+            logger.info("Retrieved %d misconception chunk(s).", len(context))
         return {
             "misconceptions_context": context,
             "batch_index": 0,
@@ -204,6 +246,11 @@ def make_create_batch_blueprints_node(deps: GraphDependencies):
             return {}
 
         start_question_number = len(state.get("completed_questions", [])) + 1
+        logger.info(
+            "Creating %d blueprint(s) starting at question slot %d...",
+            batch_count,
+            start_question_number,
+        )
         batch = create_batch_blueprints(
             topic=state["topic"],
             learning_objective=state["learning_objective"],
@@ -216,6 +263,7 @@ def make_create_batch_blueprints_node(deps: GraphDependencies):
             misconceptions_context=state.get("misconceptions_context", []),
             model=deps.model,
         )
+        logger.info("Created %d blueprint(s).", len(batch.blueprints))
         return {
             "batch_start_index": start_question_number,
             "batch_blueprints": batch.blueprints,
@@ -234,12 +282,15 @@ def make_create_batch_blueprints_node(deps: GraphDependencies):
 
 def make_retrieve_best_practices_node(deps: GraphDependencies):
     def retrieve_best_practices(state: WorkflowState) -> dict:
+        logger.info("Retrieving best-practice guidelines...")
         query = _retrieval_query_best_practices(state)
         context = deps.vector_manager.retrieve(BEST_PRACTICES_COLLECTION, query)
         if not context:
             logger.warning(
                 "No best-practice documents retrieved; reviewers will use defaults."
             )
+        else:
+            logger.info("Retrieved %d best-practice chunk(s).", len(context))
         return {"best_practices_context": context}
 
     return retrieve_best_practices
@@ -251,12 +302,14 @@ def make_generate_batch_mcqs_node(deps: GraphDependencies):
         if not blueprints:
             return {"error": "No batch blueprints available for generation."}
 
+        logger.info("Generating %d MCQ candidate(s)...", len(blueprints))
         batch = generate_batch_mcqs(
             blueprints=blueprints,
             misconceptions_context=state.get("misconceptions_context", []),
             best_practices_context=state.get("best_practices_context", []),
             model=deps.model,
         )
+        logger.info("Generated %d MCQ candidate(s).", len(batch.questions))
         return {
             "batch_candidates": batch.questions,
             "candidate_question": None,
@@ -277,10 +330,17 @@ def select_batch_question_node(state: WorkflowState) -> dict:
         return {"error": "Batch index out of range for question selection."}
 
     start_index = state.get("batch_start_index", 1)
+    question_index = start_index + batch_index
+    logger.info(
+        "Evaluating question slot %d (%d/%d in batch)...",
+        question_index,
+        batch_index + 1,
+        len(blueprints),
+    )
     return {
         "question_blueprint": blueprints[batch_index],
         "candidate_question": candidates[batch_index],
-        "current_question_index": start_index + batch_index,
+        "current_question_index": question_index,
         "content_evaluation": None,
         "quality_evaluation": None,
         "duplicate_evaluation": None,
@@ -294,6 +354,8 @@ def make_content_accuracy_check_node(deps: GraphDependencies):
         if question is None or blueprint is None:
             return {"error": "No candidate question or blueprint for content check."}
 
+        q_index = state.get("current_question_index", 0)
+        logger.info("Content accuracy check for Q%d...", q_index)
         evaluation = check_content_accuracy(
             question=question,
             blueprint=blueprint,
@@ -313,6 +375,8 @@ def make_mcq_quality_check_node(deps: GraphDependencies):
         if question is None or blueprint is None:
             return {"error": "No candidate question or blueprint for quality check."}
 
+        q_index = state.get("current_question_index", 0)
+        logger.info("MCQ quality check for Q%d...", q_index)
         evaluation = check_mcq_quality(
             question=question,
             blueprint=blueprint,
@@ -333,6 +397,8 @@ def make_duplicate_check_node(deps: GraphDependencies):
         if question is None or blueprint is None:
             return {"error": "No candidate question or blueprint for duplicate check."}
 
+        q_index = state.get("current_question_index", 0)
+        logger.info("Duplicate check for Q%d...", q_index)
         result = check_duplicate(
             question=question,
             blueprint=blueprint,
@@ -378,6 +444,11 @@ def make_revise_mcq_node(deps: GraphDependencies):
             return {"error": "Cannot revise without question, blueprint, and evaluations."}
 
         next_round = question.revision_rounds + 1
+        logger.info(
+            "Revising Q%d (revision round %d)...",
+            state.get("current_question_index", 0),
+            next_round,
+        )
         revised = revise_mcq(
             question=question,
             blueprint=blueprint,
@@ -435,6 +506,13 @@ def finalize_question_node(state: WorkflowState) -> dict:
         content_evaluation=content,
         quality_evaluation=quality,
         duplicate_evaluation=duplicate,
+    )
+    approved_count = len(state.get("completed_questions", [])) + 1
+    logger.info(
+        "Approved Q%d (%d/%d target).",
+        state.get("current_question_index", 0),
+        approved_count,
+        state.get("num_questions", 1),
     )
     return {
         "completed_questions": [record],
@@ -501,9 +579,13 @@ def build_mcq_graph(
     deps: GraphDependencies | None = None,
     *,
     rebuild_indexes: bool = False,
+    callbacks: Sequence[BaseCallbackHandler] | None = None,
 ):
     """Compile the LangGraph workflow."""
-    dependencies = deps or GraphDependencies(rebuild_indexes=rebuild_indexes)
+    dependencies = deps or GraphDependencies(
+        rebuild_indexes=rebuild_indexes,
+        callbacks=callbacks,
+    )
 
     class MCQGraphState(WorkflowState, total=False):
         completed_questions: Annotated[list[CompletedMCQRecord], operator.add]
@@ -585,33 +667,65 @@ def run_workflow(
     batch_size: int = DEFAULT_BATCH_SIZE,
     max_revision_rounds: int = 3,
     rebuild_indexes: bool = False,
+    callbacks: Sequence[BaseCallbackHandler] | None = None,
+    deps: GraphDependencies | None = None,
 ) -> dict:
     """Execute the compiled graph and return the final state."""
-    app = build_mcq_graph(rebuild_indexes=rebuild_indexes)
-    max_total = compute_max_total_attempts(num_questions, max_revision_rounds)
-    initial_state: WorkflowState = {
-        "topic": topic,
-        "learning_objective": learning_objective,
-        "difficulty": difficulty,
-        "num_questions": num_questions,
-        "batch_size": batch_size,
-        "max_revision_rounds": max_revision_rounds,
-        "max_total_attempts": max_total,
-        "generation_attempts": 0,
-        "batch_start_index": 1,
-        "batch_index": 0,
-        "batch_blueprints": [],
-        "batch_candidates": [],
-        "current_question_index": 0,
-        "question_blueprint": None,
-        "misconceptions_context": [],
-        "best_practices_context": [],
-        "completed_questions": [],
-        "rejected_questions": [],
-        "candidate_question": None,
-        "content_evaluation": None,
-        "quality_evaluation": None,
-        "duplicate_evaluation": None,
-        "error": None,
-    }
+    app = build_mcq_graph(
+        deps=deps,
+        rebuild_indexes=rebuild_indexes,
+        callbacks=callbacks,
+    )
+    initial_state = _initial_workflow_state(
+        topic=topic,
+        learning_objective=learning_objective,
+        difficulty=difficulty,
+        num_questions=num_questions,
+        batch_size=batch_size,
+        max_revision_rounds=max_revision_rounds,
+    )
     return app.invoke(initial_state)
+
+
+def stream_workflow(
+    *,
+    topic: str,
+    learning_objective: str,
+    difficulty: str,
+    num_questions: int,
+    batch_size: int = DEFAULT_BATCH_SIZE,
+    max_revision_rounds: int = 3,
+    rebuild_indexes: bool = False,
+    callbacks: Sequence[BaseCallbackHandler] | None = None,
+    deps: GraphDependencies | None = None,
+) -> Iterator[tuple[str, dict[str, Any]]]:
+    """
+    Stream graph node updates as ``(node_name, update_dict)`` pairs.
+
+    After the stream ends, callers that need the full merged state should
+    accumulate updates themselves or call ``run_workflow`` instead.
+    """
+    app = build_mcq_graph(
+        deps=deps,
+        rebuild_indexes=rebuild_indexes,
+        callbacks=callbacks,
+    )
+    initial_state = _initial_workflow_state(
+        topic=topic,
+        learning_objective=learning_objective,
+        difficulty=difficulty,
+        num_questions=num_questions,
+        batch_size=batch_size,
+        max_revision_rounds=max_revision_rounds,
+    )
+    logger.info(
+        "Starting workflow: topic=%r num_questions=%d batch_size=%d",
+        topic,
+        num_questions,
+        batch_size,
+    )
+    for event in app.stream(initial_state, stream_mode="updates"):
+        # stream_mode="updates" yields {node_name: update_dict}
+        for node_name, update in event.items():
+            yield node_name, update if isinstance(update, dict) else {}
+    logger.info("Workflow stream finished.")

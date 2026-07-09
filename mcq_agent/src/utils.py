@@ -13,6 +13,12 @@ from src.schemas import CompletedMCQRecord, MCQBatchOutput, MCQQuestion, Rejecte
 
 # Project root is the mcq_agent directory (parent of src/).
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+ENV_PATH = PROJECT_ROOT / ".env"
+ENV_EXAMPLE_PATH = PROJECT_ROOT / ".env.example"
+
+# Active dotenv file for config helpers (CLI defaults to .env; Streamlit uses .env.example).
+_active_dotenv_path: Path = ENV_PATH
+
 DATA_DIR = Path(os.getenv("MCQ_DATA_DIR", PROJECT_ROOT / "data"))
 DATAFOLDER_ROOT = Path(os.getenv("MCQ_DATAFOLDER_DIR", PROJECT_ROOT.parent / "dataFolder"))
 BEST_PRACTICES_DIR = Path(os.getenv("MCQ_BEST_PRACTICES_DIR", DATA_DIR / "mds_best_practices"))
@@ -49,9 +55,25 @@ DEFAULT_BATCH_SIZE = 5
 SUPPORTED_EXTENSIONS = {".md", ".json", ".png"}
 
 
+def set_dotenv_path(path: Path) -> None:
+    """Set which dotenv file config helpers load (e.g. ``.env.example`` for Streamlit)."""
+    global _active_dotenv_path
+    _active_dotenv_path = path
+
+
+def get_dotenv_path() -> Path:
+    """Return the active dotenv path."""
+    return _active_dotenv_path
+
+
+def load_active_dotenv(*, override: bool = False) -> None:
+    """Load the active dotenv file into the process environment."""
+    load_dotenv(_active_dotenv_path, override=override)
+
+
 def setup_logging(level: str | None = None) -> logging.Logger:
     """Configure root logger and return the mcq_agent logger."""
-    load_dotenv(PROJECT_ROOT / ".env")
+    load_active_dotenv()
     log_level = (level or os.getenv("LOG_LEVEL", "INFO")).upper()
     logging.basicConfig(
         level=getattr(logging, log_level, logging.INFO),
@@ -62,7 +84,7 @@ def setup_logging(level: str | None = None) -> logging.Logger:
 
 def get_model_config() -> dict[str, str | float]:
     """Load OpenAI-compatible model settings from environment."""
-    load_dotenv(PROJECT_ROOT / ".env")
+    load_active_dotenv()
     return {
         "model": os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
         "api_key": os.getenv("OPENAI_API_KEY", ""),
@@ -73,7 +95,7 @@ def get_model_config() -> dict[str, str | float]:
 
 def get_embedding_config() -> dict[str, str]:
     """Load embedding model settings from environment."""
-    load_dotenv(PROJECT_ROOT / ".env")
+    load_active_dotenv()
     return {
         "model": os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"),
         "api_key": os.getenv("OPENAI_API_KEY", ""),
@@ -152,18 +174,30 @@ def write_outputs(
     json_path: Path | None = None,
     md_path: Path | None = None,
     rejected_json_path: Path | None = None,
+    *,
+    session_prompts: dict[str, str] | None = None,
 ) -> tuple[Path, Path]:
-    """Write generated MCQs to JSON and Markdown files."""
+    """Write generated MCQs to JSON and Markdown files.
+
+    When ``session_prompts`` is provided, those prompt texts are appended to
+    the Markdown report and included under ``session_prompts`` in the JSON.
+    """
     ensure_directories()
     json_path = json_path or OUTPUT_DIR / "generated_mcqs.json"
     md_path = md_path or OUTPUT_DIR / "generated_mcqs.md"
     rejected_json_path = rejected_json_path or OUTPUT_DIR / "rejected_mcqs.json"
 
+    payload = batch.model_dump()
+    if session_prompts:
+        payload["session_prompts"] = session_prompts
     json_path.write_text(
-        batch.model_dump_json(indent=2),
+        json.dumps(payload, indent=2, default=str),
         encoding="utf-8",
     )
-    md_path.write_text(_format_markdown(batch), encoding="utf-8")
+    md_path.write_text(
+        _format_markdown(batch, session_prompts=session_prompts),
+        encoding="utf-8",
+    )
 
     if batch.rejected_questions:
         rejected_json_path.write_text(
@@ -177,7 +211,33 @@ def write_outputs(
     return json_path, md_path
 
 
-def _format_markdown(batch: MCQBatchOutput) -> str:
+def _format_session_prompts_markdown(session_prompts: dict[str, str]) -> list[str]:
+    """Append-ready Markdown section listing prompts used for a run."""
+    lines = [
+        "# Session Prompts",
+        "",
+        "System prompts and retrieval queries active for this generation run.",
+        "",
+    ]
+    for key, value in session_prompts.items():
+        lines.extend(
+            [
+                f"## {key}",
+                "",
+                "```",
+                value.rstrip(),
+                "```",
+                "",
+            ]
+        )
+    return lines
+
+
+def _format_markdown(
+    batch: MCQBatchOutput,
+    *,
+    session_prompts: dict[str, str] | None = None,
+) -> str:
     """Render MCQ batch as human-readable Markdown."""
     lines = [
         "# Generated Multiple-Choice Questions",
@@ -196,6 +256,9 @@ def _format_markdown(batch: MCQBatchOutput) -> str:
         lines.extend(["# Rejected Questions", ""])
         for index, record in enumerate(batch.rejected_questions, start=1):
             lines.extend(_format_rejected_markdown(index, record))
+
+    if session_prompts:
+        lines.extend(_format_session_prompts_markdown(session_prompts))
 
     return "\n".join(lines)
 

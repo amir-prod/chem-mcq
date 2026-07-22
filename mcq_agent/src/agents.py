@@ -34,6 +34,7 @@ from src.schemas import (
     QuestionBlueprint,
     QuestionBlueprintBatch,
     RejectedQuestionRecord,
+    StemMediaType,
     StructuredEvaluation,
 )
 from src.utils import dumps_json, get_model_config
@@ -125,6 +126,29 @@ def _summarize_completed_for_duplicate(records: list[CompletedMCQRecord]) -> str
     return "\n".join(lines)
 
 
+def _format_assigned_media_types(media_types: list[StemMediaType]) -> str:
+    lines = [
+        f"{index}. {media_type.value}"
+        for index, media_type in enumerate(media_types, start=1)
+    ]
+    return "\n".join(lines) if lines else "[None]"
+
+
+def _force_blueprint_media_type(
+    blueprint: QuestionBlueprint, media_type: StemMediaType
+) -> QuestionBlueprint:
+    """Overwrite stem_media_type so the run mix is not left to the model."""
+    return blueprint.model_copy(update={"stem_media_type": media_type})
+
+
+def _align_question_media(question: MCQQuestion, blueprint: QuestionBlueprint) -> MCQQuestion:
+    """Copy forced media type from blueprint; clear media_content for text stems."""
+    updates: dict[str, Any] = {"stem_media_type": blueprint.stem_media_type}
+    if blueprint.stem_media_type == StemMediaType.TEXT:
+        updates["media_content"] = ""
+    return question.model_copy(update=updates)
+
+
 def create_question_blueprint(
     *,
     topic: str,
@@ -135,6 +159,7 @@ def create_question_blueprint(
     completed_questions: list[CompletedMCQRecord],
     rejected_questions: list[RejectedQuestionRecord],
     misconceptions_context: list[str] | None = None,
+    stem_media_type: StemMediaType = StemMediaType.TEXT,
     model: ChatOpenAI | None = None,
 ) -> QuestionBlueprint:
     """Create a structured plan for the next MCQ."""
@@ -145,11 +170,15 @@ def create_question_blueprint(
         difficulty=difficulty,
         question_number=question_number,
         num_questions=num_questions,
+        stem_media_type=stem_media_type.value,
         completed_summaries=_summarize_completed(completed_questions),
         rejected_summaries=_summarize_rejected(rejected_questions),
         misconceptions_context=_format_misconceptions_context(misconceptions_context),
     )
-    return _invoke_structured(llm, BLUEPRINT_SYSTEM_PROMPT, user_prompt, QuestionBlueprint)
+    blueprint = _invoke_structured(
+        llm, BLUEPRINT_SYSTEM_PROMPT, user_prompt, QuestionBlueprint
+    )
+    return _force_blueprint_media_type(blueprint, stem_media_type)
 
 
 def create_batch_blueprints(
@@ -163,10 +192,16 @@ def create_batch_blueprints(
     completed_questions: list[CompletedMCQRecord],
     rejected_questions: list[RejectedQuestionRecord],
     misconceptions_context: list[str] | None = None,
+    assigned_media_types: list[StemMediaType] | None = None,
     model: ChatOpenAI | None = None,
 ) -> QuestionBlueprintBatch:
     """Create structured plans for a batch of MCQs."""
     llm = model or build_chat_model()
+    media_types = assigned_media_types or [StemMediaType.TEXT] * batch_count
+    if len(media_types) != batch_count:
+        raise ValueError(
+            f"Expected {batch_count} assigned media types, got {len(media_types)}"
+        )
     user_prompt = BATCH_BLUEPRINT_USER_PROMPT.format(
         topic=topic,
         learning_objective=learning_objective,
@@ -174,6 +209,7 @@ def create_batch_blueprints(
         batch_count=batch_count,
         start_question_number=start_question_number,
         num_questions=num_questions,
+        assigned_media_types=_format_assigned_media_types(media_types),
         completed_summaries=_summarize_completed(completed_questions),
         rejected_summaries=_summarize_rejected(rejected_questions),
         misconceptions_context=_format_misconceptions_context(misconceptions_context),
@@ -188,7 +224,11 @@ def create_batch_blueprints(
         raise ValueError(
             f"Expected {batch_count} blueprints, got {len(batch.blueprints)}"
         )
-    return batch
+    forced = [
+        _force_blueprint_media_type(blueprint, media_type)
+        for blueprint, media_type in zip(batch.blueprints, media_types, strict=True)
+    ]
+    return QuestionBlueprintBatch(blueprints=forced)
 
 
 def generate_mcq(
@@ -208,7 +248,7 @@ def generate_mcq(
     question = _invoke_structured(llm, GENERATION_SYSTEM_PROMPT, user_prompt, MCQQuestion)
     question.source_context_used = misconceptions_context[:]
     question.learning_objective = blueprint.learning_objective
-    return question
+    return _align_question_media(question, blueprint)
 
 
 def generate_batch_mcqs(
@@ -241,7 +281,7 @@ def generate_batch_mcqs(
     for blueprint, question in zip(blueprints, batch.questions, strict=True):
         question.source_context_used = misconceptions_context[:]
         question.learning_objective = blueprint.learning_objective
-        finalized.append(question)
+        finalized.append(_align_question_media(question, blueprint))
     return MCQQuestionBatch(questions=finalized)
 
 
@@ -364,4 +404,4 @@ def revise_mcq(
         f"Quality: {quality_evaluation.revision_instructions}; "
         f"Duplicate: {duplicate_evaluation.revision_instructions}"
     ).strip("; ")
-    return revised
+    return _align_question_media(revised, blueprint)

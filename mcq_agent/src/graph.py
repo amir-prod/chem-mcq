@@ -25,8 +25,10 @@ from src.schemas import (
     CompletedMCQRecord,
     DuplicateCheckResult,
     RejectedQuestionRecord,
+    StemMediaType,
     StructuredEvaluation,
     WorkflowState,
+    allocate_stem_media_types,
     compute_max_total_attempts,
 )
 from src.utils import (
@@ -204,6 +206,16 @@ def make_create_batch_blueprints_node(deps: GraphDependencies):
             return {}
 
         start_question_number = len(state.get("completed_questions", [])) + 1
+        media_plan = state.get("stem_media_plan") or allocate_stem_media_types(
+            state["num_questions"]
+        )
+        start_index = start_question_number - 1
+        assigned_media_types = media_plan[start_index : start_index + batch_count]
+        if len(assigned_media_types) < batch_count:
+            # Safety pad if plan is shorter than expected (should not happen).
+            pad = [StemMediaType.TEXT] * (batch_count - len(assigned_media_types))
+            assigned_media_types = list(assigned_media_types) + pad
+
         batch = create_batch_blueprints(
             topic=state["topic"],
             learning_objective=state["learning_objective"],
@@ -214,6 +226,7 @@ def make_create_batch_blueprints_node(deps: GraphDependencies):
             completed_questions=state.get("completed_questions", []),
             rejected_questions=state.get("rejected_questions", []),
             misconceptions_context=state.get("misconceptions_context", []),
+            assigned_media_types=assigned_media_types,
             model=deps.model,
         )
         return {
@@ -612,6 +625,7 @@ def run_workflow(
         "content_evaluation": None,
         "quality_evaluation": None,
         "duplicate_evaluation": None,
+        "stem_media_plan": allocate_stem_media_types(num_questions),
         "error": None,
     }
     return app.invoke(initial_state)

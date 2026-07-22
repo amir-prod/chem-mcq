@@ -14,6 +14,8 @@ mcq_agent/
 │   ├── vectorstore.py          # Chroma indexes and retrievers
 │   ├── schemas.py              # Pydantic models
 │   ├── prompts.py              # Prompt templates
+│   ├── prompt_store.py         # Session prompt overrides (contextvars)
+│   ├── cost_tracking.py        # Token usage callback
 │   ├── graph.py                # LangGraph workflow
 │   ├── agents.py               # LLM blueprint / generation / evaluation / revision
 │   ├── export.py               # Pandoc DOCX/PDF export
@@ -23,6 +25,7 @@ mcq_agent/
 ├── outputs/                    # generated_mcqs.json / .md, rejected_mcqs.json
 ├── generate_mcqs.py            # CLI entry point
 ├── export_mcqs.py              # Pandoc export to DOCX/PDF
+├── streamlit_app.py            # Browser GUI for collaborators
 ├── requirements.txt
 └── .env.example
 ```
@@ -94,6 +97,35 @@ Outputs:
 - `outputs/rejected_mcqs.json` — questions that failed after max revision rounds (written only when rejections occur)
 
 Only **approved** questions count toward `--num_questions`. If too many candidates are rejected, you may receive fewer approved items than requested (the CLI logs a warning).
+
+### Text-native tables and figures
+
+Across a run, the agent assigns stem media types deterministically (~20% table, ~20% figure, remainder text). For `--num_questions 5` that is typically **1 table + 1 figure + 3 text**.
+
+- **table** — Markdown pipe table in `media_content`; stem references it.
+- **figure** — ASCII/Unicode or fenced text diagram in `media_content` (no image files or URLs).
+- **text** — `media_content` left empty.
+
+These fields appear on each MCQ and blueprint in `generated_mcqs.json`, and tables/figures are rendered in the Markdown report for Pandoc export.
+
+## Streamlit GUI
+
+Collaborators can run generation from a browser UI with live logs, session-only prompt editing, token usage, and downloads (JSON / Markdown / DOCX):
+
+```bash
+cd mcq_agent
+source .venv/bin/activate   # if using a venv
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+Notes:
+
+- **Prompt edits** apply only to the current browser session (reset on refresh). They are not written to `src/prompts.py`. Session system prompts are appended to the Markdown/JSON outputs.
+- **Config** (model, embeddings, retrieval) is loaded from `mcq_agent/.env.example`. Enter your **OpenAI API key** in the Streamlit sidebar (required; not read from `.env`).
+- **Token usage** (prompt / completion / embedding) is shown in the UI after each run.
+- **DOCX download** uses Pandoc (`pypandoc_binary` in `requirements.txt`, or a system Pandoc on `PATH`). JSON and Markdown downloads still work without it.
+- The CLI still uses `mcq_agent/.env` for `OPENAI_API_KEY` and local overrides.
 
 ## Export to DOCX and PDF
 
@@ -281,7 +313,8 @@ Planned before generation:
   "target_misconception": "...",
   "correct_answer_concept": "...",
   "expected_reasoning": "...",
-  "question_style_notes": "..."
+  "question_style_notes": "...",
+  "stem_media_type": "text | table | figure"
 }
 ```
 
@@ -314,8 +347,8 @@ Duplicate check returns:
 
 Each approved entry in `generated_mcqs.json` includes:
 
-- **mcq** — `question`, `options` (A–D), `correct_answer`, `explanation`, `learning_objective`, `difficulty`, `cognitive_level`, `revision_rounds`, `approved`
-- **question_blueprint** — the plan used to generate the item
+- **mcq** — `question`, `options` (A–D), `correct_answer`, `explanation`, `learning_objective`, `difficulty`, `cognitive_level`, `stem_media_type`, `media_content`, `revision_rounds`, `approved`
+- **question_blueprint** — the plan used to generate the item (includes `stem_media_type`)
 - **content_evaluation** — content accuracy review summary
 - **quality_evaluation** — MCQ quality review summary
 - **duplicate_evaluation** — duplicate check result

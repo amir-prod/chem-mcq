@@ -22,6 +22,14 @@ class CognitiveLevel(str, Enum):
     EVALUATION = "evaluation"
 
 
+class StemMediaType(str, Enum):
+    """How the stem presents supporting media (text-native only)."""
+
+    TEXT = "text"
+    TABLE = "table"
+    FIGURE = "figure"
+
+
 class MCQOptions(BaseModel):
     """Four-option multiple-choice answer set."""
 
@@ -41,6 +49,8 @@ class MCQQuestion(BaseModel):
     learning_objective: str
     difficulty: Difficulty
     cognitive_level: CognitiveLevel
+    stem_media_type: StemMediaType = StemMediaType.TEXT
+    media_content: str = ""
     source_context_used: list[str] = Field(default_factory=list)
     evaluator_feedback: str = ""
     revision_rounds: int = 0
@@ -65,6 +75,7 @@ class QuestionBlueprint(BaseModel):
     correct_answer_concept: str
     expected_reasoning: str
     question_style_notes: str = ""
+    stem_media_type: StemMediaType = StemMediaType.TEXT
 
 
 class QuestionBlueprintBatch(BaseModel):
@@ -194,6 +205,9 @@ class WorkflowState(TypedDict, total=False):
     # Loop guards
     generation_attempts: int
 
+    # Precomputed stem media mix for the full run (length == num_questions)
+    stem_media_plan: list[StemMediaType]
+
     # Control flags
     error: str | None
 
@@ -212,3 +226,60 @@ class MCQBatchOutput(BaseModel):
 def compute_max_total_attempts(num_questions: int, max_revision_rounds: int) -> int:
     """Upper bound on blueprint/generation cycles to prevent infinite loops."""
     return num_questions * (max_revision_rounds + 4)
+
+
+def allocate_stem_media_types(num_questions: int) -> list[StemMediaType]:
+    """
+    Assign stem media types across a full generation run.
+
+    Target mix: ~20% table, ~20% figure, remainder text.
+    For n >= 5, round(n * 0.2) of each media type (at least 1).
+    For 2 <= n < 5, one table and one figure (remainder text).
+    For n == 1, text only.
+    Types are spread across slots to avoid clustering media items.
+    """
+    if num_questions < 1:
+        return []
+
+    if num_questions == 1:
+        return [StemMediaType.TEXT]
+
+    if num_questions < 5:
+        n_table = 1
+        n_figure = 1 if num_questions >= 2 else 0
+        if n_table + n_figure > num_questions:
+            n_figure = num_questions - n_table
+    else:
+        n_table = max(1, round(num_questions * 0.2))
+        n_figure = max(1, round(num_questions * 0.2))
+
+    if n_table + n_figure > num_questions:
+        n_figure = max(0, num_questions - n_table)
+        if n_table + n_figure > num_questions:
+            n_table = num_questions
+            n_figure = 0
+
+    n_text = num_questions - n_table - n_figure
+    media = [StemMediaType.TABLE] * n_table + [StemMediaType.FIGURE] * n_figure
+    return _spread_media_slots(media, num_questions)
+
+
+def _spread_media_slots(
+    media: list[StemMediaType], num_questions: int
+) -> list[StemMediaType]:
+    """Place table/figure slots at evenly spaced indices; fill the rest with text."""
+    if not media:
+        return [StemMediaType.TEXT] * num_questions
+
+    result: list[StemMediaType] = [StemMediaType.TEXT] * num_questions
+    step = num_questions / (len(media) + 1)
+    positions: list[int] = []
+    for i in range(1, len(media) + 1):
+        pos = min(num_questions - 1, max(0, round(i * step) - 1))
+        while pos in positions:
+            pos = (pos + 1) % num_questions
+        positions.append(pos)
+
+    for pos, media_type in zip(sorted(positions), media, strict=True):
+        result[pos] = media_type
+    return result

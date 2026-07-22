@@ -205,6 +205,9 @@ def _format_mcq_body(question: MCQQuestion) -> list[str]:
         question.question,
         "",
     ]
+    media_content = (question.media_content or "").strip()
+    if media_content:
+        lines.extend([media_content, ""])
     for letter in ("A", "B", "C", "D"):
         marker = " ✓" if letter == question.correct_answer else ""
         lines.append(f"- **{letter}.** {getattr(question.options, letter)}{marker}")
@@ -238,6 +241,7 @@ def _format_completed_markdown(index: int, record: CompletedMCQRecord) -> list[s
         f"**Status:** Approved  ",
         f"**Revision rounds:** {record.revision_rounds}  ",
         f"**Cognitive level:** {question.cognitive_level.value}  ",
+        f"**Stem media:** {question.stem_media_type.value}  ",
         "",
         "### Blueprint",
         "",
@@ -245,6 +249,7 @@ def _format_completed_markdown(index: int, record: CompletedMCQRecord) -> list[s
         f"- **Correct answer concept:** {blueprint.correct_answer_concept}",
         f"- **Expected reasoning:** {blueprint.expected_reasoning}",
         f"- **Style notes:** {blueprint.question_style_notes or 'None'}",
+        f"- **Stem media type:** {blueprint.stem_media_type.value}",
         "",
     ]
     lines.extend(_format_mcq_body(question))

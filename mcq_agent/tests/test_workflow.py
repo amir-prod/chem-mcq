@@ -25,7 +25,9 @@ from src.schemas import (
     MCQQuestion,
     QuestionBlueprint,
     RejectedQuestionRecord,
+    StemMediaType,
     StructuredEvaluation,
+    allocate_stem_media_types,
     compute_max_total_attempts,
 )
 
@@ -240,6 +242,42 @@ class BatchRoutingTests(unittest.TestCase):
             batch_blueprints=[_sample_blueprint(), _sample_blueprint()],
         )
         self.assertEqual(route_after_advance(state), "__end__")
+
+
+class StemMediaAllocationTests(unittest.TestCase):
+    def test_n1_is_text_only(self):
+        plan = allocate_stem_media_types(1)
+        self.assertEqual(plan, [StemMediaType.TEXT])
+
+    def test_n2_has_one_table_and_one_figure(self):
+        plan = allocate_stem_media_types(2)
+        self.assertEqual(len(plan), 2)
+        self.assertEqual(plan.count(StemMediaType.TABLE), 1)
+        self.assertEqual(plan.count(StemMediaType.FIGURE), 1)
+
+    def test_n5_has_one_table_one_figure_three_text(self):
+        plan = allocate_stem_media_types(5)
+        self.assertEqual(len(plan), 5)
+        self.assertEqual(plan.count(StemMediaType.TABLE), 1)
+        self.assertEqual(plan.count(StemMediaType.FIGURE), 1)
+        self.assertEqual(plan.count(StemMediaType.TEXT), 3)
+
+    def test_n7_scales_to_about_twenty_percent(self):
+        plan = allocate_stem_media_types(7)
+        self.assertEqual(len(plan), 7)
+        self.assertEqual(plan.count(StemMediaType.TABLE), max(1, round(7 * 0.2)))
+        self.assertEqual(plan.count(StemMediaType.FIGURE), max(1, round(7 * 0.2)))
+        self.assertEqual(
+            plan.count(StemMediaType.TEXT),
+            7 - plan.count(StemMediaType.TABLE) - plan.count(StemMediaType.FIGURE),
+        )
+
+    def test_schema_defaults_to_text_media(self):
+        blueprint = _sample_blueprint()
+        mcq = _sample_mcq()
+        self.assertEqual(blueprint.stem_media_type, StemMediaType.TEXT)
+        self.assertEqual(mcq.stem_media_type, StemMediaType.TEXT)
+        self.assertEqual(mcq.media_content, "")
 
 
 class LoopGuardTests(unittest.TestCase):

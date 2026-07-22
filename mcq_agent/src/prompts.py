@@ -8,6 +8,8 @@ Create a detailed blueprint for one original multiple-choice question.
 The blueprint must be intentional: target a specific misconception, require the stated
 cognitive level, and avoid generic recall unless the learning objective demands it.
 Do not repeat concepts already covered in completed or rejected questions listed below.
+Honor the assigned stem_media_type: for table/figure items, question_style_notes must
+describe what the Markdown table or text-native figure will show.
 """
 
 BLUEPRINT_USER_PROMPT = """\
@@ -15,6 +17,7 @@ Topic: {topic}
 Learning objective: {learning_objective}
 Difficulty: {difficulty}
 Question slot: {question_number} of {num_questions}
+Required stem_media_type for this slot: {stem_media_type}
 
 Already completed question summaries:
 {completed_summaries}
@@ -27,7 +30,10 @@ Literature-backed student misconceptions (prefer targeting one of these when rel
 
 Create a question blueprint as structured JSON with:
 topic, learning_objective, difficulty, cognitive_level, target_misconception,
-correct_answer_concept, expected_reasoning, question_style_notes.
+correct_answer_concept, expected_reasoning, question_style_notes, stem_media_type.
+Set stem_media_type exactly to the required value above.
+If stem_media_type is table or figure, question_style_notes must describe the data or
+diagram the stem will use (text-native only; no image URLs).
 """
 
 BATCH_BLUEPRINT_SYSTEM_PROMPT = """\
@@ -37,6 +43,8 @@ Each blueprint must intentionally target a distinct literature-backed student mi
 require the stated cognitive level, and avoid generic recall unless the learning objective
 demands it. Do not repeat concepts already covered in completed or rejected questions.
 Every blueprint in the batch must target a different misconception.
+Honor each slot's assigned stem_media_type. For table/figure slots, question_style_notes
+must describe what the Markdown table or text-native figure will show.
 """
 
 BATCH_BLUEPRINT_USER_PROMPT = """\
@@ -45,6 +53,9 @@ Learning objective: {learning_objective}
 Difficulty: {difficulty}
 Batch size: {batch_count} question(s)
 Starting question slot: {start_question_number} of {num_questions}
+
+Assigned stem_media_type per blueprint in this batch (in order; must match exactly):
+{assigned_media_types}
 
 Already completed question summaries:
 {completed_summaries}
@@ -58,7 +69,10 @@ Literature-backed student misconceptions (each blueprint should target a differe
 Create exactly {batch_count} distinct question blueprints as structured JSON.
 Each blueprint must include:
 topic, learning_objective, difficulty, cognitive_level, target_misconception,
-correct_answer_concept, expected_reasoning, question_style_notes.
+correct_answer_concept, expected_reasoning, question_style_notes, stem_media_type.
+Set each blueprint's stem_media_type to the corresponding assigned value above.
+If stem_media_type is table or figure, question_style_notes must describe the data or
+diagram the stem will use (text-native only; no image URLs).
 """
 
 GENERATION_SYSTEM_PROMPT = """\
@@ -73,6 +87,13 @@ Requirements:
 - Follow best-practice constraints (clear stem, plausible distractors, no clueing).
 - Provide a concise explanation for the correct answer.
 - Do not copy misconception examples verbatim.
+- Honor stem_media_type:
+  - text: leave media_content empty.
+  - table: put a valid Markdown pipe table in media_content; stem must reference it
+    (e.g. "Using the table below…"). Never invent image URLs.
+  - figure: put a self-contained text-native diagram in media_content (ASCII/Unicode
+    structural formulas, labeled reaction schemes, or a fenced code block). Stem must
+    reference it. Never invent image URLs or binary assets.
 """
 
 GENERATION_USER_PROMPT = """\
@@ -87,6 +108,7 @@ MCQ item-writing constraints (best practices):
 
 Generate one original multiple-choice question as structured JSON matching the schema.
 Set learning_objective and difficulty from the blueprint. Set cognitive_level appropriately.
+Set stem_media_type from the blueprint. Populate media_content only for table/figure items.
 """
 
 BATCH_GENERATION_SYSTEM_PROMPT = """\
@@ -102,6 +124,13 @@ Requirements for each question:
 - Provide a concise explanation for the correct answer.
 - Do not copy misconception examples verbatim.
 - Return questions in the same order as the blueprints.
+- Honor each blueprint's stem_media_type:
+  - text: leave media_content empty.
+  - table: put a valid Markdown pipe table in media_content; stem must reference it
+    (e.g. "Using the table below…"). Never invent image URLs.
+  - figure: put a self-contained text-native diagram in media_content (ASCII/Unicode
+    structural formulas, labeled reaction schemes, or a fenced code block). Stem must
+    reference it. Never invent image URLs or binary assets.
 """
 
 BATCH_GENERATION_USER_PROMPT = """\
@@ -116,13 +145,17 @@ MCQ item-writing constraints (best practices):
 
 Generate exactly {batch_count} original multiple-choice questions as structured JSON.
 Each question must match its corresponding blueprint's learning_objective, difficulty,
-and cognitive_level.
+cognitive_level, and stem_media_type. Populate media_content only for table/figure items.
 """
 
 CONTENT_CHECK_SYSTEM_PROMPT = """\
 You are an expert chemistry content reviewer.
 Evaluate whether the science is correct, the keyed answer is truly correct,
 and no distractor is accidentally also correct.
+
+If the item uses a table or text-native figure (stem_media_type / media_content), also
+verify that the media is chemically consistent with the keyed answer and explanation,
+and that answering does not require an external image.
 
 Return structured JSON only. Approve only when content is scientifically sound.
 """
@@ -145,6 +178,11 @@ You are an expert in multiple-choice item design and assessment quality.
 Evaluate MCQ-writing quality: stem clarity, plausible distractors, alignment with
 the learning objective and blueprint, cognitive level, difficulty, ambiguity,
 clueing, "all of the above" issues, and adherence to the best-practice rubric.
+
+If stem_media_type is table or figure:
+- media_content must be present, readable as plain text/Markdown, and necessary to the item.
+- Tables must be valid Markdown pipe tables; figures must be text-native (no image URLs).
+- The stem must clearly reference the media; distractors must still work with the shown data.
 
 Return structured JSON only. Approve only if the item is ready for use.
 """
@@ -191,8 +229,11 @@ REVISION_SYSTEM_PROMPT = """\
 You are an expert chemistry educator revising a multiple-choice question.
 Address only the specific issues and revision instructions provided.
 Preserve parts of the question that already passed evaluation.
-Keep the blueprint's learning objective, misconception focus, and cognitive level.
+Keep the blueprint's learning objective, misconception focus, cognitive level,
+and stem_media_type.
 Maintain four options (A–D) with exactly one correct answer.
+For table/figure items, keep media_content as valid Markdown table or text-native figure
+(no image URLs). For text items, keep media_content empty.
 """
 
 REVISION_USER_PROMPT = """\
@@ -218,6 +259,7 @@ Duplicate check:
 Revision round: {revision_round}
 
 Revise the question to address the feedback. Return the improved question as structured JSON.
+Preserve stem_media_type from the blueprint and keep media_content consistent with that type.
 """
 
 RETRIEVAL_QUERY_BEST_PRACTICES = (

@@ -168,13 +168,52 @@ def write_outputs(
     if batch.rejected_questions:
         rejected_json_path.write_text(
             json.dumps(
-                [r.model_dump() for r in batch.rejected_questions],
+                [r.model_dump(mode="json") for r in batch.rejected_questions],
                 indent=2,
             ),
             encoding="utf-8",
         )
 
     return json_path, md_path
+
+
+def persist_workflow_outputs(
+    *,
+    topic: str,
+    learning_objective: str,
+    difficulty: str,
+    completed_questions: list[CompletedMCQRecord],
+    rejected_questions: list[RejectedQuestionRecord],
+    json_path: Path,
+    md_path: Path,
+    rejected_json_path: Path,
+) -> tuple[Path, Path] | None:
+    """
+    Persist approved (and rejected) questions to disk.
+
+    Returns output paths when anything was written; None when there is nothing
+    to save yet. Safe to call after each finalize/reject as a crash checkpoint.
+    """
+    if not completed_questions and not rejected_questions:
+        return None
+
+    batch = MCQBatchOutput(
+        topic=topic,
+        learning_objective=learning_objective,
+        difficulty=difficulty,
+        num_questions=len(completed_questions),
+        questions=list(completed_questions),
+        rejected_questions=list(rejected_questions),
+    )
+    paths = write_outputs(batch, json_path, md_path, rejected_json_path)
+    logger = logging.getLogger("mcq_agent")
+    logger.info(
+        "Checkpoint saved: %d approved, %d rejected -> %s",
+        len(completed_questions),
+        len(rejected_questions),
+        paths[0],
+    )
+    return paths
 
 
 def _format_markdown(batch: MCQBatchOutput) -> str:

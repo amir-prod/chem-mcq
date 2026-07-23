@@ -1,0 +1,250 @@
+[
+  {
+    "question_blueprint": {
+      "topic": "Intermolecular forces",
+      "learning_objective": "Explain how differences in intermolecular forces affect boiling point and melting temperature among molecular substances.",
+      "difficulty": "hard",
+      "cognitive_level": "Analysis",
+      "target_misconception": "Students often think molecular polarity alone determines boiling point, so the most polar molecule must always have the highest boiling point, ignoring the competing effect of molar mass/polarizability and London dispersion forces.",
+      "correct_answer_concept": "A less polar but larger/more polarizable molecule can have a higher boiling point than a smaller more polar molecule because stronger dispersion forces can outweigh dipole-dipole effects.",
+      "expected_reasoning": "Students should compare multiple candidate molecules by identifying all relevant IMFs present, then weigh dipole-dipole interactions against London dispersion strength as influenced by electron count, size, and polarizability. The correct choice should reflect that boiling point depends on the total strength of intermolecular attractions, not polarity in isolation.",
+      "question_style_notes": "Use a comparison/ranking stem with 3\u20134 molecular substances where one small strongly polar molecule is contrasted with a larger weakly polar or nonpolar molecule. Ask which substance has the highest boiling point or which explanation best accounts for an observed boiling-point order. Distractors should reflect the misconception that the largest molecular dipole always gives the highest boiling point.",
+      "stem_media_type": "text"
+    },
+    "last_candidate": {
+      "question": "Four chlorinated molecular substances are listed below: chloromethane (CH3Cl), dichloromethane (CH2Cl2), 1-chlorobutane (C4H9Cl), and carbon tetrachloride (CCl4). None can form hydrogen bonds to themselves. Which substance is expected to have the highest boiling point, and what is the best explanation for that choice?",
+      "options": {
+        "A": "Dichloromethane, because its larger molecular dipole means dipole-dipole attractions must dominate over dispersion forces.",
+        "B": "Carbon tetrachloride, because its larger electron cloud and greater polarizability produce London dispersion forces strong enough to outweigh the dipole-dipole forces in the smaller polar molecules.",
+        "C": "Chloromethane, because the presence of a polar C-Cl bond is more important than molecular size or polarizability in determining boiling point.",
+        "D": "1-Chlorobutane, because molecules with similar C-Cl bond polarity should have nearly the same intermolecular forces, so the longest chain must boil highest for that reason alone."
+      },
+      "correct_answer": "B",
+      "explanation": "Boiling point depends on the total strength of intermolecular attractions, not polarity alone. Chloromethane, dichloromethane, and 1-chlorobutane are polar, so they have dipole-dipole attractions as well as London dispersion forces. Carbon tetrachloride is nonpolar, so it does not have dipole-dipole attractions, but it has a much larger, more polarizable electron cloud than the smaller chlorinated methanes. Its London dispersion forces are therefore strong enough to outweigh the dipole-dipole attractions in the smaller polar molecules, giving CCl4 the highest boiling point. None of these substances hydrogen-bonds to itself.",
+      "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+      "difficulty": "hard",
+      "cognitive_level": "analysis",
+      "stem_media_type": "text",
+      "media_content": "",
+      "source_context_used": [
+        "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n\u251c\u2500\u2500 mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n\u251c\u2500\u2500 mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n\u2514\u2500\u2500 mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` \u2014 human-readable misconception entries\n- `extracted_misconceptions.json` \u2014 structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+      ],
+      "evaluator_feedback": "Content: Keep answer B as the key. If revising for stronger alignment and rigor, either change the learning objective metadata to boiling point only or expand the assessment set to include melting temperature separately. To better match a hard analysis-level item, make distractors more plausible\u2014for example, have one option claim that the more polar chlorinated methanes should boil higher because dipole-dipole forces dominate, rather than incorrectly stating that nonpolar molecules have dipole-dipole forces. Maintain the current explanation that stronger London dispersion from greater size/polarizability can outweigh polarity alone.; Quality: Revise the item to better match the hard, analysis-level blueprint. Either (1) change the learning-objective metadata to boiling point only, or (2) create a companion item on melting temperature if the shared objective must remain. Increase reasoning demand by asking students to predict which substance has the highest boiling point from 3\u20134 candidates or to choose the best explanation for a less obvious ranking without giving away the order so directly. Keep the no-hydrogen-bonding set if the goal is to force comparison of dipole-dipole versus dispersion. Replace weak distractors with plausible misconception-based alternatives, such as: the most polar molecule must have the highest boiling point; molecular dipole matters more than size/polarizability in all cases; shape/surface area does not affect dispersion; or molecules with similar bond polarity should have similar boiling points. Make options more parallel in length and structure to reduce clueing. Correct the typo in the learning objective.; Duplicate:",
+      "revision_rounds": 3,
+      "approved": true
+    },
+    "rejection_reason": "content accuracy failed; MCQ quality failed",
+    "revision_rounds": 3,
+    "content_evaluation": {
+      "approved": false,
+      "score": 0.58,
+      "issues": [
+        "The keyed answer is scientifically incorrect: among the listed substances, 1-chlorobutane has the highest normal boiling point, not carbon tetrachloride.",
+        "Because option D names the actually highest-boiling substance, the distractor is accidentally more correct than the keyed answer even though its explanation is flawed.",
+        "The explanation incorrectly states that CCl4 has the highest boiling point in this set because its dispersion forces outweigh those in the others; this ignores that 1-chlorobutane has both substantial dispersion forces from its larger hydrocarbon chain and permanent dipole-dipole interactions.",
+        "The item does align with the target misconception in principle, but the chosen molecule set undermines the intended concept because two large candidates compete, and the polar larger molecule (1-chlorobutane) exceeds CCl4 in boiling point.",
+        "Learning objective metadata mentions both boiling point and melting temperature, but the question assesses boiling point only.",
+        "There is a typo in the learning objective: 'tempreture' should be 'temperature'.",
+        "Distractor D is weakly reasoned, but because it identifies the correct substance, it creates a keying flaw that blocks approval."
+      ],
+      "revision_instructions": "Revise the substance set or the key so that only one option is clearly correct. If you want to preserve the concept that a less polar/nonpolar but more polarizable molecule can have the highest boiling point, replace 1-chlorobutane with a smaller polar molecule (for example, CH3Cl, CH2Cl2, CHCl3, and CCl4 or another carefully checked set) and verify actual boiling-point trends. Alternatively, if keeping the current set, change the correct answer to 1-chlorobutane and rewrite the explanation to emphasize that its larger size/surface area and polarizability plus dipole-dipole forces make its boiling point highest. Also update the learning objective to boiling point only, or add a separate melting-point component, and correct the typo 'tempreture' to 'temperature'. Ensure all distractors are plausible but unambiguously incorrect.",
+      "blocking_errors": [
+        "Incorrect keyed answer: B is not the highest-boiling substance in the listed set.",
+        "Accidentally correct distractor: D names the true highest-boiling substance, making the item invalid as written.",
+        "Explanation is chemically inconsistent with real boiling-point data for the listed compounds."
+      ]
+    },
+    "quality_evaluation": {
+      "approved": false,
+      "score": 0.68,
+      "issues": [
+        "Learning objective misalignment: the stated objective includes both boiling point and melting temperature, but the item assesses only boiling point.",
+        "The item is not fully hard/analysis level as written because the stem narrows the task to selecting both the substance and the explanation, and the answer choices make the correct reasoning relatively transparent.",
+        "Distractor quality is uneven. Options A and C are plausible misconception-based distractors, but D is weak and awkwardly justified ('for that reason alone'), making it less competitive.",
+        "Response options are not parallel in structure and length; B is the most complete and scientifically balanced option, which can cue test-wise students.",
+        "There is potential content-validity concern with the key choice because 1-chlorobutane and carbon tetrachloride have fairly similar boiling points in reality, so the item may depend on memorized data or borderline trends rather than a clearly robust IMF comparison.",
+        "The explanation overstates certainty by saying CCl4 has the highest boiling point without acknowledging that the comparison with 1-chlorobutane is close and can be influenced by structure/surface area as well as polarizability.",
+        "The stem is generally clear, but the phrase 'and what is the best explanation for that choice?' creates a two-part selection that can reward partial elimination rather than pure concept application.",
+        "There is a typo in the learning objective metadata: 'tempreture' should be 'temperature'.",
+        "Source/context metadata included in the item is irrelevant to student-facing content and should not appear in production item records if avoidable."
+      ],
+      "revision_instructions": "Revise before use. First, align metadata and assessment target: either change the learning objective to boiling point only, or create a separate companion item for melting temperature. Second, strengthen the chemistry validity by choosing a set of molecules with a more unambiguous boiling-point ordering that still tests the target misconception\u2014for example, compare a small strongly polar molecule against a larger weakly polar/nonpolar molecule where the larger one clearly boils higher. Third, increase analysis demand by asking students to predict the highest boiling point from the substances first, then in a separate item or refined option set ask for the reasoning; alternatively present a ranking and ask which explanation best accounts for it. Fourth, rewrite distractors so all are plausible and parallel: each should invoke a realistic misconception about polarity, size, polarizability, or surface area without obvious throwaway wording. Fifth, make option lengths and syntax more similar to reduce clueing. Finally, correct the typo in the learning objective and remove irrelevant metadata from the item package.",
+      "blocking_errors": [
+        "The key may not be sufficiently robust because carbon tetrachloride versus 1-chlorobutane is a close real-world boiling-point comparison, creating ambiguity for an item intended to have one clearly correct answer.",
+        "The item is not fully aligned with the stated learning objective/blueprint because it assesses boiling point only, not melting temperature."
+      ]
+    },
+    "duplicate_evaluation": {
+      "is_duplicate": false,
+      "similarity_reason": "",
+      "most_similar_question_id": null,
+      "revision_instructions": ""
+    }
+  },
+  {
+    "question_blueprint": {
+      "topic": "Intermolecular forces",
+      "learning_objective": "Explain how specific intermolecular forces and molecular structure influence boiling point and melting temperature.",
+      "difficulty": "hard",
+      "cognitive_level": "Analysis",
+      "target_misconception": "Students often assume hydrogen bonding occurs whenever hydrogen is present in a molecule, rather than only when H is directly bonded to N, O, or F and suitable lone-pair interactions are possible.",
+      "correct_answer_concept": "Only molecules with H directly bonded to N, O, or F can donate strong hydrogen bonds; molecules lacking this feature may have lower boiling points even if they contain hydrogen and are polar.",
+      "expected_reasoning": "Students should inspect a set of molecules in a data table, determine which can hydrogen-bond to themselves, and use that along with size and polarity to explain boiling-point differences. The correct reasoning should explicitly distinguish C-H bonds from O-H/N-H/F-H bonds and connect self-hydrogen bonding to unusually elevated boiling points.",
+      "question_style_notes": "Provide a Markdown table listing 4 substances with columns such as formula/condensed structure, molar mass, and observed boiling point. Include at least one alcohol or amine, one ether or ketone, and one hydrocarbon of similar mass. Ask which statement best explains the trend or which pair demonstrates the effect of hydrogen bonding. The table should make it necessary to interpret data, not just recall a rule.",
+      "stem_media_type": "table"
+    },
+    "last_candidate": {
+      "question": "Using the table below, which statement best explains the full ordering of boiling points for these substances?",
+      "options": {
+        "A": "Ethanol has the highest boiling point because it can form strong intermolecular hydrogen bonds through its O\u2013H group. Acetaldehyde and dimethyl ether are polar and can accept hydrogen bonds, but in pure samples they cannot donate hydrogen bonds to themselves, so their boiling points are lower; propane is nonpolar and therefore has the lowest boiling point.",
+        "B": "Ethanol has the highest boiling point mainly because its C\u2013O bond makes it more polar than dimethyl ether; once molecules are polar, hydrogen-bond donation has little additional effect, so molar mass and polarity are sufficient to explain the trend.",
+        "C": "Acetaldehyde boils higher than dimethyl ether because the oxygen atom in acetaldehyde allows acetaldehyde molecules to hydrogen-bond strongly to each other, whereas dimethyl ether cannot form comparable intermolecular attractions.",
+        "D": "Because propane and acetaldehyde have nearly the same molar mass, and ethanol and dimethyl ether have the same molar mass, the boiling-point differences within each pair are due mostly to small structural variations rather than to any major difference in intermolecular forces."
+      },
+      "correct_answer": "A",
+      "explanation": "The table shows that molar mass alone cannot explain the trend: ethanol and dimethyl ether both have molar mass 46.1 g/mol, yet ethanol boils much higher. The key difference is that ethanol has an O\u2013H bond, so ethanol molecules can donate and accept hydrogen bonds to each other in the pure liquid. Dimethyl ether and acetaldehyde are polar and can accept hydrogen bonds, but neither has H directly bonded to O, N, or F, so they cannot donate hydrogen bonds and therefore do not exhibit strong self-hydrogen bonding. Between those two, acetaldehyde has stronger dipole\u2013dipole attractions than dimethyl ether, helping explain its higher boiling point. Propane is nonpolar and relies only on London dispersion forces, so it has the lowest boiling point.",
+      "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+      "difficulty": "hard",
+      "cognitive_level": "analysis",
+      "stem_media_type": "table",
+      "media_content": "| Substance | Condensed structure | Molar mass (g/mol) | Boiling point (\u00b0C) |\n|---|---|---:|---:|\n| Propane | CH3CH2CH3 | 44.1 | -42 |\n| Dimethyl ether | CH3OCH3 | 46.1 | -25 |\n| Ethanol | CH3CH2OH | 46.1 | 78 |\n| Acetaldehyde | CH3CHO | 44.1 | 21 |",
+      "source_context_used": [
+        "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n\u251c\u2500\u2500 mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n\u251c\u2500\u2500 mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n\u2514\u2500\u2500 mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` \u2014 human-readable misconception entries\n- `extracted_misconceptions.json` \u2014 structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+      ],
+      "evaluator_feedback": "Content: Keep A as the keyed answer. Revise the learning objective/metadata to focus specifically on boiling point, or add a separate melting-point assessment if both properties must be covered. Correct the typo 'tempreture' to 'temperature.' Increase difficulty by making distractors more nuanced rather than blatantly false\u2014for example, contrast hydrogen-bond donation vs acceptance, or compare polarity vs hydrogen bonding among similar-mass molecules without introducing obviously incorrect statements. Consider clarifying the stem to 'Which statement best explains the full ordering of boiling points in the table?' Option B should be rewritten to avoid ambiguous wording about 'most polar' and to make the misconception more subtle. Option C can remain as a misconception-based distractor only if phrased plausibly, but currently its carbonyl-H hydrogen-bond claim is too obviously incorrect for a hard item. The explanation can be improved by explicitly stating that dimethyl ether and acetaldehyde may accept hydrogen bonds but cannot donate them, so they do not exhibit strong self-hydrogen bonding.; Quality: Revise the learning objective metadata to focus specifically on boiling point, or add a separate item for melting temperature to satisfy the broader objective. Keep the table and overall comparison structure. To support a true hard-difficulty classification, strengthen distractors so all are chemically plausible and parallel in form. For example, replace the obviously wrong distractors with subtler alternatives involving polarity, shape, dipole strength, hydrogen-bond acceptance versus donation, or overreliance on molar mass. Make all options similar in length and specificity to reduce cueing. Keep the stem wording tight, such as 'Using the table below, which statement best explains the boiling-point trend?' Also correct the typo 'tempreture' to 'temperature.'; Duplicate:",
+      "revision_rounds": 3,
+      "approved": true
+    },
+    "rejection_reason": "content accuracy failed; MCQ quality failed",
+    "revision_rounds": 3,
+    "content_evaluation": {
+      "approved": false,
+      "score": 0.78,
+      "issues": [
+        "Science and keyed answer are largely correct: A is the best answer, and the explanation correctly distinguishes hydrogen-bond donation from mere hydrogen presence or hydrogen-bond acceptance.",
+        "The table values are chemically consistent with the intended trend: propane (-42 \u00b0C), dimethyl ether (-25 \u00b0C), acetaldehyde (~20\u201321 \u00b0C), and ethanol (~78 \u00b0C) are reasonable boiling points.",
+        "The learning objective metadata says 'Explain how IMFs affect boiling point and melting tempreture,' but the item assesses only boiling point, not melting temperature.",
+        "There is a typo in the learning objective: 'tempreture' should be 'temperature'.",
+        "Difficulty is labeled 'hard,' but distractors C and D are relatively weak/obvious rather than nuanced enough for a hard analysis item.",
+        "Option B is somewhat overstated/ambiguous in saying ethanol is higher 'mainly because its C\u2013O bond makes it more polar'; the key error is the dismissal of hydrogen-bond donation, but the phrasing is not as clean or subtle as it could be.",
+        "Option C is scientifically false because acetaldehyde cannot strongly hydrogen-bond to itself as donor; however, as written it may be too obviously false for the intended difficulty level rather than a subtle distractor.",
+        "The stem asks for the 'full ordering' of boiling points, but option A explains ethanol highest and propane lowest clearly while only briefly addressing the middle ordering via stronger dipole\u2013dipole attractions in acetaldehyde than in dimethyl ether; this is acceptable but could be made tighter by explicitly referencing the observed order ethanol > acetaldehyde > dimethyl ether > propane."
+      ],
+      "revision_instructions": "Keep A as the correct answer. Revise metadata so the learning objective matches the assessed skill: either change it to boiling point only or add a separate melting-point item. Correct 'tempreture' to 'temperature.' Strengthen distractors to better fit a hard item: make them chemically plausible and parallel in structure, focusing on subtle confusion between hydrogen-bond donation vs acceptance, polarity vs hydrogen bonding, and dipole strength among similar-mass molecules. Tighten the stem to 'Using the table below, which statement best explains the boiling-point trend/order?' Consider revising A or the explanation to explicitly state the order ethanol > acetaldehyde > dimethyl ether > propane. Keep the table; it is chemically consistent and sufficient without external images.",
+      "blocking_errors": [
+        "Metadata misalignment: the stated learning objective includes melting temperature, but the item only assesses boiling point."
+      ]
+    },
+    "quality_evaluation": {
+      "approved": false,
+      "score": 0.72,
+      "issues": [
+        "The item is not fully aligned with the stated learning objective because it assesses boiling point only, while the learning objective includes both boiling point and melting temperature.",
+        "There is a typo in the learning objective metadata: 'tempreture' should be 'temperature'.",
+        "Although the keyed answer is scientifically correct and the table is necessary and well integrated, the distractors are not strong enough for a hard, analysis-level item.",
+        "Option C is too implausible for the target difficulty because acetaldehyde clearly lacks an O\u2013H, N\u2013H, or F\u2013H bond, making the hydrogen-bonding claim too easy to eliminate.",
+        "Option D is also relatively weak because it downplays intermolecular-force differences in a context where the table strongly signals them; it is not as competitive as the correct answer.",
+        "The correct option is noticeably longer and more fully reasoned than the distractors, creating length-based cueing.",
+        "The response set risks functioning partly as 'choose the fully true explanation' rather than offering four equally plausible analyses, which weakens MCQ quality.",
+        "The stem is acceptable, but 'full ordering' may be slightly broader than what option A explicitly does, since it gives the major rationale rather than a detailed pairwise ranking mechanism for every comparison.",
+        "Metadata inconsistency exists because the item is marked approved in the provided payload despite revision-needed quality concerns."
+      ],
+      "revision_instructions": "Revise the metadata so the learning objective matches the item: either change it to focus specifically on boiling point or create a companion item for melting temperature. Correct the typo 'tempreture' to 'temperature.' Keep the table, as it is valid Markdown, readable, necessary, and properly referenced by the stem. Strengthen the distractors to support hard, analysis-level performance: make them chemically plausible and parallel in structure, such as contrasting hydrogen-bond donation vs acceptance, dipole strength vs hydrogen bonding, or overreliance on molar mass among similar-mass compounds. Reduce cueing by making all options similar in length and specificity. Consider tightening the stem to 'Using the table below, which statement best explains the boiling-point trend?' Ensure only one option is best while the distractors reflect realistic misconceptions rather than obviously false claims.",
+      "blocking_errors": [
+        "Misalignment between the stated learning objective/blueprint scope and the actual construct assessed (boiling point only, not melting temperature).",
+        "Distractor quality is insufficient for approval at the claimed hard difficulty level."
+      ]
+    },
+    "duplicate_evaluation": {
+      "is_duplicate": false,
+      "similarity_reason": "",
+      "most_similar_question_id": null,
+      "revision_instructions": ""
+    }
+  },
+  {
+    "question_blueprint": {
+      "topic": "Intermolecular forces",
+      "learning_objective": "Explain how molecular shape and packing, in addition to intermolecular forces, affect melting temperature.",
+      "difficulty": "hard",
+      "cognitive_level": "Analysis",
+      "target_misconception": "Students often believe stronger intermolecular forces always mean both higher boiling point and higher melting temperature in the same order, overlooking that melting point is also strongly affected by crystal packing and molecular symmetry.",
+      "correct_answer_concept": "Melting temperature is influenced not only by IMF strength but also by how efficiently molecules pack in a crystal; a more symmetrical molecule can have a higher melting point even if its boiling point is not the highest.",
+      "expected_reasoning": "Students should interpret a figure comparing particle arrangements or crystal packing for related molecules and connect efficient packing/symmetry to greater lattice stability in the solid. They should distinguish why boiling point mainly reflects liquid-to-gas separation, whereas melting point additionally depends on solid-state packing.",
+      "question_style_notes": "Use a text-native figure showing simplified molecular shapes or crystal-packing diagrams for two or three related substances (for example, a more symmetrical molecule packing neatly versus an isomer packing poorly), along with their boiling points and melting points. Ask which conclusion best explains why the melting-point order differs from the boiling-point order.",
+      "stem_media_type": "figure"
+    },
+    "last_candidate": {
+      "question": "Using the figure below, which explanation best accounts for why these two C5H12 isomers show opposite trends in boiling point and melting point?",
+      "options": {
+        "A": "n-Pentane has the higher boiling point, so it should also have the higher melting point because both properties are determined only by the strength of intermolecular forces.",
+        "B": "Neopentane has the higher melting point because its more symmetrical shape allows more efficient crystal packing, even though both isomers are nonpolar and n-pentane has the higher boiling point.",
+        "C": "n-Pentane has the higher boiling point because its solid crystal lattice is more stable, while neopentane melts at a higher temperature because its liquid molecules attract each other less strongly.",
+        "D": "Neopentane has the higher melting point because branching makes it more polar, so its intermolecular forces are stronger than those in n-pentane."
+      },
+      "correct_answer": "B",
+      "explanation": "Both molecules are nonpolar C5H12 isomers, so London dispersion forces dominate in each. n-Pentane has the higher boiling point, which is consistent with stronger attractions in the liquid phase. Melting point, however, depends strongly on how well molecules pack in the solid crystal. Because neopentane is more symmetrical, it can pack more efficiently and form a more stable crystal lattice, giving it a higher melting point even though its boiling point is lower.",
+      "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+      "difficulty": "hard",
+      "cognitive_level": "analysis",
+      "stem_media_type": "figure",
+      "media_content": "```text\nTwo isomers with the same formula: C5H12\nBoth molecules are nonpolar and are dominated by London dispersion forces.\nThe packing sketches below are qualitative schematics of relative crystal-packing efficiency, not literal molecular arrangements.\n\nn-pentane (straight-chain isomer)\nstructure: CH3-CH2-CH2-CH2-CH3\nboiling point: 36 \u00b0C\nmelting point: -130 \u00b0C\nqualitative solid packing sketch:\n[ \u25cf \u25cf \u25cf \u25cf \u25cf ]   [ \u25cf \u25cf \u25cf \u25cf \u25cf ]\n   [ \u25cf \u25cf \u25cf \u25cf \u25cf ]   [ \u25cf \u25cf \u25cf \u25cf \u25cf ]\n[ \u25cf \u25cf \u25cf \u25cf \u25cf ]   [ \u25cf \u25cf \u25cf \u25cf \u25cf ]\nless regular packing\n\nneopentane (more symmetrical isomer)\nstructure: C(CH3)4\nboiling point: 9.5 \u00b0C\nmelting point: -16 \u00b0C\nqualitative solid packing sketch:\n[ \u25cf \u25cf \u25cf ] [ \u25cf \u25cf \u25cf ] [ \u25cf \u25cf \u25cf ]\n[ \u25cf \u25cf \u25cf ] [ \u25cf \u25cf \u25cf ] [ \u25cf \u25cf \u25cf ]\n[ \u25cf \u25cf \u25cf ] [ \u25cf \u25cf \u25cf ] [ \u25cf \u25cf \u25cf ]\nmore regular packing\n```",
+      "source_context_used": [
+        "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n\u251c\u2500\u2500 mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n\u251c\u2500\u2500 mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n\u2514\u2500\u2500 mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` \u2014 human-readable misconception entries\n- `extracted_misconceptions.json` \u2014 structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+      ],
+      "evaluator_feedback": "Content: Keep option B as the keyed answer. The science is sound: both isomers are nonpolar hydrocarbons dominated by London dispersion forces; n-pentane has the higher boiling point, while neopentane can have the higher melting point because its greater symmetry allows more efficient crystal packing and a more stable crystal lattice. Retain the explicit note that the sketches are qualitative schematics of relative crystal-packing efficiency, not literal structures. For polish, correct the typo in the learning objective ('temperature') and consider making the two packing sketches more visually parallel in style.; Quality: Keep B as the correct answer, but revise all options to be more parallel in length and structure so the correct answer is not conspicuously the most complete. Strengthen distractor plausibility by making each one a believable interpretation of why melting-point order differs from boiling-point order among nonpolar isomers. For example: one option should overattribute both properties to IMF strength alone, one should incorrectly connect boiling point to crystal-lattice stability, and one should incorrectly invoke branching/polarity or another common misconception without being trivially dismissible. Retain the explicit statement in the figure that both molecules are nonpolar and dominated by London dispersion forces, and keep the note that the sketches are qualitative packing schematics. Improve the visual parallelism of the two packing diagrams. Correct the typo in the learning objective ('temperature'). Remove or reconcile any inconsistent internal approval/evaluator metadata before use.; Duplicate:",
+      "revision_rounds": 3,
+      "approved": false
+    },
+    "rejection_reason": "content accuracy failed; MCQ quality failed",
+    "revision_rounds": 3,
+    "content_evaluation": {
+      "approved": false,
+      "score": 0.88,
+      "issues": [
+        "The core science is correct: both C5H12 isomers are nonpolar, London dispersion forces dominate, n-pentane has the higher boiling point, and neopentane's unusually high melting point is well explained by greater symmetry and more efficient crystal packing.",
+        "The keyed answer (B) is scientifically correct and aligns with the explanation and the figure text.",
+        "Distractors A, C, and D are incorrect and not accidentally correct, but they vary in plausibility and parallelism; B is noticeably more complete and polished than the others.",
+        "The text-native figure is chemically consistent with the keyed answer and explicitly notes that the packing sketches are qualitative, which is appropriate.",
+        "The packing sketches are highly schematic and not visually parallel in style; while not chemically wrong, they could better support the comparison.",
+        "There is a typo in the learning objective: 'tempreture' should be 'temperature'.",
+        "Metadata inconsistency: the item includes evaluator feedback indicating the content is sound, but the embedded field 'approved': false may confuse workflow if not reconciled."
+      ],
+      "revision_instructions": "Keep B as the correct answer. Revise the distractors so all four options are more parallel in length, structure, and sophistication, while preserving only one correct explanation. Maintain the explicit statement in the figure that both isomers are nonpolar and dominated by London dispersion forces, and keep the note that the packing diagrams are qualitative schematics. Improve the visual parallelism of the two packing sketches so the contrast in packing efficiency is clearer without implying literal molecular geometry. Correct the typo in the learning objective ('temperature') and reconcile any conflicting approval/status metadata before use.",
+      "blocking_errors": [
+        "Option design quality is not yet strong enough for approval: the correct answer is more complete and better framed than the distractors, making it somewhat cueable.",
+        "There is unresolved internal metadata inconsistency ('approved': false despite positive evaluator feedback), which should be cleaned before publication."
+      ]
+    },
+    "quality_evaluation": {
+      "approved": false,
+      "score": 0.79,
+      "issues": [
+        "The item is well aligned to the blueprint: it targets the misconception that boiling-point and melting-point order must match and asks for analysis of packing versus IMF effects.",
+        "The figure is present, text-native, readable, and clearly referenced in the stem; it is necessary to answer the question.",
+        "Scientific content is sound: n-pentane has the higher boiling point, while neopentane can have the higher melting point due to greater symmetry and more efficient crystal packing.",
+        "The stem is clear, focused, and not a Type K or disguised true/false item.",
+        "Cognitive level is appropriate for analysis because students must interpret the figure and reconcile opposite trends in two properties.",
+        "The main quality weakness is response-set cueing: option B is the longest, most qualified, and most complete answer, making it stand out.",
+        "Distractor plausibility is only moderate. A and D are useful misconception-based distractors, but C is less coherent scientifically and may be eliminated more easily than intended.",
+        "Option parallelism is weak: the options differ noticeably in length, structure, and level of detail.",
+        "The stem says 'using the figure below,' but the figure itself already states that both molecules are nonpolar and dominated by London dispersion forces, which may reduce the inferential demand somewhat.",
+        "The packing sketches are described as qualitative, which is good, but the two diagrams are not strongly visually parallel; this may slightly reduce clarity.",
+        "There is a typo in the learning objective: 'tempreture' should be 'temperature'.",
+        "Internal metadata indicates the item is not yet approved and includes evaluator notes about needed revision; these should be reconciled before operational use."
+      ],
+      "revision_instructions": "Revise the answer choices so they are more parallel in length and grammatical structure, with the correct answer no longer conspicuously the most complete. Keep B as the keyed concept, but shorten or rebalance it and strengthen the distractors so each reflects a believable misconception about IMF strength, crystal-lattice stability, or branching/polarity. Preserve the figure and its note that the packing sketches are qualitative and that both isomers are nonpolar. Improve the visual parallelism of the packing diagrams. Correct the typo in the learning objective ('temperature') and remove inconsistent internal approval/feedback metadata before use.",
+      "blocking_errors": [
+        "Option B is noticeably longer and more complete than the distractors, creating test-wiseness cueing.",
+        "Distractors are not sufficiently balanced in plausibility and structure for a ready-to-use hard item.",
+        "The item contains unresolved revision metadata and is explicitly marked not approved, so it is not yet ready for use."
+      ]
+    },
+    "duplicate_evaluation": {
+      "is_duplicate": false,
+      "similarity_reason": "",
+      "most_similar_question_id": null,
+      "revision_instructions": ""
+    }
+  }
+]

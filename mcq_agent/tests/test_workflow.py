@@ -15,6 +15,7 @@ from src.graph import (
     route_after_advance,
     route_after_quality_gate,
     run_workflow,
+    _finalize_question,
 )
 from src.schemas import (
     CognitiveLevel,
@@ -30,6 +31,8 @@ from src.schemas import (
     allocate_stem_media_types,
     compute_max_total_attempts,
 )
+from src.utils import persist_workflow_outputs
+
 
 
 def _sample_blueprint() -> QuestionBlueprint:
@@ -280,6 +283,60 @@ class StemMediaAllocationTests(unittest.TestCase):
         self.assertEqual(mcq.media_content, "")
 
 
+class CheckpointPersistenceTests(unittest.TestCase):
+    def test_persist_returns_none_when_empty(self):
+        from pathlib import Path
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            result = persist_workflow_outputs(
+                topic="t",
+                learning_objective="lo",
+                difficulty="hard",
+                completed_questions=[],
+                rejected_questions=[],
+                json_path=root / "out.json",
+                md_path=root / "out.md",
+                rejected_json_path=root / "out_rejected.json",
+            )
+            self.assertIsNone(result)
+            self.assertFalse((root / "out.json").exists())
+
+    def test_finalize_checkpoint_writes_partial_outputs(self):
+        from pathlib import Path
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            json_path = root / "partial.json"
+            md_path = root / "partial.md"
+            rejected_path = root / "partial_rejected.json"
+            written = {}
+
+            def checkpoint(state, *, completed=None, rejected=None):
+                written["completed"] = completed
+                written["rejected"] = rejected
+                persist_workflow_outputs(
+                    topic=state["topic"],
+                    learning_objective=state["learning_objective"],
+                    difficulty=state["difficulty"],
+                    completed_questions=completed or [],
+                    rejected_questions=rejected or [],
+                    json_path=json_path,
+                    md_path=md_path,
+                    rejected_json_path=rejected_path,
+                )
+
+            result = _finalize_question(_base_state(), checkpoint=checkpoint)
+            self.assertEqual(len(result["completed_questions"]), 1)
+            self.assertEqual(len(written["completed"]), 1)
+            self.assertTrue(json_path.exists())
+            self.assertTrue(md_path.exists())
+            payload = json_path.read_text(encoding="utf-8")
+            self.assertIn("stoichiometry", payload)
+
+
 class LoopGuardTests(unittest.TestCase):
     def test_compute_max_total_attempts_scales_with_batch(self):
         self.assertEqual(compute_max_total_attempts(3, 2), 18)
@@ -291,13 +348,14 @@ class LoopGuardTests(unittest.TestCase):
         """Simulate graph returning after attempt cap without hanging."""
         mock_app = MagicMock()
         mock_build_graph.return_value = mock_app
-        mock_app.invoke.return_value = {
+        final = {
             "completed_questions": [],
             "rejected_questions": [MagicMock(spec=RejectedQuestionRecord)] * 3,
             "error": "Exceeded max generation attempts (8). Completed 0 of 1 requested.",
             "generation_attempts": 8,
             "max_total_attempts": 8,
         }
+        mock_app.stream.return_value = iter([final])
 
         result = run_workflow(
             topic="acids",
@@ -309,7 +367,7 @@ class LoopGuardTests(unittest.TestCase):
         )
         self.assertEqual(result["generation_attempts"], 8)
         self.assertIn("error", result)
-        mock_app.invoke.assert_called_once()
+        mock_app.stream.assert_called_once()
 
 
 if __name__ == "__main__":

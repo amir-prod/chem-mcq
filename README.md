@@ -98,6 +98,10 @@ Outputs:
 
 Only **approved** questions count toward `--num_questions`. If too many candidates are rejected, you may receive fewer approved items than requested (the CLI logs a warning).
 
+### Safe fail / checkpoints
+
+Outputs are written **incrementally** after each approved or rejected question, not only at the end of the run. If the process is interrupted (Ctrl+C), crashes, or stops early, partial results remain in the same `--output_name` / output paths (`*.json`, `*.md`, and `*_rejected.json` when applicable).
+
 ### Text-native tables and figures
 
 Across a run, the agent assigns stem media types deterministically (~20% table, ~20% figure, remainder text). For `--num_questions 5` that is typically **1 table + 1 figure + 3 text**.
@@ -203,7 +207,7 @@ flowchart TD
     ADV -->|"target reached"| END([END])
 ```
 
-`generate_mcqs.py` calls `write_outputs()` after the graph finishes (not a LangGraph node).
+`generate_mcqs.py` also flushes outputs when the run ends or is interrupted. During the run, **finalize** and **reject** checkpoint approved/rejected items to disk after each question so partial results survive crashes.
 
 ### Pipeline nodes
 

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import operator
+from pathlib import Path
 from typing import Annotated, Literal
 
 from langgraph.graph import END, START, StateGraph
@@ -35,6 +36,7 @@ from src.utils import (
     BEST_PRACTICES_COLLECTION,
     DEFAULT_BATCH_SIZE,
     MISCONCEPTIONS_COLLECTION,
+    persist_workflow_outputs,
 )
 from src.vectorstore import VectorStoreManager, ensure_indexes
 
@@ -48,12 +50,44 @@ class GraphDependencies:
         self,
         vector_manager: VectorStoreManager | None = None,
         rebuild_indexes: bool = False,
+        *,
+        output_json: Path | None = None,
+        output_md: Path | None = None,
+        output_rejected_json: Path | None = None,
     ) -> None:
         self.vector_manager = ensure_indexes(
             vector_manager,
             rebuild=rebuild_indexes,
         )
         self.model = build_chat_model()
+        self.output_json = output_json
+        self.output_md = output_md
+        self.output_rejected_json = output_rejected_json
+
+    def checkpoint(self, state: WorkflowState, *, completed=None, rejected=None) -> None:
+        """Persist approved/rejected questions so far (no-op if paths unset)."""
+        if not self.output_json or not self.output_md or not self.output_rejected_json:
+            return
+        completed_questions = (
+            completed
+            if completed is not None
+            else list(state.get("completed_questions", []))
+        )
+        rejected_questions = (
+            rejected
+            if rejected is not None
+            else list(state.get("rejected_questions", []))
+        )
+        persist_workflow_outputs(
+            topic=state["topic"],
+            learning_objective=state["learning_objective"],
+            difficulty=state["difficulty"],
+            completed_questions=completed_questions,
+            rejected_questions=rejected_questions,
+            json_path=self.output_json,
+            md_path=self.output_md,
+            rejected_json_path=self.output_rejected_json,
+        )
 
 
 def _blueprint_hint(state: WorkflowState) -> str:
@@ -422,6 +456,18 @@ def make_revise_mcq_node(deps: GraphDependencies):
 
 def finalize_question_node(state: WorkflowState) -> dict:
     """Append an approved question to completed outputs and clear working state."""
+    return _finalize_question(state, checkpoint=None)
+
+
+def make_finalize_question_node(deps: GraphDependencies):
+    def finalize_with_checkpoint(state: WorkflowState) -> dict:
+        return _finalize_question(state, checkpoint=deps.checkpoint)
+
+    return finalize_with_checkpoint
+
+
+def _finalize_question(state: WorkflowState, checkpoint) -> dict:
+    """Append an approved question to completed outputs and clear working state."""
     question = state.get("candidate_question")
     blueprint = state.get("question_blueprint")
     content = state.get("content_evaluation")
@@ -449,6 +495,14 @@ def finalize_question_node(state: WorkflowState) -> dict:
         quality_evaluation=quality,
         duplicate_evaluation=duplicate,
     )
+    completed = list(state.get("completed_questions", [])) + [record]
+    rejected = list(state.get("rejected_questions", []))
+    if checkpoint is not None:
+        try:
+            checkpoint(state, completed=completed, rejected=rejected)
+        except Exception:  # noqa: BLE001
+            logger.exception("Failed to checkpoint outputs after finalize.")
+
     return {
         "completed_questions": [record],
         "candidate_question": None,
@@ -460,6 +514,18 @@ def finalize_question_node(state: WorkflowState) -> dict:
 
 
 def reject_or_regenerate_node(state: WorkflowState) -> dict:
+    """Reject a failed question and prepare for the next batch slot."""
+    return _reject_or_regenerate(state, checkpoint=None)
+
+
+def make_reject_or_regenerate_node(deps: GraphDependencies):
+    def reject_with_checkpoint(state: WorkflowState) -> dict:
+        return _reject_or_regenerate(state, checkpoint=deps.checkpoint)
+
+    return reject_with_checkpoint
+
+
+def _reject_or_regenerate(state: WorkflowState, checkpoint) -> dict:
     """Reject a failed question and prepare for the next batch slot."""
     question = state.get("candidate_question")
     blueprint = state.get("question_blueprint")
@@ -486,7 +552,7 @@ def reject_or_regenerate_node(state: WorkflowState) -> dict:
         rejection_reason,
     )
 
-    rejected = RejectedQuestionRecord(
+    rejected_record = RejectedQuestionRecord(
         question_blueprint=blueprint,
         last_candidate=question,
         rejection_reason=rejection_reason,
@@ -495,8 +561,16 @@ def reject_or_regenerate_node(state: WorkflowState) -> dict:
         quality_evaluation=quality,
         duplicate_evaluation=duplicate,
     )
+    completed = list(state.get("completed_questions", []))
+    rejected = list(state.get("rejected_questions", [])) + [rejected_record]
+    if checkpoint is not None:
+        try:
+            checkpoint(state, completed=completed, rejected=rejected)
+        except Exception:  # noqa: BLE001
+            logger.exception("Failed to checkpoint outputs after reject.")
+
     return {
-        "rejected_questions": [rejected],
+        "rejected_questions": [rejected_record],
         "candidate_question": None,
         "question_blueprint": None,
         "content_evaluation": None,
@@ -514,9 +588,17 @@ def build_mcq_graph(
     deps: GraphDependencies | None = None,
     *,
     rebuild_indexes: bool = False,
+    output_json: Path | None = None,
+    output_md: Path | None = None,
+    output_rejected_json: Path | None = None,
 ):
     """Compile the LangGraph workflow."""
-    dependencies = deps or GraphDependencies(rebuild_indexes=rebuild_indexes)
+    dependencies = deps or GraphDependencies(
+        rebuild_indexes=rebuild_indexes,
+        output_json=output_json,
+        output_md=output_md,
+        output_rejected_json=output_rejected_json,
+    )
 
     class MCQGraphState(WorkflowState, total=False):
         completed_questions: Annotated[list[CompletedMCQRecord], operator.add]
@@ -549,8 +631,8 @@ def build_mcq_graph(
     graph.add_node("duplicate_check", make_duplicate_check_node(dependencies))
     graph.add_node("quality_gate", quality_gate_node)
     graph.add_node("revise_mcq", make_revise_mcq_node(dependencies))
-    graph.add_node("finalize_question", finalize_question_node)
-    graph.add_node("reject_or_regenerate", reject_or_regenerate_node)
+    graph.add_node("finalize_question", make_finalize_question_node(dependencies))
+    graph.add_node("reject_or_regenerate", make_reject_or_regenerate_node(dependencies))
     graph.add_node("advance_batch", advance_batch_node)
 
     graph.add_edge(START, "retrieve_misconceptions")
@@ -598,9 +680,23 @@ def run_workflow(
     batch_size: int = DEFAULT_BATCH_SIZE,
     max_revision_rounds: int = 3,
     rebuild_indexes: bool = False,
+    output_json: Path | None = None,
+    output_md: Path | None = None,
+    output_rejected_json: Path | None = None,
 ) -> dict:
-    """Execute the compiled graph and return the final state."""
-    app = build_mcq_graph(rebuild_indexes=rebuild_indexes)
+    """
+    Execute the compiled graph and return the final (or partial) state.
+
+    Streams state updates so Ctrl+C / unexpected stops can still return whatever
+    was approved so far. Approved and rejected items are also checkpointed to
+    disk after each finalize/reject when output paths are provided.
+    """
+    app = build_mcq_graph(
+        rebuild_indexes=rebuild_indexes,
+        output_json=output_json,
+        output_md=output_md,
+        output_rejected_json=output_rejected_json,
+    )
     max_total = compute_max_total_attempts(num_questions, max_revision_rounds)
     initial_state: WorkflowState = {
         "topic": topic,
@@ -628,4 +724,19 @@ def run_workflow(
         "stem_media_plan": allocate_stem_media_types(num_questions),
         "error": None,
     }
-    return app.invoke(initial_state)
+
+    last_state: dict = dict(initial_state)
+    try:
+        for state in app.stream(initial_state, stream_mode="values"):
+            last_state = state
+    except KeyboardInterrupt:
+        logger.warning(
+            "Interrupted by user after %d approved / %d rejected question(s).",
+            len(last_state.get("completed_questions", [])),
+            len(last_state.get("rejected_questions", [])),
+        )
+        last_state = {
+            **last_state,
+            "error": last_state.get("error") or "Interrupted by user",
+        }
+    return last_state

@@ -11,13 +11,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from src.graph import run_workflow
-from src.schemas import Difficulty, MCQBatchOutput
+from src.schemas import Difficulty
 from src.utils import (
     PROJECT_ROOT,
+    persist_workflow_outputs,
     resolve_output_paths,
     setup_logging,
     validate_data_directories,
-    write_outputs,
 )
 from src.vectorstore import VectorStoreManager, ensure_indexes
 
@@ -104,6 +104,41 @@ def parse_args() -> argparse.Namespace:
     return args
 
 
+def _save_partial(
+    *,
+    topic: str,
+    learning_objective: str,
+    difficulty: str,
+    completed,
+    rejected,
+    output_json: Path,
+    output_md: Path,
+    output_rejected_json: Path,
+    logger,
+) -> bool:
+    """Write whatever questions exist; return True if anything was saved."""
+    paths = persist_workflow_outputs(
+        topic=topic,
+        learning_objective=learning_objective,
+        difficulty=difficulty,
+        completed_questions=completed or [],
+        rejected_questions=rejected or [],
+        json_path=output_json,
+        md_path=output_md,
+        rejected_json_path=output_rejected_json,
+    )
+    if paths is None:
+        return False
+    logger.info(
+        "Wrote %d approved / %d rejected to %s and %s",
+        len(completed or []),
+        len(rejected or []),
+        paths[0],
+        paths[1],
+    )
+    return True
+
+
 def main() -> int:
     args = parse_args()
     logger = setup_logging()
@@ -125,6 +160,8 @@ def main() -> int:
             logger.exception("Indexing failed: %s", exc)
             return 1
 
+    final_state: dict = {}
+    interrupted = False
     try:
         ensure_indexes(rebuild=args.rebuild_index)
         final_state = run_workflow(
@@ -135,23 +172,60 @@ def main() -> int:
             batch_size=args.batch_size,
             max_revision_rounds=args.max_revision_rounds,
             rebuild_indexes=args.rebuild_index,
+            output_json=args.output_json,
+            output_md=args.output_md,
+            output_rejected_json=args.output_rejected_json,
         )
+    except KeyboardInterrupt:
+        interrupted = True
+        logger.warning("Interrupted before workflow returned; checking for checkpoints.")
     except Exception as exc:  # noqa: BLE001
         logger.exception("Workflow failed: %s", exc)
+        # Incremental checkpoints may already be on disk; still try a final flush.
+        questions = final_state.get("completed_questions", [])
+        rejected = final_state.get("rejected_questions", [])
+        if questions or rejected:
+            _save_partial(
+                topic=args.topic,
+                learning_objective=args.learning_objective,
+                difficulty=args.difficulty,
+                completed=questions,
+                rejected=rejected,
+                output_json=args.output_json,
+                output_md=args.output_md,
+                output_rejected_json=args.output_rejected_json,
+                logger=logger,
+            )
         return 1
 
-    if final_state.get("error"):
-        logger.error("Workflow error: %s", final_state["error"])
-        return 1
+    if final_state.get("error") == "Interrupted by user":
+        interrupted = True
 
     questions = final_state.get("completed_questions", [])
     rejected = final_state.get("rejected_questions", [])
+
+    saved = _save_partial(
+        topic=args.topic,
+        learning_objective=args.learning_objective,
+        difficulty=args.difficulty,
+        completed=questions,
+        rejected=rejected,
+        output_json=args.output_json,
+        output_md=args.output_md,
+        output_rejected_json=args.output_rejected_json,
+        logger=logger,
+    )
+
+    if final_state.get("error") and not interrupted:
+        logger.error("Workflow error: %s", final_state["error"])
+
     if not questions:
         logger.error(
-            "No approved questions were generated (%d rejected).",
+            "No approved questions were generated (%d rejected).%s",
             len(rejected),
+            " Partial rejected output was saved." if saved else "",
         )
-        return 1
+        return 130 if interrupted else 1
 
     if len(questions) < args.num_questions:
         logger.warning(
@@ -161,27 +235,13 @@ def main() -> int:
             len(rejected),
         )
 
-    batch = MCQBatchOutput(
-        topic=args.topic,
-        learning_objective=args.learning_objective,
-        difficulty=args.difficulty,
-        num_questions=len(questions),
-        questions=questions,
-        rejected_questions=rejected,
-    )
-    json_path, md_path = write_outputs(
-        batch,
-        args.output_json,
-        args.output_md,
-        args.output_rejected_json,
-    )
-    logger.info(
-        "Wrote %d approved question(s) to %s and %s (%d rejected)",
-        len(questions),
-        json_path,
-        md_path,
-        len(rejected),
-    )
+    if interrupted:
+        logger.warning(
+            "Run interrupted; kept %d approved question(s) on disk.",
+            len(questions),
+        )
+        return 130
+
     return 0
 
 

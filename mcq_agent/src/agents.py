@@ -53,6 +53,8 @@ def build_chat_model() -> ChatOpenAI:
         "model": config["model"],
         "api_key": config["api_key"],
         "temperature": config["temperature"],
+        "timeout": config["timeout"],
+        "max_retries": config["max_retries"],
     }
     if config["base_url"]:
         kwargs["base_url"] = config["base_url"]
@@ -220,13 +222,31 @@ def create_batch_blueprints(
         user_prompt,
         QuestionBlueprintBatch,
     )
-    if len(batch.blueprints) != batch_count:
-        raise ValueError(
-            f"Expected {batch_count} blueprints, got {len(batch.blueprints)}"
+    blueprints = list(batch.blueprints[:batch_count])
+    if len(blueprints) != batch_count:
+        logger.warning(
+            "Batch blueprint call returned %d/%d items; filling missing slots one-by-one.",
+            len(blueprints),
+            batch_count,
         )
+        for offset in range(len(blueprints), batch_count):
+            blueprints.append(
+                create_question_blueprint(
+                    topic=topic,
+                    learning_objective=learning_objective,
+                    difficulty=difficulty,
+                    question_number=start_question_number + offset,
+                    num_questions=num_questions,
+                    completed_questions=completed_questions,
+                    rejected_questions=rejected_questions,
+                    misconceptions_context=misconceptions_context,
+                    stem_media_type=media_types[offset],
+                    model=llm,
+                )
+            )
     forced = [
         _force_blueprint_media_type(blueprint, media_type)
-        for blueprint, media_type in zip(batch.blueprints, media_types, strict=True)
+        for blueprint, media_type in zip(blueprints, media_types, strict=True)
     ]
     return QuestionBlueprintBatch(blueprints=forced)
 
@@ -258,7 +278,11 @@ def generate_batch_mcqs(
     best_practices_context: list[str],
     model: ChatOpenAI | None = None,
 ) -> MCQQuestionBatch:
-    """Generate a batch of MCQs from blueprints and retrieved context."""
+    """Generate a batch of MCQs from blueprints and retrieved context.
+
+    Local / smaller models often return fewer structured items than requested.
+    When that happens, keep what was returned and fill the rest one-by-one.
+    """
     llm = model or build_chat_model()
     user_prompt = BATCH_GENERATION_USER_PROMPT.format(
         blueprints_json=dumps_json(blueprints),
@@ -272,13 +296,25 @@ def generate_batch_mcqs(
         user_prompt,
         MCQQuestionBatch,
     )
-    if len(batch.questions) != len(blueprints):
-        raise ValueError(
-            f"Expected {len(blueprints)} questions, got {len(batch.questions)}"
+    questions = list(batch.questions[: len(blueprints)])
+    if len(questions) != len(blueprints):
+        logger.warning(
+            "Batch MCQ call returned %d/%d items; filling missing slots one-by-one.",
+            len(questions),
+            len(blueprints),
         )
+        for blueprint in blueprints[len(questions) :]:
+            questions.append(
+                generate_mcq(
+                    blueprint=blueprint,
+                    misconceptions_context=misconceptions_context,
+                    best_practices_context=best_practices_context,
+                    model=llm,
+                )
+            )
 
     finalized: list[MCQQuestion] = []
-    for blueprint, question in zip(blueprints, batch.questions, strict=True):
+    for blueprint, question in zip(blueprints, questions, strict=True):
         question.source_context_used = misconceptions_context[:]
         question.learning_objective = blueprint.learning_objective
         finalized.append(_align_question_media(question, blueprint))

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -31,7 +32,7 @@ from src.schemas import (
     allocate_stem_media_types,
     compute_max_total_attempts,
 )
-from src.utils import persist_workflow_outputs
+from src.utils import get_embedding_config, get_model_config, persist_workflow_outputs, DEFAULT_OPENAI_BASE_URL
 
 
 
@@ -245,6 +246,82 @@ class BatchRoutingTests(unittest.TestCase):
             batch_blueprints=[_sample_blueprint(), _sample_blueprint()],
         )
         self.assertEqual(route_after_advance(state), "__end__")
+
+
+class BatchGenerationFallbackTests(unittest.TestCase):
+    def test_generate_batch_fills_missing_questions_one_by_one(self):
+        from src.agents import generate_batch_mcqs
+        from src.schemas import MCQQuestionBatch
+
+        blueprints = [_sample_blueprint(), _sample_blueprint(), _sample_blueprint()]
+        partial = MCQQuestionBatch(questions=[_sample_mcq()])
+        filled = [_sample_mcq(question="filled-2"), _sample_mcq(question="filled-3")]
+
+        with patch("src.agents._invoke_structured", return_value=partial), patch(
+            "src.agents.generate_mcq", side_effect=filled
+        ) as mock_single:
+            result = generate_batch_mcqs(
+                blueprints=blueprints,
+                misconceptions_context=["ctx"],
+                best_practices_context=["bp"],
+                model=MagicMock(),
+            )
+
+        self.assertEqual(len(result.questions), 3)
+        self.assertEqual(mock_single.call_count, 2)
+        self.assertEqual(result.questions[1].question, "filled-2")
+        self.assertEqual(result.questions[2].question, "filled-3")
+
+
+class ModelEmbeddingConfigTests(unittest.TestCase):
+    def test_embedding_uses_dedicated_key_and_ignores_local_chat_base(self):
+        env = {
+            "OPENAI_API_KEY": "sk-openwebui",
+            "OPENAI_BASE_URL": "http://localhost:8080/api/v1",
+            "OPENAI_MODEL": "qwen36-35b",
+            "EMBEDDING_API_KEY": "sk-openai-embed",
+            "OPENAI_EMBEDDING_MODEL": "text-embedding-3-large",
+            "OPENAI_TEMPERATURE": "0.3",
+        }
+        with patch("src.utils.load_dotenv"), patch.dict(os.environ, env, clear=False):
+            for key in ("EMBEDDING_BASE_URL",):
+                os.environ.pop(key, None)
+            chat = get_model_config()
+            embed = get_embedding_config()
+
+        self.assertEqual(chat["api_key"], "sk-openwebui")
+        self.assertEqual(chat["base_url"], "http://localhost:8080/api/v1")
+        self.assertEqual(chat["model"], "qwen36-35b")
+        self.assertEqual(embed["api_key"], "sk-openai-embed")
+        self.assertEqual(embed["base_url"], DEFAULT_OPENAI_BASE_URL)
+        self.assertEqual(embed["model"], "text-embedding-3-large")
+
+    def test_embedding_falls_back_to_openai_key_when_no_embedding_key(self):
+        env = {
+            "OPENAI_API_KEY": "sk-shared",
+            "OPENAI_BASE_URL": "https://api.openai.com/v1",
+            "OPENAI_EMBEDDING_MODEL": "text-embedding-3-small",
+        }
+        with patch("src.utils.load_dotenv"), patch.dict(os.environ, env, clear=False):
+            os.environ.pop("EMBEDDING_API_KEY", None)
+            os.environ.pop("EMBEDDING_BASE_URL", None)
+            embed = get_embedding_config()
+
+        self.assertEqual(embed["api_key"], "sk-shared")
+        self.assertEqual(embed["base_url"], "https://api.openai.com/v1")
+
+    def test_explicit_embedding_base_url_empty_means_openai_default(self):
+        env = {
+            "OPENAI_API_KEY": "sk-openwebui",
+            "OPENAI_BASE_URL": "http://localhost:8080/api/v1",
+            "EMBEDDING_API_KEY": "sk-openai-embed",
+            "EMBEDDING_BASE_URL": "",
+        }
+        with patch("src.utils.load_dotenv"), patch.dict(os.environ, env, clear=False):
+            embed = get_embedding_config()
+
+        self.assertEqual(embed["api_key"], "sk-openai-embed")
+        self.assertEqual(embed["base_url"], DEFAULT_OPENAI_BASE_URL)
 
 
 class StemMediaAllocationTests(unittest.TestCase):

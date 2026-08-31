@@ -1,0 +1,320 @@
+{
+  "topic": "intermolecular forces",
+  "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+  "difficulty": "hard",
+  "num_questions": 4,
+  "questions": [
+    {
+      "mcq": {
+        "question": "Melting solid NaCl requires more energy than vaporizing liquid HCl. Which statement correctly explains the difference in energy requirements for these phase transitions?",
+        "options": {
+          "A": "Melting NaCl requires breaking strong ionic bonds between ions, whereas vaporizing HCl only overcomes weak dipole-dipole attractions.",
+          "B": "Vaporizing HCl requires breaking strong covalent bonds between atoms, whereas melting NaCl only disrupts weak ionic attractions.",
+          "C": "Melting NaCl requires overcoming strong electrostatic attractions between ions, whereas vaporizing HCl only overcomes weaker dipole-dipole forces between molecules.",
+          "D": "Melting NaCl requires breaking strong ionic bonds between ions, whereas vaporizing HCl requires breaking strong covalent bonds between atoms."
+        },
+        "correct_answer": "C",
+        "explanation": "Phase transitions involve overcoming the forces holding particles together in a condensed phase, not breaking covalent or ionic bonds within individual molecules or formula units. Melting NaCl requires overcoming strong electrostatic attractions in the crystal lattice, while vaporizing HCl requires overcoming weaker dipole-dipole forces. Option C correctly identifies that these processes overcome intermolecular and lattice forces rather than breaking intramolecular bonds. Options A, B, and D incorrectly assume that intramolecular bonds are broken during phase changes.",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "stem_media_type": "text",
+        "media_content": "",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: ; Quality: Rewrite the stem to ask directly for the correct explanation of the energy requirements, removing the 'evaluate this claim' directive. Rewrite all four options to be direct, parallel scientific statements of approximately equal length. Remove all meta-language from the correct option and state the principle directly (e.g., 'Melting NaCl requires more energy because it overcomes strong electrostatic attractions between ions, whereas vaporizing HCl only overcomes weaker dipole-dipole forces between molecules.' Adjust distractors to match this direct format while preserving target misconceptions (A: claims breaking ionic bonds; B: claims breaking covalent H–Cl bonds; D: claims both break intramolecular bonds with incorrect strength comparison). Verify that all options can stand alone as direct answers to the revised stem without evaluative framing.; Duplicate:",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "intermolecular forces",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "Analyze",
+        "target_misconception": "Confusing intramolecular covalent/ionic bond breaking with overcoming intermolecular forces during phase transitions.",
+        "correct_answer_concept": "Phase changes require energy to overcome IMFs, not to break intramolecular bonds; the magnitude of energy correlates directly with IMF strength.",
+        "expected_reasoning": "The student must differentiate between chemical bond dissociation (intramolecular) and physical phase transition (intermolecular), then apply the relationship between IMF type/strength and the thermal energy required for vaporization or fusion.",
+        "question_style_notes": "Text stem presenting a comparative scenario: 'Liquid HCl and solid NaCl both require significant energy to transition to gas/liquid states. A student claims melting NaCl requires more energy than vaporizing HCl because ionic bonds are stronger than dipole-dipole forces. Evaluate this claim and explain the actual energy requirements based on the forces being overcome.'",
+        "stem_media_type": "text"
+      },
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": true,
+        "score": 1.0,
+        "issues": [
+          "Option C states vaporizing HCl 'only overcomes weaker dipole-dipole forces,' which omits London dispersion forces. While dipole-dipole is the dominant IMF for HCl and this phrasing is standard in many curricula, it is slightly imprecise."
+        ],
+        "revision_instructions": "For maximum scientific rigor, update Option C to include dispersion forces (e.g., '...overcomes weaker dipole-dipole and dispersion forces...'). The current version is acceptable for introductory levels, but this adjustment eliminates a minor technical inaccuracy.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.95,
+        "issues": [
+          "Stem is clear but could be slightly more direct to align with best-practice questioning standards.",
+          "Option C uses 'electrostatic attractions' while distractors use 'ionic bonds'; this is intentional to target the misconception but requires explicit clarification in the instructor key to prevent student confusion."
+        ],
+        "revision_instructions": "Rephrase the stem to: 'Which of the following best explains why melting solid NaCl requires more energy than vaporizing liquid HCl?' Update the instructor key to explicitly note that 'electrostatic attractions' in option C correctly refers to the lattice forces overcome during melting, distinguishing it from the intramolecular 'ionic bond' breaking incorrectly proposed in options A and D.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "",
+        "most_similar_question_id": null,
+        "revision_instructions": ""
+      }
+    },
+    {
+      "mcq": {
+        "question": "stem\": \"Using the data in the table below, a student argues that Heptane should have a higher boiling point than 1-Butanol because it has a greater molar mass. Evaluate this argument and select the statement that best explains the actual boiling point trend.\",\n      \"options\": {\n        \"A\": \"The argument is valid because boiling point increases linearly with molar mass regardless of the type of intermolecular force present.\",\n        \"B\": \"The argument is invalid because 1-Butanol exhibits hydrogen bonding, a much stronger specific intermolecular force that elevates its boiling point above Heptane’s despite the mass difference.\",\n        \"C\": \"The argument is valid because Methyl propyl ether and 1-Butanol have identical molar masses, so their boiling points should be nearly identical regardless of functional groups.\",\n        \"D\": \"The argument is invalid because London dispersion forces are negligible in all organic compounds, making hydrogen bonding the only factor that determines boiling point.\"\n      },\n      \"correct_answer\": \"B\",\n      \"explanation\": \"While molar mass influences London dispersion forces, the type of intermolecular force is often the dominant factor. 1-Butanol can form hydrogen bonds, which are significantly stronger than the London dispersion forces in Heptane. This specific IMF requires substantially more thermal energy to overcome, resulting in a higher boiling point despite Heptane’s greater mass.\",\n      \"media_content\": \"| Compound | Molar Mass (g/mol) | Primary IMF | Experimental Boiling Point (°C) |\\n|---|---|---|---|\\n| Pentane | 72.15 | London dispersion | 36.1 |\\n| Heptane | 100.20 | London dispersion | 98.4 |\\n| 1-Butanol | 74.12 | Hydrogen bonding | 117.7 |\\n| Methyl propyl ether | 74.12 | Dipole-dipole | 38.8 |\"\n    },\n    {\n      \"stem\": \"Using the structural diagrams below, both n-pentane and neopentane share the molecular formula C5H12 and identical molar masses. Predict which compound has the higher boiling point and select the explanation that correctly applies the relationship between molecular geometry and intermolecular forces.\",\n      \"options\": {\n        \"A\": \"Neopentane, because its compact, spherical shape allows molecules to pack more tightly in the liquid phase, increasing boiling point.\",\n        \"B\": \"n-Pentane, because its extended linear geometry provides greater surface area for molecular contact, enhancing London dispersion forces.\",\n        \"C\": \"Both have identical boiling points, because London dispersion forces depend solely on molar mass and electron count, not molecular shape.\",\n        \"D\": \"n-Pentane, because its linear shape reduces electron cloud polarizability, leading to stronger instantaneous dipoles.\"\n      },\n      \"correct_answer\": \"B\",\n      \"explanation\": \"London dispersion forces arise from temporary fluctuations in electron distribution. A linear molecular shape allows for greater surface area contact between adjacent molecules compared to a compact, branched shape. This increased contact area amplifies instantaneous dipole-induced dipole interactions, resulting in stronger overall dispersion forces and a higher boiling point for n-pentane.\",\n      \"media_content\": \"n-Pentane (C5H12)          Neopentane (C5H12)\\nCH3-CH2-CH2-CH2-CH3       CH3\\n                          |\\n                        CH3-C-CH3\\n                          |\\n                          CH3\\n(Extended linear chain)   (Compact, spherical)\"\n    },\n    {\n      \"stem\": \"Compound A and Compound B are structural isomers with identical functional groups and therefore exhibit the same types and strengths of intermolecular forces. Compound A is highly symmetric and roughly spherical, while Compound B is asymmetric and elongated. Experimental data shows that Compound A has a higher melting point but a lower boiling point than Compound B. Analyze this observation and select the statement that best explains the divergence between their melting and boiling points.\",\n      \"options\": {\n        \"A\": \"Compound A has a higher melting point because its spherical shape maximizes London dispersion forces in the solid state, while Compound B boils at a higher temperature due to weaker dipole-dipole interactions.\",\n        \"B\": \"Compound A has a higher melting point because its high symmetry allows efficient packing in the crystal lattice, whereas Compound B has a higher boiling point because its elongated shape increases surface area contact in the liquid phase.\",\n        \"C\": \"Compound A has a higher boiling point because spherical molecules experience less steric hindrance during vaporization, while Compound B melts at a lower temperature due to irregular lattice formation.\",\n        \"D\": \"Both compounds should have identical melting and boiling points because they possess the same molecular formula and identical intermolecular force types.\"\n      },\n      \"correct_answer\": \"B\",\n      \"explanation\": \"Melting point is heavily influenced by how efficiently molecules pack into a solid crystal lattice; high symmetry allows tighter, more stable packing, requiring more energy to disrupt. Boiling point, however, depends on overcoming intermolecular forces in the liquid phase, where molecular shape and surface area dictate the strength of London dispersion forces. Thus, symmetry favors a higher melting point, while elongation favors a higher boiling point.\",\n      \"media_content\": \"\"\n    },\n    {\n      \"stem\": \"Molecule X is a polar organic compound with a large dipole moment but an irregular, bulky three-dimensional shape. Molecule Y is also polar but has a smaller dipole moment and a highly symmetric, planar structure. Both compounds are solids at room temperature. Evaluate the relative melting points of these molecules and select the statement that correctly justifies the outcome based on solid-state properties.\",\n      \"options\": {\n        \"A\": \"Molecule X has the higher melting point because its larger dipole moment creates stronger intermolecular attractions that require more thermal energy to overcome.\",\n        \"B\": \"Molecule Y has the higher melting point because its high symmetry and planar geometry allow for efficient crystal lattice packing, which outweighs the effect of its weaker dipole moment.\",\n        \"C\": \"Both molecules have identical melting points because melting point depends exclusively on the magnitude of the molecular dipole moment.\",\n        \"D\": \"Molecule X has the higher melting point because its bulky shape increases London dispersion forces, compensating for its irregular packing in the solid state.\"\n      },\n      \"correct_answer\": \"B\",\n      \"explanation\": \"While stronger dipole-dipole interactions generally raise melting points, solid-state packing efficiency is often the dominant factor. Molecule Y’s high symmetry and planar structure enable molecules to align and pack tightly into a stable crystal lattice. This efficient packing requires more thermal energy to disrupt than the weaker but less efficiently packed lattice of Molecule X, resulting in a higher melting point for Y.\",\n      \"media_content\": \"\"\n    }\n  ]\n}```json{  ",
+        "options": {
+          "A": "The argument is valid because boiling point increases linearly with molar mass regardless of the type of intermolecular force present.",
+          "B": "The argument is invalid because 1-Butanol exhibits hydrogen bonding, a much stronger specific intermolecular force that elevates its boiling point above Heptane’s despite the mass difference.",
+          "C": "The argument is valid because Methyl propyl ether and 1-Butanol have identical molar masses, so their boiling points should be nearly identical regardless of functional groups.",
+          "D": "The argument is invalid because London dispersion forces are negligible in all organic compounds, making hydrogen bonding the only factor that determines boiling point."
+        },
+        "correct_answer": "B",
+        "explanation": "While molar mass influences London dispersion forces, the type of intermolecular force is often the dominant factor. 1-Butanol can form hydrogen bonds, which are significantly stronger than the London dispersion forces in Heptane. This specific IMF requires substantially more thermal energy to overcome, resulting in a higher boiling point despite Heptane’s greater mass.",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "evaluation",
+        "stem_media_type": "table",
+        "media_content": "| Compound | Molar Mass (g/mol) | Primary IMF | Experimental Boiling Point (°C) |\n|---|---|---|---|\n| Pentane | 72.15 | London dispersion | 36.1 |\n| Heptane | 100.20 | London dispersion | 98.4 |\n| 1-Butanol | 74.12 | Hydrogen bonding | 117.7 |\n| Methyl propyl ether | 74.12 | Dipole-dipole | 38.8 |",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "The question correctly targets the misconception of assuming molar mass is the sole determinant of boiling point. The table provides the necessary data, and the stem explicitly references it. The correct answer highlights the qualitative impact of hydrogen bonding over London dispersion forces. Distractors reflect plausible errors regarding mass dependence and functional group irrelevance. The explanation is concise and aligns with the expected reasoning path. All constraints are satisfied.",
+        "revision_rounds": 1,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "intermolecular forces",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "Evaluate",
+        "target_misconception": "Assuming molar mass is the sole determinant of boiling/melting point, ignoring the qualitative impact of specific IMF types (e.g., hydrogen bonding vs. London dispersion).",
+        "correct_answer_concept": "Stronger specific IMFs (like hydrogen bonding) can elevate boiling points significantly above those of heavier molecules that only exhibit weaker London dispersion forces.",
+        "expected_reasoning": "The student must analyze the tabulated data to identify the mass-BP trend, recognize the functional group responsible for hydrogen bonding in the lower-mass outlier, and justify why IMF type overrides molar mass in this case.",
+        "question_style_notes": "Markdown table displaying four organic compounds with columns for: Compound Name, Molar Mass (g/mol), Primary IMF, and Experimental Boiling Point (°C). The table includes two alkanes, one alcohol, and one ether, where the alcohol has a lower molar mass than one alkane but a significantly higher boiling point.",
+        "stem_media_type": "table"
+      },
+      "revision_rounds": 1,
+      "content_evaluation": {
+        "approved": true,
+        "score": 1.0,
+        "issues": [
+          "Minor typo in the learning objective: 'tempreture' should be 'temperature'. Does not impact the scientific validity or clarity of the question."
+        ],
+        "revision_instructions": "Correct the spelling of 'temperature' in the learning objective field for professional consistency.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.95,
+        "issues": [
+          "The stem contains slight redundancy ('Evaluate this argument and select the statement that best explains...'), which adds unnecessary cognitive load before the options are even read."
+        ],
+        "revision_instructions": "Tighten the stem for directness: 'A student argues that Heptane should have a higher boiling point than 1-Butanol because it has a greater molar mass. Which statement best evaluates this argument and explains the actual boiling point trend?'",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate question evaluates boiling point trends by contrasting molar mass with specific intermolecular forces (hydrogen bonding vs. London dispersion). The completed question addresses a fundamentally different concept regarding phase change energies, specifically distinguishing between overcoming intermolecular forces and breaking intramolecular bonds. There is no overlap in target misconception, stem pattern, or conceptual focus.",
+        "most_similar_question_id": null,
+        "revision_instructions": "Not applicable; no near-duplicates found."
+      }
+    },
+    {
+      "mcq": {
+        "question": "Based on the structural diagrams, which compound has the higher boiling point, and what is the correct explanation?",
+        "options": {
+          "A": "Neopentane, because its compact shape allows tighter molecular packing, increasing the boiling point.",
+          "B": "n-Pentane, because its linear shape provides greater surface contact, strengthening London dispersion forces.",
+          "C": "Both have identical boiling points, because London dispersion forces depend only on molar mass, not shape.",
+          "D": "n-Pentane, because its linear shape strengthens the covalent bonds between carbon atoms, requiring more energy to boil."
+        },
+        "correct_answer": "B",
+        "explanation": "London dispersion forces arise from temporary fluctuations in electron distribution. A linear molecular shape allows for greater surface area contact between adjacent molecules compared to a compact, branched shape. This increased contact area amplifies instantaneous dipole-induced dipole interactions, resulting in stronger overall dispersion forces and a higher boiling point for n-pentane.",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "application",
+        "stem_media_type": "figure",
+        "media_content": "n-Pentane (C5H12)          Neopentane (C5H12)\nCH3-CH2-CH2-CH2-CH3       CH3\n                          |\n                        CH3-C-CH3\n                          |\n                          CH3\n(Extended linear chain)   (Compact, spherical)",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: Correct the spelling of 'temperature' in the learning objective field.; Quality: Shorten Option B to match the approximate length and grammatical structure of Options A, C, and D to eliminate the test-wiseness cue. Rewrite Option D to target a common misconception (intramolecular vs. intermolecular forces): 'n-Pentane, because its linear shape strengthens the covalent bonds between carbon atoms, requiring more energy to boil.' Simplify the stem to: 'Based on the structural diagrams, which compound has the higher boiling point, and what is the correct explanation?' Ensure all response options are parallel in structure, length, and complexity.; Duplicate: N/A (not a duplicate)",
+        "revision_rounds": 2,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "intermolecular forces",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "Apply",
+        "target_misconception": "Believing that molecular shape and surface area do not significantly affect London dispersion forces or boiling point when electron count and molar mass are identical.",
+        "correct_answer_concept": "Linear molecular geometries allow for greater surface area contact between adjacent molecules compared to branched geometries, resulting in stronger London dispersion forces and a higher boiling point.",
+        "expected_reasoning": "The student must interpret the structural diagrams to compare molecular shapes, relate shape to effective contact surface area, and predict how increased surface area amplifies instantaneous dipole-induced dipole interactions, thereby raising the boiling point.",
+        "question_style_notes": "Text-native figure showing the skeletal structures of n-pentane and neopentane (2,2-dimethylpropane). Labels indicate identical molecular formulas (C5H12) and molar masses. The figure highlights the extended linear chain of n-pentane versus the compact, spherical branching of neopentane.",
+        "stem_media_type": "figure"
+      },
+      "revision_rounds": 2,
+      "content_evaluation": {
+        "approved": true,
+        "score": 1.0,
+        "issues": [
+          "Minor typo in the learning objective field: 'tempreture' should be 'temperature'."
+        ],
+        "revision_instructions": "Correct the spelling of 'temperature' in the learning objective field. The rest of the item is scientifically sound, well-structured, and effectively targets the intended misconception.",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.95,
+        "issues": [
+          "Typo in the learning objective: 'tempreture' should be 'temperature'.",
+          "Option D is slightly longer (22 words) than Options A-C (18-20 words), creating a minor parallelism inconsistency.",
+          "The difficulty is labeled 'hard', but the concept (shape-dependent London dispersion forces) is typically 'medium' difficulty in general chemistry; it may be appropriate for advanced organic chemistry."
+        ],
+        "revision_instructions": "Correct the spelling in the learning objective to 'temperature'. Tighten Option D to match the exact length and grammatical structure of the other options (e.g., 'n-Pentane, because its linear shape strengthens covalent bonds, requiring more energy to boil.'). Verify that the 'hard' difficulty rating aligns with the target student population; adjust to 'medium' if this is for introductory chemistry.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate question specifically targets how molecular branching and surface area affect London dispersion forces and boiling points for structural isomers with identical molar mass. This differs from ID 1 (which focuses on intramolecular vs. intermolecular forces in phase changes) and ID 2 (which focuses on how specific IMF types like hydrogen bonding can override molar mass effects). The concepts, stems, and targeted misconceptions are distinct.",
+        "most_similar_question_id": null,
+        "revision_instructions": "N/A"
+      }
+    },
+    {
+      "mcq": {
+        "question": "stem\": \"Compound A and Compound B are structural isomers with identical functional groups and therefore exhibit the same types and strengths of intermolecular forces. Compound A is highly symmetric and roughly spherical, while Compound B is asymmetric and elongated. Experimental data shows that Compound A has a higher melting point but a lower boiling point than Compound B. Analyze this observation and select the statement that best explains the divergence between their melting and boiling points.\",\n      \"options\": {\n        \"A\": \"Compound A has a higher melting point because its spherical shape maximizes London dispersion forces in the solid state, while Compound B boils at a higher temperature due to weaker dipole-dipole interactions.\",\n        \"B\": \"Compound A has a higher melting point because its high symmetry allows efficient packing in the crystal lattice, whereas Compound B has a higher boiling point because its elongated shape increases surface area contact in the liquid phase.\",\n        \"C\": \"Compound A has a higher boiling point because spherical molecules experience less steric hindrance during vaporization, while Compound B melts at a lower temperature due to irregular lattice formation.\",\n        \"D\": \"Both compounds should have identical melting and boiling points because they possess the same molecular formula and identical intermolecular force types.\"\n      },\n      ",
+        "options": {
+          "A": "Compound A has a higher melting point because its spherical shape maximizes London dispersion forces in the solid state, while Compound B boils at a higher temperature due to weaker dipole-dipole interactions.",
+          "B": "Compound A has a higher melting point because its high symmetry allows efficient packing in the crystal lattice, whereas Compound B has a higher boiling point because its elongated shape increases surface area contact in the liquid phase.",
+          "C": "Compound A has a higher boiling point because spherical molecules experience less steric hindrance during vaporization, while Compound B melts at a lower temperature due to irregular lattice formation.",
+          "D": "Both compounds should have identical melting and boiling points because they possess the same molecular formula and identical intermolecular force types."
+        },
+        "correct_answer": "B",
+        "explanation": "Melting point is heavily influenced by how efficiently molecules pack into a solid crystal lattice; high symmetry allows tighter, more stable packing, requiring more energy to disrupt. Boiling point, however, depends on overcoming intermolecular forces in the liquid phase, where molecular shape and surface area dictate the strength of London dispersion forces. Thus, symmetry favors a higher melting point, while elongation favors a higher boiling point.",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "analysis",
+        "stem_media_type": "text",
+        "media_content": "",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "The question correctly targets the misconception that melting and boiling point trends always parallel each other. The stem presents a clear comparative scenario as requested. The correct answer accurately distinguishes between solid-state packing efficiency (melting point) and liquid-state volatility/surface area (boiling point). Distractors reflect plausible errors regarding IMF types and packing assumptions. The explanation is concise and aligns with the expected reasoning path. All constraints are satisfied.",
+        "revision_rounds": 1,
+        "approved": true
+      },
+      "question_blueprint": {
+        "topic": "intermolecular forces",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "Analyze",
+        "target_misconception": "Assuming that melting point trends always parallel boiling point trends across different compound classes, failing to account for crystal lattice packing efficiency versus volatility.",
+        "correct_answer_concept": "Boiling point is governed primarily by the strength of IMFs in the liquid phase, whereas melting point is heavily influenced by molecular symmetry and packing efficiency in the solid crystal lattice, which can cause MP and BP trends to diverge.",
+        "expected_reasoning": "The student must separate the physical requirements for melting (disrupting an ordered lattice) from boiling (overcoming all IMFs to enter the gas phase), then apply this distinction to explain why a highly symmetric molecule might have a higher MP but lower BP than a less symmetric isomer.",
+        "question_style_notes": "Text stem describing two structural isomers with identical IMF types and strengths. Compound A is highly symmetric and spherical; Compound B is asymmetric and elongated. The stem asks why Compound A has a higher melting point but a lower boiling point than Compound B, requiring an explanation of how symmetry affects solid-state packing versus liquid-state volatility.",
+        "stem_media_type": "text"
+      },
+      "revision_rounds": 1,
+      "content_evaluation": {
+        "approved": true,
+        "score": 1.0,
+        "issues": [],
+        "revision_instructions": "",
+        "blocking_errors": []
+      },
+      "quality_evaluation": {
+        "approved": true,
+        "score": 0.95,
+        "issues": [
+          "Option A contains a physical contradiction ('weaker dipole-dipole interactions' leading to a higher boiling point) and conflicts with the stem's explicit premise that both isomers have identical IMF types and strengths. This reduces distractor plausibility and may allow test-wise students to eliminate it quickly."
+        ],
+        "revision_instructions": "Rewrite Option A to maintain internal consistency and align with the stem's premise. For example, attribute the boiling point difference to a plausible but incorrect misconception, such as 'Compound B boils higher because its elongated shape increases dipole-dipole interactions,' or reference molecular weight/packing in the liquid phase incorrectly. Ensure all distractors present coherent (though wrong) reasoning paths.",
+        "blocking_errors": []
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": false,
+        "similarity_reason": "The candidate question specifically targets the divergence between melting and boiling point trends for structural isomers, contrasting crystal lattice packing efficiency (driven by symmetry) with liquid-phase surface area contact (driven by elongation). While ID 3 also involves molecular shape and isomers, it focuses exclusively on boiling point trends and the effect of surface area on London dispersion forces, without addressing melting point behavior or crystal packing. The candidate's core concept, stem pattern (comparing MP vs BP divergence), and target misconception (MP/BP trends always parallel) are distinct from ID 3's focus on shape-dependent LDF strength for boiling points alone.",
+        "most_similar_question_id": null,
+        "revision_instructions": "N/A (not a duplicate)"
+      }
+    }
+  ],
+  "rejected_questions": [
+    {
+      "question_blueprint": {
+        "topic": "intermolecular forces",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "Evaluate",
+        "target_misconception": "Overgeneralizing that stronger intermolecular forces always yield higher melting points, ignoring the dominant role of molecular symmetry and packing efficiency in the solid state.",
+        "correct_answer_concept": "While stronger IMFs generally increase both MP and BP, melting point is disproportionately sensitive to how well molecules pack into a crystal lattice; high symmetry can override weaker IMF strength to produce a higher melting point.",
+        "expected_reasoning": "The student must evaluate a scenario where a molecule with weaker dipole-dipole interactions exhibits a higher melting point than a molecule with stronger dipole-dipole interactions. They must justify this by explaining how superior molecular symmetry enables tighter crystal packing, which requires more thermal energy to disrupt than the stronger but less efficiently packed alternative.",
+        "question_style_notes": "Text stem presenting a comparative analysis of two polar organic molecules: Molecule X has a larger dipole moment but an irregular, bulky shape. Molecule Y has a smaller dipole moment but a highly symmetric, planar structure. The question asks which compound has the higher melting point and requires a detailed explanation linking dipole strength, molecular shape, and solid-state lattice energy.",
+        "stem_media_type": "text"
+      },
+      "last_candidate": {
+        "question": "Molecule X is a polar organic compound with a large dipole moment but an irregular, bulky three-dimensional shape. Molecule Y is also polar but has a smaller dipole moment and a highly symmetric, planar structure. Both compounds are solids at room temperature. Molecule Y exhibits a higher melting point than Molecule X. Which statement correctly justifies the relative melting points of these molecules based on solid-state properties?",
+        "options": {
+          "A": "Molecule Y has the higher melting point because its smaller dipole moment reduces intermolecular repulsion, allowing molecules to pack more tightly.",
+          "B": "Molecule Y has the higher melting point because its high symmetry and planar geometry allow for efficient crystal lattice packing, which outweighs the effect of its weaker dipole moment.",
+          "C": "Both molecules have similar melting points because dipole moment is the primary determinant of solid-state stability.",
+          "D": "Molecule Y has the higher melting point because its irregular, bulky shape increases molecular surface area, enhancing London dispersion forces in the solid state."
+        },
+        "correct_answer": "B",
+        "explanation": "Melting point in molecular solids is heavily influenced by how efficiently molecules pack into a crystal lattice. Molecule Y’s high symmetry and planar geometry enable tight, ordered packing, which significantly increases lattice energy and raises the melting point, overriding the effect of its weaker dipole moment. Option A incorrectly attributes tighter packing to reduced dipole repulsion rather than geometric symmetry. Option C is incorrect because dipole moment is not the sole or primary determinant of melting point; packing efficiency often plays a larger role. Option D incorrectly claims that an irregular, bulky shape enhances packing and dispersion forces; in reality, irregular shapes disrupt efficient lattice formation, lowering the melting point.",
+        "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+        "difficulty": "hard",
+        "cognitive_level": "evaluation",
+        "stem_media_type": "text",
+        "media_content": "",
+        "source_context_used": [
+          "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n├── mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n├── mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n└── mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` — human-readable misconception entries\n- `extracted_misconceptions.json` — structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+        ],
+        "evaluator_feedback": "Content: The scientific content, learning objective alignment, and keyed answer are all correct. To improve question quality and cognitive demand, consider rephrasing the stem to ask 'Which statement best explains the observed difference in melting points?' and adjust options A/D to propose plausible but incorrect solid-state mechanisms (e.g., claiming irregular shapes pack more efficiently) rather than contradicting the given premise.; Quality: Revise Option D to reference only properties provided in the stem. Example: 'Molecule X has the higher melting point because its bulky, irregular shape maximizes London dispersion forces, compensating for poor crystal packing.' Soften Option C to avoid absolute cues, e.g., 'Both molecules have similar melting points because dipole moment is the primary determinant of solid-state stability.' Streamline the stem to focus directly on the melting point comparison, removing the boiling point clause unless it is required for a multi-part item or explicitly tied to the reasoning.; Duplicate: The question is a near-duplicate of ID 4. To differentiate, consider: (1) shifting the focus to a different solid-state factor (e.g., hydrogen bonding networks vs. van der Waals packing, or molecular vs. ionic crystal lattices); (2) using entirely different molecular classes or physical properties (e.g., comparing vapor pressure trends to MP, or solubility vs. MP); or (3) explicitly framing the divergence around a novel trend (e.g., why a highly symmetric nonpolar molecule has a higher MP than a polar asymmetric one). Additionally, refine Option D for chemical precision, simplify the stem as suggested by the evaluator, and ensure distractors target distinct misconceptions not already covered in ID 4.",
+        "revision_rounds": 3,
+        "approved": true
+      },
+      "rejection_reason": "content accuracy failed; MCQ quality failed; duplicate: The candidate question and ID 4 are near-duplicates. Both test the identical core concept: that melting point trends in molecular solids are governed primarily by molecular symmetry and crystal packing efficiency rather than by dipole moment or intermolecular force strength. Both use the same comparative stem structure (a molecule with stronger dipoles/IMFs but lower MP vs. a molecule with weaker dipoles/IMFs but higher MP due to symmetry) and target the exact same misconception (overgeneralizing that stronger IMFs always yield higher melting points, ignoring packing efficiency).",
+      "revision_rounds": 3,
+      "content_evaluation": {
+        "approved": false,
+        "score": 0.6,
+        "issues": [
+          "Option D contains a direct factual contradiction to the stem. It claims Molecule Y has an 'irregular, bulky shape', but the stem explicitly assigns this property to Molecule X. Distractors must not contradict the given premises.",
+          "Typo in the learning objective: 'melting tempreture' should be corrected to 'melting temperature'.",
+          "Option A's justification ('smaller dipole moment reduces intermolecular repulsion') is chemically imprecise and does not accurately describe the mechanism of packing efficiency."
+        ],
+        "revision_instructions": "Rewrite Option D to correctly reference Molecule X's properties or construct a new distractor that targets a plausible but incorrect solid-state mechanism without contradicting the stem. Example: 'Molecule X has the higher melting point because its bulky, irregular shape maximizes London dispersion forces, compensating for poor crystal packing.' Correct the spelling error in the learning objective to 'melting temperature'. Refine Option A to target a specific misconception (e.g., confusing dipole-dipole attraction with repulsion or misattributing packing efficiency to charge magnitude rather than geometry).",
+        "blocking_errors": [
+          "Option D contradicts the stem by misattributing the 'irregular, bulky shape' to Molecule Y. This invalidates the option as a coherent distractor and creates confusion for the test-taker."
+        ]
+      },
+      "quality_evaluation": {
+        "approved": false,
+        "score": 0.6,
+        "issues": [
+          "Option D directly contradicts the stem's description of the molecules. The stem explicitly states Molecule Y is 'highly symmetric, planar' and Molecule X is 'irregular, bulky', but Option D claims Y has an 'irregular, bulky shape'. This allows students to eliminate the distractor via reading comprehension rather than chemical reasoning.",
+          "The learning objective references both boiling point and melting temperature, but the item exclusively assesses melting point. While focused items are acceptable, explicit alignment should be maintained or the objective should be narrowed to match the item's scope.",
+          "Option A's rationale ('reduces intermolecular repulsion') is chemically imprecise for dipole-dipole interactions in the context of lattice packing. It could be refined to target a more standard misconception about dipole alignment or electrostatic forces in solids."
+        ],
+        "revision_instructions": "Revise Option D to maintain factual consistency with the stem while testing a distinct misconception. Example: 'Molecule Y has the higher melting point because its planar geometry maximizes London dispersion forces, compensating for its weaker dipole moment.' Refine Option A to target a plausible solid-state misconception without contradicting the premise. Example: 'Molecule Y has the higher melting point because its smaller dipole moment reduces electrostatic repulsion between molecules, enabling tighter packing.' Update the learning objective to explicitly match the item's focus (e.g., 'Explain how IMFs and molecular symmetry affect melting point') or add a comparative boiling point component if the original objective must be preserved.",
+        "blocking_errors": [
+          "Option D contains a direct factual contradiction with the stem (attributes 'irregular, bulky shape' to Molecule Y, which the stem explicitly describes as 'highly symmetric, planar'). This violates the principle that distractors must be plausible, internally consistent, and require content knowledge rather than stem-reading to eliminate."
+        ]
+      },
+      "duplicate_evaluation": {
+        "is_duplicate": true,
+        "similarity_reason": "The candidate question and ID 4 are near-duplicates. Both test the identical core concept: that melting point trends in molecular solids are governed primarily by molecular symmetry and crystal packing efficiency rather than by dipole moment or intermolecular force strength. Both use the same comparative stem structure (a molecule with stronger dipoles/IMFs but lower MP vs. a molecule with weaker dipoles/IMFs but higher MP due to symmetry) and target the exact same misconception (overgeneralizing that stronger IMFs always yield higher melting points, ignoring packing efficiency).",
+        "most_similar_question_id": 4,
+        "revision_instructions": "To differentiate this question from ID 4, consider: (1) shifting the focus to a different solid-state factor, such as hydrogen bonding networks versus van der Waals packing, or molecular versus ionic crystal lattices; (2) comparing a different physical property (e.g., vapor pressure or solubility trends) while retaining the symmetry/packing concept; or (3) explicitly framing the divergence around a novel trend, such as why a highly symmetric nonpolar molecule has a higher melting point than a polar asymmetric one. Additionally, streamline the stem to directly ask for the best explanation of the melting point difference, ensure all options reference only properties provided in the stem, and refine distractors to target distinct misconceptions not already covered in ID 4."
+      }
+    }
+  ]
+}

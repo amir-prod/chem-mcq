@@ -52,7 +52,9 @@ class VectorStoreManager:
             "model": config["model"],
             "api_key": config["api_key"],
         }
-        if config["base_url"]:
+        # Always pass base_url explicitly. Omitting it lets the OpenAI SDK inherit
+        # OPENAI_BASE_URL from the environment (often a local chat server).
+        if config.get("base_url"):
             kwargs["base_url"] = config["base_url"]
         return OpenAIEmbeddings(**kwargs)
 

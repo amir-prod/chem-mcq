@@ -38,7 +38,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-# Edit .env and set OPENAI_API_KEY
+# Edit .env: set chat + embedding credentials (see Model and API below)
 ```
 
 ## Data folders
@@ -246,12 +246,34 @@ A generation attempt cap (`num_questions × (max_revision_rounds + 4)`) prevents
 
 ### Model and API
 
-Edit `mcq_agent/.env`:
+Edit `mcq_agent/.env`. Chat and embeddings can use different credentials so you can run a local OpenAI-compatible chat server (for example [Open WebUI](https://docs.openwebui.com/features/authentication-access/api-keys)) while keeping embeddings on OpenAI.
+
+**Open WebUI chat + OpenAI embeddings (recommended for local LLMs):**
 
 ```env
-OPENAI_API_KEY=...
+# Chat via Open WebUI (Bearer API key from Settings > Account)
+OPENAI_API_KEY=sk-your-openwebui-key
+OPENAI_BASE_URL=https://horizon.ccast.ndsu.edu/api/v1
+OPENAI_MODEL=qwen36-35b
+OPENAI_TEMPERATURE=0.3
+
+# Embeddings via OpenAI (do not reuse the local chat base URL)
+EMBEDDING_API_KEY=sk-your-openai-key
+OPENAI_EMBEDDING_MODEL=text-embedding-3-large
+```
+
+When `EMBEDDING_API_KEY` is set, embeddings default to the official OpenAI host unless you set `EMBEDDING_BASE_URL`. After changing embedding model or host, rebuild indexes:
+
+```bash
+python generate_mcqs.py --index-only --rebuild-index
+```
+
+**Pure OpenAI (chat and embeddings share one key):**
+
+```env
+OPENAI_API_KEY=sk-...
 OPENAI_MODEL=gpt-4o-mini
-OPENAI_BASE_URL=https://your-compatible-provider/v1   # optional
+# OPENAI_BASE_URL=   # omit for api.openai.com
 OPENAI_EMBEDDING_MODEL=text-embedding-3-small
 OPENAI_TEMPERATURE=0.3
 ```

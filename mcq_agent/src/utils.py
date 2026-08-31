@@ -60,24 +60,60 @@ def setup_logging(level: str | None = None) -> logging.Logger:
     return logging.getLogger("mcq_agent")
 
 
-def get_model_config() -> dict[str, str | float]:
-    """Load OpenAI-compatible model settings from environment."""
+# Official OpenAI API host — must be set explicitly for embeddings when chat
+# uses a local OPENAI_BASE_URL, because the OpenAI SDK otherwise inherits that env var.
+DEFAULT_OPENAI_BASE_URL = "https://api.openai.com/v1"
+
+
+def get_model_config() -> dict[str, str | float | int]:
+    """Load OpenAI-compatible chat model settings from environment."""
     load_dotenv(PROJECT_ROOT / ".env")
     return {
         "model": os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
         "api_key": os.getenv("OPENAI_API_KEY", ""),
         "base_url": os.getenv("OPENAI_BASE_URL") or None,
         "temperature": float(os.getenv("OPENAI_TEMPERATURE", "0.3")),
+        # Local LLMs behind a gateway often need longer than the OpenAI default.
+        "timeout": float(os.getenv("OPENAI_TIMEOUT", "600")),
+        "max_retries": int(os.getenv("OPENAI_MAX_RETRIES", "2")),
     }
 
 
-def get_embedding_config() -> dict[str, str]:
-    """Load embedding model settings from environment."""
+def get_embedding_config() -> dict[str, str | None]:
+    """
+    Load embedding model settings from environment.
+
+    Prefer dedicated EMBEDDING_* credentials so chat can point at a local
+    OpenAI-compatible server (e.g. Open WebUI) while embeddings stay on OpenAI.
+
+    Resolution:
+    - api_key: EMBEDDING_API_KEY if set, else OPENAI_API_KEY
+    - base_url: EMBEDDING_BASE_URL if that env var is present (empty → official
+      OpenAI host); else if EMBEDDING_API_KEY is set, use the official OpenAI
+      host so a local chat OPENAI_BASE_URL is not reused; otherwise fall back
+      to OPENAI_BASE_URL or the official host.
+
+    Always returns an explicit base_url string for the OpenAI default case so
+    the OpenAI SDK does not inherit chat's OPENAI_BASE_URL from the environment.
+    """
     load_dotenv(PROJECT_ROOT / ".env")
+    embedding_api_key = os.getenv("EMBEDDING_API_KEY")
+    openai_api_key = os.getenv("OPENAI_API_KEY", "")
+    api_key = embedding_api_key if embedding_api_key else openai_api_key
+
+    if "EMBEDDING_BASE_URL" in os.environ:
+        raw = os.environ["EMBEDDING_BASE_URL"].strip()
+        base_url = raw or DEFAULT_OPENAI_BASE_URL
+    elif embedding_api_key:
+        # Dedicated embedding key: do not inherit local chat base URL.
+        base_url = DEFAULT_OPENAI_BASE_URL
+    else:
+        base_url = os.getenv("OPENAI_BASE_URL") or DEFAULT_OPENAI_BASE_URL
+
     return {
         "model": os.getenv("OPENAI_EMBEDDING_MODEL", "text-embedding-3-small"),
-        "api_key": os.getenv("OPENAI_API_KEY", ""),
-        "base_url": os.getenv("OPENAI_BASE_URL") or None,
+        "api_key": api_key,
+        "base_url": base_url,
     }
 
 

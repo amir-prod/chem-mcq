@@ -1,0 +1,71 @@
+[
+  {
+    "question_blueprint": {
+      "topic": "intermolecular forces",
+      "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+      "difficulty": "hard",
+      "cognitive_level": "Evaluate",
+      "target_misconception": "Overgeneralizing that stronger intermolecular forces always yield higher melting points, ignoring the dominant role of molecular symmetry and packing efficiency in the solid state.",
+      "correct_answer_concept": "While stronger IMFs generally increase both MP and BP, melting point is disproportionately sensitive to how well molecules pack into a crystal lattice; high symmetry can override weaker IMF strength to produce a higher melting point.",
+      "expected_reasoning": "The student must evaluate a scenario where a molecule with weaker dipole-dipole interactions exhibits a higher melting point than a molecule with stronger dipole-dipole interactions. They must justify this by explaining how superior molecular symmetry enables tighter crystal packing, which requires more thermal energy to disrupt than the stronger but less efficiently packed alternative.",
+      "question_style_notes": "Text stem presenting a comparative analysis of two polar organic molecules: Molecule X has a larger dipole moment but an irregular, bulky shape. Molecule Y has a smaller dipole moment but a highly symmetric, planar structure. The question asks which compound has the higher melting point and requires a detailed explanation linking dipole strength, molecular shape, and solid-state lattice energy.",
+      "stem_media_type": "text"
+    },
+    "last_candidate": {
+      "question": "Molecule X is a polar organic compound with a large dipole moment but an irregular, bulky three-dimensional shape. Molecule Y is also polar but has a smaller dipole moment and a highly symmetric, planar structure. Both compounds are solids at room temperature. Molecule Y exhibits a higher melting point than Molecule X. Which statement correctly justifies the relative melting points of these molecules based on solid-state properties?",
+      "options": {
+        "A": "Molecule Y has the higher melting point because its smaller dipole moment reduces intermolecular repulsion, allowing molecules to pack more tightly.",
+        "B": "Molecule Y has the higher melting point because its high symmetry and planar geometry allow for efficient crystal lattice packing, which outweighs the effect of its weaker dipole moment.",
+        "C": "Both molecules have similar melting points because dipole moment is the primary determinant of solid-state stability.",
+        "D": "Molecule Y has the higher melting point because its irregular, bulky shape increases molecular surface area, enhancing London dispersion forces in the solid state."
+      },
+      "correct_answer": "B",
+      "explanation": "Melting point in molecular solids is heavily influenced by how efficiently molecules pack into a crystal lattice. Molecule Y\u2019s high symmetry and planar geometry enable tight, ordered packing, which significantly increases lattice energy and raises the melting point, overriding the effect of its weaker dipole moment. Option A incorrectly attributes tighter packing to reduced dipole repulsion rather than geometric symmetry. Option C is incorrect because dipole moment is not the sole or primary determinant of melting point; packing efficiency often plays a larger role. Option D incorrectly claims that an irregular, bulky shape enhances packing and dispersion forces; in reality, irregular shapes disrupt efficient lattice formation, lowering the melting point.",
+      "learning_objective": "Explain how IMFs affect boiling point and melting tempreture",
+      "difficulty": "hard",
+      "cognitive_level": "evaluation",
+      "stem_media_type": "text",
+      "media_content": "",
+      "source_context_used": [
+        "# Misconceptions corpus for RAG\n\nThe agent indexes three topic-specific misconception corpora under this directory:\n\n```text\ndata/mds_misconceptions/\n\u251c\u2500\u2500 mds_IMFs/                  -> ../../../dataFolder/mds_IMFs\n\u251c\u2500\u2500 mds_ox_redox/              -> ../../../dataFolder/mds_ox_redox\n\u2514\u2500\u2500 mds_sn1_sn2_reduction/     -> ../../../dataFolder/mds_sn1_sn2_reduction\n```\n\nEach topic folder contains:\n\n- `misconceptions_corpus.md` \u2014 human-readable misconception entries\n- `extracted_misconceptions.json` \u2014 structured extraction output\n\nRebuild the vector index after adding or updating corpora:\n\n```bash\npython generate_mcqs.py --index-only --rebuild-index\n```"
+      ],
+      "evaluator_feedback": "Content: The scientific content, learning objective alignment, and keyed answer are all correct. To improve question quality and cognitive demand, consider rephrasing the stem to ask 'Which statement best explains the observed difference in melting points?' and adjust options A/D to propose plausible but incorrect solid-state mechanisms (e.g., claiming irregular shapes pack more efficiently) rather than contradicting the given premise.; Quality: Revise Option D to reference only properties provided in the stem. Example: 'Molecule X has the higher melting point because its bulky, irregular shape maximizes London dispersion forces, compensating for poor crystal packing.' Soften Option C to avoid absolute cues, e.g., 'Both molecules have similar melting points because dipole moment is the primary determinant of solid-state stability.' Streamline the stem to focus directly on the melting point comparison, removing the boiling point clause unless it is required for a multi-part item or explicitly tied to the reasoning.; Duplicate: The question is a near-duplicate of ID 4. To differentiate, consider: (1) shifting the focus to a different solid-state factor (e.g., hydrogen bonding networks vs. van der Waals packing, or molecular vs. ionic crystal lattices); (2) using entirely different molecular classes or physical properties (e.g., comparing vapor pressure trends to MP, or solubility vs. MP); or (3) explicitly framing the divergence around a novel trend (e.g., why a highly symmetric nonpolar molecule has a higher MP than a polar asymmetric one). Additionally, refine Option D for chemical precision, simplify the stem as suggested by the evaluator, and ensure distractors target distinct misconceptions not already covered in ID 4.",
+      "revision_rounds": 3,
+      "approved": true
+    },
+    "rejection_reason": "content accuracy failed; MCQ quality failed; duplicate: The candidate question and ID 4 are near-duplicates. Both test the identical core concept: that melting point trends in molecular solids are governed primarily by molecular symmetry and crystal packing efficiency rather than by dipole moment or intermolecular force strength. Both use the same comparative stem structure (a molecule with stronger dipoles/IMFs but lower MP vs. a molecule with weaker dipoles/IMFs but higher MP due to symmetry) and target the exact same misconception (overgeneralizing that stronger IMFs always yield higher melting points, ignoring packing efficiency).",
+    "revision_rounds": 3,
+    "content_evaluation": {
+      "approved": false,
+      "score": 0.6,
+      "issues": [
+        "Option D contains a direct factual contradiction to the stem. It claims Molecule Y has an 'irregular, bulky shape', but the stem explicitly assigns this property to Molecule X. Distractors must not contradict the given premises.",
+        "Typo in the learning objective: 'melting tempreture' should be corrected to 'melting temperature'.",
+        "Option A's justification ('smaller dipole moment reduces intermolecular repulsion') is chemically imprecise and does not accurately describe the mechanism of packing efficiency."
+      ],
+      "revision_instructions": "Rewrite Option D to correctly reference Molecule X's properties or construct a new distractor that targets a plausible but incorrect solid-state mechanism without contradicting the stem. Example: 'Molecule X has the higher melting point because its bulky, irregular shape maximizes London dispersion forces, compensating for poor crystal packing.' Correct the spelling error in the learning objective to 'melting temperature'. Refine Option A to target a specific misconception (e.g., confusing dipole-dipole attraction with repulsion or misattributing packing efficiency to charge magnitude rather than geometry).",
+      "blocking_errors": [
+        "Option D contradicts the stem by misattributing the 'irregular, bulky shape' to Molecule Y. This invalidates the option as a coherent distractor and creates confusion for the test-taker."
+      ]
+    },
+    "quality_evaluation": {
+      "approved": false,
+      "score": 0.6,
+      "issues": [
+        "Option D directly contradicts the stem's description of the molecules. The stem explicitly states Molecule Y is 'highly symmetric, planar' and Molecule X is 'irregular, bulky', but Option D claims Y has an 'irregular, bulky shape'. This allows students to eliminate the distractor via reading comprehension rather than chemical reasoning.",
+        "The learning objective references both boiling point and melting temperature, but the item exclusively assesses melting point. While focused items are acceptable, explicit alignment should be maintained or the objective should be narrowed to match the item's scope.",
+        "Option A's rationale ('reduces intermolecular repulsion') is chemically imprecise for dipole-dipole interactions in the context of lattice packing. It could be refined to target a more standard misconception about dipole alignment or electrostatic forces in solids."
+      ],
+      "revision_instructions": "Revise Option D to maintain factual consistency with the stem while testing a distinct misconception. Example: 'Molecule Y has the higher melting point because its planar geometry maximizes London dispersion forces, compensating for its weaker dipole moment.' Refine Option A to target a plausible solid-state misconception without contradicting the premise. Example: 'Molecule Y has the higher melting point because its smaller dipole moment reduces electrostatic repulsion between molecules, enabling tighter packing.' Update the learning objective to explicitly match the item's focus (e.g., 'Explain how IMFs and molecular symmetry affect melting point') or add a comparative boiling point component if the original objective must be preserved.",
+      "blocking_errors": [
+        "Option D contains a direct factual contradiction with the stem (attributes 'irregular, bulky shape' to Molecule Y, which the stem explicitly describes as 'highly symmetric, planar'). This violates the principle that distractors must be plausible, internally consistent, and require content knowledge rather than stem-reading to eliminate."
+      ]
+    },
+    "duplicate_evaluation": {
+      "is_duplicate": true,
+      "similarity_reason": "The candidate question and ID 4 are near-duplicates. Both test the identical core concept: that melting point trends in molecular solids are governed primarily by molecular symmetry and crystal packing efficiency rather than by dipole moment or intermolecular force strength. Both use the same comparative stem structure (a molecule with stronger dipoles/IMFs but lower MP vs. a molecule with weaker dipoles/IMFs but higher MP due to symmetry) and target the exact same misconception (overgeneralizing that stronger IMFs always yield higher melting points, ignoring packing efficiency).",
+      "most_similar_question_id": 4,
+      "revision_instructions": "To differentiate this question from ID 4, consider: (1) shifting the focus to a different solid-state factor, such as hydrogen bonding networks versus van der Waals packing, or molecular versus ionic crystal lattices; (2) comparing a different physical property (e.g., vapor pressure or solubility trends) while retaining the symmetry/packing concept; or (3) explicitly framing the divergence around a novel trend, such as why a highly symmetric nonpolar molecule has a higher melting point than a polar asymmetric one. Additionally, streamline the stem to directly ask for the best explanation of the melting point difference, ensure all options reference only properties provided in the stem, and refine distractors to target distinct misconceptions not already covered in ID 4."
+    }
+  }
+]
